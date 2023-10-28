@@ -6,6 +6,7 @@ import ProfileRecordMainPage from "../pages/Profile/Profile_Record/ProfileRecord
 import ProfileRequestMainPage from "../pages/Profile/Profile_Request/ProfileRequestMainPage";
 import DashboardMainPage from "../pages/ManagePages/Dashboard/DashboardMainPage";
 import IncomingRequestMainPage from "../pages/ManagePages/IncomingRequest/IncomingRequestMainPage";
+import MainLayout from "../pages/MainLayout";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -14,10 +15,7 @@ export default function Route() {
     {
       path: "/",
       element: (
-        <div>
-          MAIN LAYOUT
-          <Outlet />
-        </div>
+        <MainLayout/>
       ),
       errorElement: <h1>Not Found</h1>,
       children: [
