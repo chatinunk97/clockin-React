@@ -7,6 +7,7 @@ import ProfileRequestMainPage from "../pages/Profile/Profile_Request/ProfileRequ
 import DashboardMainPage from "../pages/ManagePages/Dashboard/DashboardMainPage";
 import IncomingRequestMainPage from "../pages/ManagePages/IncomingRequest/IncomingRequestMainPage";
 import MainLayout from "../pages/MainLayout";
+import ProfileMainPage from "../pages/Profile/ProfileMainPage";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -14,39 +15,33 @@ export default function Route() {
     { path: "/register", element: <RegisterMainPage /> },
     {
       path: "/",
-      element: (
-        <MainLayout/>
-      ),
+      element: <MainLayout />,
       errorElement: <h1>Not Found</h1>,
       children: [
-        { path: "/", element: <ClockinMainPage /> },
+        { path: "/clockin", element: <ClockinMainPage /> },
         {
           path: "/profile",
-          element: (
-            <div>
-              Profile Main Pagee <Outlet />{" "}
-            </div>
-          ),
+          element: <ProfileMainPage />,
           children: [
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
             { path: "/profile/request", element: <ProfileRequestMainPage /> },
           ],
         },
+      ],
+    },
+    {
+      path: "/manage",
+      element: (
+        <div>
+          Manage Page
+          <Outlet />
+        </div>
+      ),
+      children: [
+        { path: "/manage/dashboard", element: <DashboardMainPage /> },
         {
-          path: "/manage",
-          element: (
-            <div>
-              Manage Page
-              <Outlet />
-            </div>
-          ),
-          children: [
-            { path: "/manage/dashboard", element: <DashboardMainPage /> },
-            {
-              path: "/manage/incomingrequest",
-              element: <IncomingRequestMainPage />,
-            },
-          ],
+          path: "/manage/incomingrequest",
+          element: <IncomingRequestMainPage />,
         },
       ],
     },

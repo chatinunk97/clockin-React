@@ -1,9 +1,8 @@
-export default function Header({ children, sideButtonText, theme }) {
+export default function Header({ children, sideButtonText = "Logout", theme , onClick }) {
   const profileTheme =
     theme === "white"
       ? { bg: "bg-white", text: "text-primaryGreen" }
       : { bg: "bg-primaryGreen", text: "text-white" };
-  console.log(profileTheme);
   return (
     <div className={`grid grid-cols-3  w-full py-11 ${profileTheme.bg}`}>
       <div></div>
@@ -12,7 +11,9 @@ export default function Header({ children, sideButtonText, theme }) {
       >
         {children}
       </div>
-      <div className={`flex justify-center items-center text-[16px] ${profileTheme.text}`}>
+      <div 
+      onClick={onClick}
+      className={`flex justify-center items-center text-[16px] cursor-pointer ${profileTheme.text}`}>
         {sideButtonText}
       </div>
     </div>

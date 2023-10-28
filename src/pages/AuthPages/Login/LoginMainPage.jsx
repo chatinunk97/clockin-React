@@ -1,15 +1,19 @@
-import React from "react";
-import LoginHeader from "./LoginHeader";
-
+import Header from "../../../components/Header";
+import Footer from '../../../components/Footer'
+import LoginForgetPassword from "./LoginForgetPassword";
+import LoginForm from "./LoginForm";
 export default function LoginMainPage() {
   return (
     <div
-      className="flex flex-col items-center bg-gray-50 w-full h-full m-auto 
+      className="flex flex-col gap-5 items-center w-full h-screen m-auto 
       min-w-360px"
     >
-      <LoginHeader />
-      <div>Form</div>
-      <div>Footer</div>
+      <Header sideButtonText="Sign Up" theme="white">
+        Login
+      </Header>
+      <LoginForm />
+      <LoginForgetPassword />
+      <Footer><span>Text</span></Footer>
     </div>
   );
 }
