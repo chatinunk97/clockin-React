@@ -8,6 +8,8 @@ import DashboardMainPage from "../pages/ManagePages/Dashboard/DashboardMainPage"
 import IncomingRequestMainPage from "../pages/ManagePages/IncomingRequest/IncomingRequestMainPage";
 import MainLayout from "../pages/MainLayout";
 import ProfileMainPage from "../pages/Profile/ProfileMainPage";
+import PersonalProfilePage from "../pages/Profile/Profile_PersonalProfile/PersonalProfilePage";
+import PeoplePage from "../pages/Profile/Profile_People/PeoplePage";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -23,8 +25,10 @@ export default function Route() {
           path: "/profile",
           element: <ProfileMainPage />,
           children: [
+            { path: "/profile/", element: <PersonalProfilePage /> },
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
             { path: "/profile/request", element: <ProfileRequestMainPage /> },
+            { path: "/profile/people", element: <PeoplePage /> },
           ],
         },
       ],
