@@ -10,6 +10,7 @@ import MainLayout from "../pages/MainLayout";
 import ProfileMainPage from "../pages/Profile/ProfileMainPage";
 import PersonalProfilePage from "../pages/Profile/Profile_PersonalProfile/PersonalProfilePage";
 import PeoplePage from "../pages/Profile/Profile_People/PeoplePage";
+import ProfileOTMainPage from "../pages/Profile/Profile_Request/ProfileOTMainPage";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -29,6 +30,7 @@ export default function Route() {
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
             { path: "/profile/request", element: <ProfileRequestMainPage /> },
             { path: "/profile/people", element: <PeoplePage /> },
+            { path: "/profile/OT", element: <ProfileOTMainPage /> },
           ],
         },
       ],
