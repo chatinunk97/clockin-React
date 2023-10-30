@@ -1,10 +1,8 @@
-import './App.css'
-import Route from './routes/Route'
+import "./App.css";
+import Route from "./routes/Route";
 
 function App() {
-
-
-  return  <Route/>
+  return <Route />;
 }
 
-export default App
+export default App;

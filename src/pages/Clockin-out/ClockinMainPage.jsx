@@ -1,5 +1,9 @@
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+
 export default function ClockinMainPage() {
-  return (
-    <div>ClockinMainPage</div>
-  )
+  const handlesideButton = () => {
+    console.log("Clicked");
+  };
+  return <div>Clockin Main Page</div>;
 }
