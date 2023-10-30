@@ -13,6 +13,8 @@ import PeoplePage from "../pages/Profile/Profile_People/PeoplePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/ProfileOTMainPage";
 import MyLeavePage from "../pages/Profile/Profile_Request/MyLeavePage";
 import LeaveFormPage from "../pages/Profile/Profile_Request/LeaveFormPage";
+import OTform from "../pages/Profile/Profile_Request/OTform";
+import MyOTFrom from "../pages/Profile/Profile_Request/MyOTFrom";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -39,11 +41,23 @@ export default function Route() {
                 { path: "/profile/myleave", element: <MyLeavePage /> },
               ],
             },
-            { path: "/profile/OT", element: <ProfileOTMainPage /> },
+            {
+              path: "/profile",
+              element: <ProfileOTMainPage />,
+              children: [
+                { path: "/profile/ot", element: <OTform /> },
+                {
+                  path: "/profile/myot",
+                  element: <MyOTFrom />,
+                },
+              ],
+            },
           ],
         },
       ],
     },
+
+    ,
     {
       path: "/manage",
       element: (
