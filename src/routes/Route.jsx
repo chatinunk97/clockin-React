@@ -3,7 +3,7 @@ import LoginMainPage from "../pages/AuthPages/Login/LoginMainPage";
 import RegisterMainPage from "../pages/AuthPages/Register/RegisterMainPage";
 import ClockinMainPage from "../pages/Clockin-out/ClockinMainPage";
 import ProfileRecordMainPage from "../pages/Profile/Profile_Record/ProfileRecordMainPage";
-import ProfileRequestMainPage from "../pages/Profile/Profile_Request/ProfileRequestMainPage";
+import ProfileLeaveMainPage from "../pages/Profile/Profile_Request/ProfileLeaveMainPage";
 import DashboardMainPage from "../pages/ManagePages/Dashboard/DashboardMainPage";
 import IncomingRequestMainPage from "../pages/ManagePages/IncomingRequest/IncomingRequestMainPage";
 import MainLayout from "../pages/MainLayout";
@@ -11,6 +11,8 @@ import ProfileMainPage from "../pages/Profile/ProfileMainPage";
 import PersonalProfilePage from "../pages/Profile/Profile_PersonalProfile/PersonalProfilePage";
 import PeoplePage from "../pages/Profile/Profile_People/PeoplePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/ProfileOTMainPage";
+import MyLeavePage from "../pages/Profile/Profile_Request/MyLeavePage";
+import LeaveFormPage from "../pages/Profile/Profile_Request/LeaveFormPage";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -28,8 +30,15 @@ export default function Route() {
           children: [
             { path: "/profile/", element: <PersonalProfilePage /> },
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
-            { path: "/profile/request", element: <ProfileRequestMainPage /> },
             { path: "/profile/people", element: <PeoplePage /> },
+            {
+              path: "/profile",
+              element: <ProfileLeaveMainPage />,
+              children: [
+                { path: "/profile/leave", element: <LeaveFormPage /> },
+                { path: "/profile/myleave", element: <MyLeavePage /> },
+              ],
+            },
             { path: "/profile/OT", element: <ProfileOTMainPage /> },
           ],
         },
