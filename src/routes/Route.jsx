@@ -10,6 +10,8 @@ import MainLayout from "../pages/MainLayout";
 import ProfileMainPage from "../pages/Profile/ProfileMainPage";
 import PersonalProfilePage from "../pages/Profile/Profile_PersonalProfile/PersonalProfilePage";
 import PeoplePage from "../pages/Profile/Profile_People/PeoplePage";
+import SetPasswordMainPage from "../pages/AuthPages/SetPasswordMainPage";
+import ForgetPasswordMainPage from "../pages/AuthPages/Login/ForgetPasswordMainPage";
 import LeaveFormPage from "../pages/Profile/Profile_Request/Leave/LeaveFormPage";
 import MyLeavePage from "../pages/Profile/Profile_Request/Leave/MyLeavePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/OT/ProfileOTMainPage";
@@ -20,6 +22,8 @@ export default function Route() {
   const router = createBrowserRouter([
     { path: "/login", element: <LoginMainPage /> },
     { path: "/register", element: <RegisterMainPage /> },
+    { path: "/setpassword", element: <SetPasswordMainPage /> },
+    { path: "forgetpassword", element: <ForgetPasswordMainPage /> },
     {
       path: "/",
       element: <MainLayout />,
