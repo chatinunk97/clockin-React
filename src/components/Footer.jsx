@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import MenuItem from "./MenuItem";
 import {
   BsPersonFill,
   BsFillAlarmFill,
@@ -23,17 +22,19 @@ export default function Footer() {
 
   const { pathname } = useLocation()
   return (
-    <div className="w-full">
-      <nav className="flex justify-center items-center gap-2">
-        {menus.map((items) => (
-          <MenuItems
-            key={items.id}
-            to={items.to}
-            Icon={items.Icon}
-            active={pathname === items.to}
-            text={items.text}
-          />
-        ))}
+    <div className="fixed bottom-0 flex flex-col justify-evenly items-center w-full py-5 bg-blue-100 ">
+      <nav className="flex   gap-2 bg-red-500 ">
+        <div className="flex bg-fuchsia-500 justify-evenly w-[400px]">
+          {menus.map((items) => (
+            <MenuItems
+              key={items.id}
+              to={items.to}
+              Icon={items.Icon}
+              active={pathname === items.to}
+              text={items.text}
+            />
+          ))}
+        </div>
       </nav>
     </div>
   );
