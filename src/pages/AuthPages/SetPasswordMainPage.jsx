@@ -11,9 +11,11 @@ export default function SetPasswordMainPage() {
       <Header sideButtonText="" theme="white">
         Set Password
       </Header>
-      <InputBar placeholder="Enter Password" type="password" />
-      <InputBar placeholder="Confirm Password" type="password" />
-      <SubmitButton>Save</SubmitButton>
+      <form className="flex flex-col gap-3 w-full p-3">
+        <InputBar placeholder="Enter Password" type="password" />
+        <InputBar placeholder="Confirm Password" type="password" />
+        <SubmitButton>Save</SubmitButton>
+      </form>
     </div>
   );
 }
