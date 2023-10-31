@@ -1,4 +1,9 @@
-export default function Header({ children, sideButtonText = "Logout", theme , onClick }) {
+export default function Header({
+  children,
+  sideButtonText = "Logout",
+  theme,
+  onClick,
+}) {
   const profileTheme =
     theme === "white"
       ? { bg: "bg-white", text: "text-primaryGreen" }
@@ -11,9 +16,10 @@ export default function Header({ children, sideButtonText = "Logout", theme , on
       >
         {children}
       </div>
-      <div 
-      onClick={onClick}
-      className={`flex justify-center items-center text-[16px] cursor-pointer ${profileTheme.text}`}>
+      <div
+        onClick={onClick}
+        className={`flex justify-center items-center text-[16px] cursor-pointer ${profileTheme.text}`}
+      >
         {sideButtonText}
       </div>
     </div>
