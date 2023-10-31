@@ -22,9 +22,9 @@ export default function Footer() {
 
   const { pathname } = useLocation()
   return (
-    <div className="fixed bottom-0 flex flex-col justify-evenly items-center w-full py-5 bg-blue-100 ">
-      <nav className="flex   gap-2 bg-red-500 ">
-        <div className="flex bg-fuchsia-500 justify-evenly w-[400px]">
+    <div className="bottom-0 flex sticky flex-col items-center w-full py-2 bg-blue-100 mt-0">
+      <nav className="flex gap-2 ">
+        <div className=" grid grid-cols-5 md:w-full ">
           {menus.map((items) => (
             <MenuItems
               key={items.id}

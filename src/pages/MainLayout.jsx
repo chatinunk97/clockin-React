@@ -8,8 +8,10 @@ export default function MainLayout() {
   return (
     <div>
       <Header>{page}</Header>
-      <Outlet />
-      <Footer>Footer Menu</Footer>
+      <div className="h-screen">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 }
