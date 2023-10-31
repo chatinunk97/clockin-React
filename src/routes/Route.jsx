@@ -15,11 +15,15 @@ import MyLeavePage from "../pages/Profile/Profile_Request/MyLeavePage";
 import LeaveFormPage from "../pages/Profile/Profile_Request/LeaveFormPage";
 import OTform from "../pages/Profile/Profile_Request/OTform";
 import MyOTFrom from "../pages/Profile/Profile_Request/MyOTFrom";
+import SetPasswordMainPage from "../pages/AuthPages/SetPasswordMainPage";
+import ForgetPasswordMainPage from "../pages/AuthPages/Login/ForgetPasswordMainPage";
 
 export default function Route() {
   const router = createBrowserRouter([
     { path: "/login", element: <LoginMainPage /> },
     { path: "/register", element: <RegisterMainPage /> },
+    { path: "/setpassword", element: <SetPasswordMainPage /> },
+    { path: "forgetpassword", element: <ForgetPasswordMainPage /> },
     {
       path: "/",
       element: <MainLayout />,
