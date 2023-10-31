@@ -1,6 +1,7 @@
 import { AiFillCalendar } from "react-icons/ai";
 import { BsFillClipboard2Fill } from "react-icons/bs";
-import Dropdown from "../Dropdown";
+import LeaveDropdown from "./LeaveDropdown";
+
 export default function LeaveInfo() {
   return (
     <div>
@@ -20,7 +21,7 @@ export default function LeaveInfo() {
           End Date
         </div>
       </div>
-      <Dropdown type="day" />
+      <LeaveDropdown type="day" />
       <div className="flex items-center">
         <div className="text-3xl text-slate-700">
           <BsFillClipboard2Fill />

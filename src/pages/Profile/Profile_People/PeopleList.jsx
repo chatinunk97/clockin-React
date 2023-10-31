@@ -7,8 +7,10 @@ export default function PeopleList({ image, firstName, lastName, position }) {
         className="h-[60px] w-[60px] border rounded-full "
       />
       <div className="pl-10">
-        <h2 className="font-bold">Jane Bin</h2>
-        <h3>Accountant</h3>
+        <h2 className="font-bold">
+          {firstName} {lastName}
+        </h2>
+        <h3>{position}</h3>
       </div>
     </div>
   );

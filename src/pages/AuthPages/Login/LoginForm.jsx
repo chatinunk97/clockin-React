@@ -1,4 +1,3 @@
-import React from "react";
 import InputBar from "../../../components/InputBar";
 import SubmitButton from "../../../components/SubmitButton";
 
