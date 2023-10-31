@@ -1,14 +1,27 @@
 import { AiFillCalendar } from "react-icons/ai";
 import { LuClock7 } from "react-icons/lu";
 import { BsFillClipboard2Fill } from "react-icons/bs";
+import DatePicker from "react-datepicker";
+import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+
 export default function OTform() {
+    const [startDate, setStartDate] = useState(new Date());
+
     return (
         <div className="flex flex-col justify-center items-start p-4 mt-12 gap-4 md:items-center md:p-20 md:mt-0">
             <h1 className=" text-3xl font-bold">Information</h1>
             <div>
                 <div className="flex items-center gap-6 w-[300px]">
                     <button className="text-3xl text-slate-700"><AiFillCalendar /></button>
-                    <div className="text-xl border-b border-b-neutral-400 w-[300px] text-center cursor-none">Calendar Date</div>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        isClearable
+                        placeholderText="Select Date"
+                        className='w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1'
+
+                    />
                 </div>
                 <div className="flex gap-4 pt-6 pb-6 text-xl justify-between">
                     <div className="flex gap-4 items-center">

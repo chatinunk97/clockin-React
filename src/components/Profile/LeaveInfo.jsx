@@ -1,28 +1,38 @@
 import { AiFillCalendar } from "react-icons/ai";
 import { BsFillClipboard2Fill } from "react-icons/bs";
 import Dropdown from "../Dropdown";
+import DatePicker from "react-datepicker";
+import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 export default function LeaveInfo() {
+
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+
   return (
-    <div>
-      <div className="flex items-center gap-6 w-[300px]">
-        <button className="text-3xl text-slate-700">
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-2 w-[300px] ">
+        <button className="text-3xl text-slate-700 hover:text-green-600">
           <AiFillCalendar />
         </button>
-        <div className="text-lg border-b border-b-neutral-400 w-[300px] text-center cursor-none">
-          Start Date
-        </div>
+        <DatePicker
+          selectsRange={true}
+          startDate={startDate}
+          endDate={endDate}
+          placeholderText="Select Date"
+          className='w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1'
+          onChange={(update) => {
+            setDateRange(update);
+          }}
+          isClearable={true}
+
+        />
       </div>
-      <div className="flex items-center gap-6 w-[300px]">
-        <button className="text-3xl text-slate-700">
-          <AiFillCalendar />
-        </button>
-        <div className="text-lg border-b border-b-neutral-400 w-[300px] text-center cursor-none">
-          End Date
-        </div>
+      <div>
+        <Dropdown type="day" />
       </div>
-      <Dropdown type="day" />
       <div className="flex items-center">
-        <div className="text-3xl text-slate-700">
+        <div className="text-3xl text-slate-700 hover:text-green-600">
           <BsFillClipboard2Fill />
         </div>
         <input

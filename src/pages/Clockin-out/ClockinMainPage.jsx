@@ -1,13 +1,10 @@
 
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
 import { IoLocationSharp } from "react-icons/io5";
-import InfoClockin from "./InfoClockinList";
 import InfoClockinItem from "./InfoClockinItem";
+
+
 export default function ClockinMainPage() {
-  const handlesideButton = () => {
-    console.log("Clicked");
-  };
+
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className="flex flex-col justify-center items-center text-xl p-2">
