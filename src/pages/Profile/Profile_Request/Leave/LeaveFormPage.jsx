@@ -11,11 +11,14 @@ export default function LeaveFormPage() {
         <LeaveList leaveName="Annual Leave" leaveAmount="30 days" />
         <LeaveList leaveName="Business Leave" leaveAmount="3 days" />
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <div>
+      <div className="flex flex-col justify-center items-center gap-4 p-2">
+        <div className="flex flex-col gap-4">
           <LeaveDropdown />
-          <h2 className="text-lg font-bold"></h2>
-          <LeaveInfo />
+          <div>
+            <LeaveInfo />
+          </div>
+        </div>
+        <div>
         </div>
         <div className="mt-10">
           <SubmitButton p="px-20 py-3">Submit</SubmitButton>
