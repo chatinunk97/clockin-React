@@ -1,7 +1,7 @@
-import Dropdown from "../../../components/Dropdown";
-import LeaveInfo from "../../../components/Profile/LeaveInfo";
-import LeaveList from "../../../components/Profile/LeaveList";
-import SubmitButton from "../../../components/SubmitButton";
+import LeaveInfo from "./LeaveInfo";
+import LeaveList from "./LeaveList";
+import LeaveDropdown from "./LeaveDropdown";
+import SubmitButton from "../../../../components/SubmitButton";
 
 export default function LeaveFormPage() {
   return (
@@ -13,7 +13,7 @@ export default function LeaveFormPage() {
       </div>
       <div className="flex flex-col justify-center items-center gap-4 p-2">
         <div className="flex flex-col gap-4">
-          <Dropdown />
+          <LeaveDropdown />
           <div>
             <LeaveInfo />
           </div>

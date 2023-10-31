@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import PersonalDetails from "../../../components/Profile/PersonalDetails";
 import SubmitButton from "../../../components/SubmitButton";
+import PersonalDetails from "./PersonalDetails";
 
 export default function PersonalProfilePage() {
   return (
@@ -11,9 +11,7 @@ export default function PersonalProfilePage() {
           className="w-[158px] h-[158px] border rounded-full absolute"
         />
       </div>
-
       <PersonalDetails />
-
       <div className="text-center mt-10">
         <Link to="/profile/record">
           <SubmitButton>View Calendar</SubmitButton>

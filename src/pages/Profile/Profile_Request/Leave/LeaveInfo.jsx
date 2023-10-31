@@ -1,9 +1,9 @@
 import { AiFillCalendar } from "react-icons/ai";
 import { BsFillClipboard2Fill } from "react-icons/bs";
-import Dropdown from "../Dropdown";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import LeaveDropdown from "./LeaveDropdown";
 export default function LeaveInfo() {
 
   const [dateRange, setDateRange] = useState([null, null]);
@@ -29,7 +29,7 @@ export default function LeaveInfo() {
         />
       </div>
       <div>
-        <Dropdown type="day" />
+        <LeaveDropdown type="day" />
       </div>
       <div className="flex items-center">
         <div className="text-3xl text-slate-700 hover:text-green-600">

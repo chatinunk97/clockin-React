@@ -1,4 +1,4 @@
-export default function Dropdown({ type }) {
+export default function LeaveDropdown({ type }) {
   return (
     <div>
       {/* <label htmlFor="leave"></label> */}
