@@ -14,9 +14,7 @@ export default function LoginMainPage() {
       </Header>
       <LoginForm />
       <LoginForgetPassword />
-      <Footer>
-        <span>Text</span>
-      </Footer>
+      <Footer />
     </div>
   );
 }
