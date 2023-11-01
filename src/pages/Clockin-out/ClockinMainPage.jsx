@@ -2,6 +2,7 @@
 import InfoClockinItem from "./InfoClockinItem";
 import ClockInlocation from "./ClockInlocation";
 import ClockInHeader from "./ClockInHeader";
+import GoogleMap from "../../config/GoogleMap/Map";
 export default function ClockinMainPage() {
 
   return (
@@ -10,7 +11,7 @@ export default function ClockinMainPage() {
         <ClockInHeader />
       </div>
       <div className=" border border-black w-[360px] h-[800px]  md:w-[800px] md:h-[1200x] text-center">
-        MAP
+      <GoogleMap/>
       </div>
       <div>
         <ClockInlocation />
