@@ -1,6 +1,6 @@
 import Joi from 'joi'
-import { useRef, useState } from 'react';
-import axios from 'axios'
+import { useState } from 'react';
+import axios from '../../../config/axios'
 import RegisterInput from './RegisterInput';
 import InputErrorMessage from './InputErrorMessage';
 
@@ -74,8 +74,8 @@ export default function RegisterFrom() {
                 return setError(validationError)
             }
             setError({})
-            const response = await axios.post('http://localhost:8080/user/createAdmin', formData);
-            if (response.status === 200) {
+            const response = await axios.post('/user/createAdmin', formData);
+            if (response.status === 201) {
                 alert('Registed');
             }
         } catch (err) {
@@ -87,7 +87,7 @@ export default function RegisterFrom() {
     return (
         <form className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6" onSubmit={handleSubmitRegister}>
 
-            <div>
+            <div className=' w-[360px] h-[80px]'>
                 <RegisterInput type='file'
                     onChange={e => {
                         if (e.target.files[0]) {
@@ -98,35 +98,35 @@ export default function RegisterFrom() {
                     name='profileImage'
                     hasError={error.profileImage} />
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Employee Id"
                     value={input.employeeId}
                     onChange={handleChangeInput}
                     name='employeeId'
                     hasError={error.employeeId} />
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder=" First name"
                     value={input.firstName}
                     onChange={handleChangeInput}
                     name='firstName'
                     hasError={error.firstName} />
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Last Name"
                     value={input.lastName}
                     onChange={handleChangeInput}
                     name='lastName'
                     hasError={error.lastName} />
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Email"
                     value={input.email}
                     onChange={handleChangeInput}
                     name='email'
                     hasError={error.email} />
             </div>
-            <div>
+            <div className='p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Phone Number"
                     value={input.mobile}
                     onChange={handleChangeInput}
@@ -134,14 +134,14 @@ export default function RegisterFrom() {
                     hasError={error.mobile} />
                 {error.mobile && <InputErrorMessage message={error.mobile} />}
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="companyProfileId"
                     value={input.companyProfileId}
                     onChange={handleChangeInput}
                     name='companyProfileId'
                     hasError={error.companyProfileId} />
             </div>
-            <div>
+            <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Password"
                     value={input.password}
                     onChange={handleChangeInput}
