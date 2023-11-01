@@ -1,24 +1,25 @@
-// import Joi from 'joi'
+import Joi from 'joi'
 import { useRef, useState } from 'react';
-// import axios from 'axios'
+import axios from 'axios'
 import RegisterInput from './RegisterInput';
+import InputErrorMessage from './InputErrorMessage';
 
-// const registerSchema = Joi.object({
-//     profileImage: Joi.string(),
-//     employeeId: Joi.string().trim().required(),
-//     firstName: Joi.string().trim().required(),
-//     lastName: Joi.string().trim().required(),
-//     email: Joi.string().email({ tlds: false }).required(),
-//     mobile: Joi.string()
-//         .pattern(/^[0-9]{10}$/)
-//         .required(),
-//     companyProfileId: Joi.number().required(),
-//     password: Joi.string()
-//         .pattern(/^[a-zA-Z0-9]{6,30}$/)
-//         .trim()
-//         .required(),
+const registerSchema = Joi.object({
+    profileImage: Joi.required(),
+    employeeId: Joi.string().trim().required(),
+    firstName: Joi.string().trim().required(),
+    lastName: Joi.string().trim().required(),
+    email: Joi.string().email({ tlds: false }).required(),
+    mobile: Joi.string()
+        .pattern(/^[0-9]{10}$/)
+        .required(),
+    companyProfileId: Joi.number().required(),
+    password: Joi.string()
+        .pattern(/^[a-zA-Z0-9]{6,30}$/)
+        .trim()
+        .required(),
 
-// });
+});
 const validateregister = input => {
     const { error } = registerSchema.validate(input, { abortEarly: false })
     if (error) {
@@ -33,7 +34,7 @@ const validateregister = input => {
 
 export default function RegisterFrom() {
     const [file, setFile] = useState(null)
-    const inputEl = useRef(null)
+
 
 
     const [input, setInput] = useState({
@@ -63,6 +64,7 @@ export default function RegisterFrom() {
             formData.append("profileImage", input.profileImage)
             formData.append("employeeId", input.employeeId)
             formData.append("firstName", input.firstName)
+            formData.append("lastName", input.lastName)
             formData.append("email", input.email)
             formData.append("mobile", input.mobile)
             formData.append("companyProfileId", input.companyProfileId)
@@ -72,7 +74,7 @@ export default function RegisterFrom() {
                 return setError(validationError)
             }
             setError({})
-            const response = await axios.post('', formData);
+            const response = await axios.post('http://localhost:8080/user/createAdmin', formData);
             if (response.status === 200) {
                 alert('Registed');
             }
@@ -83,12 +85,16 @@ export default function RegisterFrom() {
 
 
     return (
-        <form className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6">
+        <form className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6" onSubmit={handleSubmitRegister}>
 
             <div>
                 <RegisterInput type='file'
-                    value={input.profileImage}
-                    onChange={handleChangeInput}
+                    onChange={e => {
+                        if (e.target.files[0]) {
+                            setFile(e.target.files[0])
+                            setInput({ ...input, profileImage: e.target.files[0] })
+                        }
+                    }}
                     name='profileImage'
                     hasError={error.profileImage} />
             </div>
@@ -126,6 +132,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='mobile'
                     hasError={error.mobile} />
+                {error.mobile && <InputErrorMessage message={error.mobile} />}
             </div>
             <div>
                 <RegisterInput placeholder="companyProfileId"
@@ -140,6 +147,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='password'
                     hasError={error.password} />
+                {error.password && <InputErrorMessage message={error.password} />}
             </div>
             <div className="mx-auto col-span-full">
                 <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">

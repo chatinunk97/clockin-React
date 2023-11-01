@@ -21,5 +21,6 @@ export default function RegisterInput({
             onChange={onChange}
             name={name}
         />
+
     );
 }
