@@ -17,16 +17,29 @@ import MyLeavePage from "../pages/Profile/Profile_Request/Leave/MyLeavePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/OT/ProfileOTMainPage";
 import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
 import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
+// import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
+// import Authenticated from "../features/auth/Authenticated";
 
 export default function Route() {
   const router = createBrowserRouter([
-    { path: "/login", element: <LoginMainPage /> },
+    {
+      path: "/login",
+      element: (
+        // <RedirectIfAuthenticated>
+        <LoginMainPage />
+        // </RedirectIfAuthenticated>
+      ),
+    },
     { path: "/register", element: <RegisterMainPage /> },
     { path: "/setpassword", element: <SetPasswordMainPage /> },
-    { path: "forgetpassword", element: <ForgetPasswordMainPage /> },
+    { path: "/forgetpassword", element: <ForgetPasswordMainPage /> },
     {
       path: "/",
-      element: <MainLayout />,
+      element: (
+        // <Authenticated>
+        <MainLayout />
+        // </Authenticated>
+      ),
       errorElement: <h1>Not Found</h1>,
       children: [
         { path: "/clockin", element: <ClockinMainPage /> },
