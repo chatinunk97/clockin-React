@@ -77,7 +77,6 @@ export default function RegisterFrom() {
       formData.append("paySlip", input.paySlip);
       formData.append("data", JSON.stringify(input));
       if (validationError) {
-        console.log(validationError);
         return setError(validationError);
       }
       setError({});

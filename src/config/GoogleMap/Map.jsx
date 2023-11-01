@@ -1,5 +1,10 @@
 import { useMemo } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  Circle,
+} from "@react-google-maps/api";
 import { GoogleAPI_KEY } from "../../../env";
 
 export default function Home() {
@@ -7,18 +12,26 @@ export default function Home() {
     googleMapsApiKey: GoogleAPI_KEY,
   });
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map/>;
+  return <Map />;
 }
 
 function Map() {
   return (
     <GoogleMap
-      zoom={10}
+      zoom={15}
       center={{ lat: 44, lng: -88 }}
-      mapContainerStyle={{ width: '100%', height: '100%' }}
+      mapContainerStyle={{ width: "100%", height: "100%" }}
     >
-    <Marker position={{ lat: 44, lng: -88 }}></Marker>
+      <Marker position={{ lat: 44, lng: -88 }}></Marker>
+      <Circle
+        center={{ lat: 44, lng: -88 }}
+        radius={200}
+        options={{
+          fillColor: "red", // Change the fill color of the circle
+          strokeOpacity: 0, // Change the outline opacity (0 to 1)
+          fillOpacity: 0.2, // Change the fill opacity (0 to 1)
+        }}
+      ></Circle>
     </GoogleMap>
-
   );
 }
