@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import InputBar from "../../../components/InputBar";
 import SubmitButton from "../../../components/SubmitButton";
 import useAuth from "../../../hooks/use-auth";
@@ -13,7 +14,9 @@ export default function LoginForm() {
 
   const handleLoginForm = (e) => {
     e.preventDefault();
-    login(input);
+    login(input).catch((err) => {
+      toast.error(err.response.data.message);
+    });
   };
 
   return (
