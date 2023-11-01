@@ -7,25 +7,27 @@ import {
 } from "@react-google-maps/api";
 import { GoogleAPI_KEY } from "../../../env";
 
-export default function Home() {
+export default function Home({ location }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: GoogleAPI_KEY,
   });
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
+  console.log(location);
+  return <Map location={location} />;
 }
 
-function Map() {
+function Map({ location }) {
   return (
     <GoogleMap
-      zoom={15}
-      center={{ lat: 44, lng: -88 }}
+      options={{ mapTypeControl: false  ,  zoomControl : false ,streetViewControl : false}}
+      zoom={19}
+      center={location}
       mapContainerStyle={{ width: "100%", height: "100%" }}
     >
-      <Marker position={{ lat: 44, lng: -88 }}></Marker>
+      <Marker position={location}></Marker>
       <Circle
-        center={{ lat: 44, lng: -88 }}
-        radius={200}
+        center={location}
+        radius={20}
         options={{
           fillColor: "red", // Change the fill color of the circle
           strokeOpacity: 0, // Change the outline opacity (0 to 1)
