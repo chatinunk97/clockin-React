@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "../../../config/axios";
 import RegisterInput from "./RegisterInput";
 import InputErrorMessage from "./InputErrorMessage";
+import Loading from '../../../components/Loading'
 
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
@@ -53,6 +54,12 @@ export default function RegisterFrom() {
 
   const [error, setError] = useState({});
 
+  const [loading, setLoading] = useState(false)
+
+
+
+
+
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -85,12 +92,15 @@ export default function RegisterFrom() {
       if (file === null) {
         alert('Require PaySlip!!!')
       }
+      setLoading(true)
       const response = await axios.post("/user/registerCompany", formData);
       if (response.status === 201) {
         alert("Registed");
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -99,6 +109,7 @@ export default function RegisterFrom() {
       className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6"
       onSubmit={handleSubmitRegister}
     >
+      {loading && <Loading />}
       <div className=" w-[360px] h-[80px]">
         <RegisterInput
           type="file"
