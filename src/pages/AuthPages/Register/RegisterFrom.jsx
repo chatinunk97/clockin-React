@@ -1,11 +1,15 @@
 import Joi from 'joi'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from '../../../config/axios'
 import RegisterInput from './RegisterInput';
 import InputErrorMessage from './InputErrorMessage';
 
 const registerSchema = Joi.object({
-    profileImage: Joi.required(),
+    paySlip: Joi.required(),
+    companyName: Joi.string().trim().required(),
+    packageId: Joi.number().required(),
+    latitudeCompany: Joi.number().required(),
+    longitudeCompany: Joi.number().required(),
     employeeId: Joi.string().trim().required(),
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim().required(),
@@ -13,7 +17,6 @@ const registerSchema = Joi.object({
     mobile: Joi.string()
         .pattern(/^[0-9]{10}$/)
         .required(),
-    companyProfileId: Joi.number().required(),
     password: Joi.string()
         .pattern(/^[a-zA-Z0-9]{6,30}$/)
         .trim()
@@ -34,17 +37,19 @@ const validateregister = input => {
 
 export default function RegisterFrom() {
     const [file, setFile] = useState(null)
-
-
-
+    const [allpackage, setallPackage] = useState([])
+    const [value, setValue] = useState();
     const [input, setInput] = useState({
-        profileImage: '',
+        paySlip: '',
+        companyName: '',
+        packageId: +'',
+        latitudeCompany: '',
+        longitudeCompany: '',
         employeeId: '',
         firstName: '',
         lastName: '',
         email: '',
         mobile: '',
-        companyProfileId: '',
         password: '',
 
     })
@@ -53,7 +58,24 @@ export default function RegisterFrom() {
 
     const handleChangeInput = e => {
         setInput({ ...input, [e.target.name]: e.target.value })
+
     }
+
+    const handleChange = (e) => {
+        setValue(e.target.value);
+    };
+    console.log(value)
+    useEffect(() => {
+        axios
+            .get('/user/showpackage')
+            .then(res => {
+                console.log(res.data.packages)
+                setallPackage(res.data.packages)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
 
 
     const handleSubmitRegister = async (e) => {
@@ -61,20 +83,24 @@ export default function RegisterFrom() {
             e.preventDefault()
             const validationError = validateregister(input)
             const formData = new FormData()
-            formData.append("profileImage", input.profileImage)
+            formData.append("paySlip", input.paySlip)
+            formData.append("companyName", input.companyName)
+            formData.append("packageId", value)
+            console.log(value)
+            formData.append("latitudeCompany", input.latitudeCompany)
+            formData.append("longitudeCompany", input.longitudeCompany)
             formData.append("employeeId", input.employeeId)
             formData.append("firstName", input.firstName)
             formData.append("lastName", input.lastName)
             formData.append("email", input.email)
             formData.append("mobile", input.mobile)
-            formData.append("companyProfileId", input.companyProfileId)
             formData.append("password", input.password)
             if (validationError) {
                 console.log(validationError)
                 return setError(validationError)
             }
             setError({})
-            const response = await axios.post('/user/createAdmin', formData);
+            const response = await axios.post('/user/registerCompany', formData);
             if (response.status === 201) {
                 alert('Registed');
             }
@@ -82,6 +108,7 @@ export default function RegisterFrom() {
             console.log(err);
         }
     }
+
 
 
     return (
@@ -92,11 +119,57 @@ export default function RegisterFrom() {
                     onChange={e => {
                         if (e.target.files[0]) {
                             setFile(e.target.files[0])
-                            setInput({ ...input, profileImage: e.target.files[0] })
+                            setInput({ ...input, paySlip: e.target.files[0] })
                         }
                     }}
-                    name='profileImage'
-                    hasError={error.profileImage} />
+                    name='paySlip'
+                    hasError={error.paySlip} />
+                {error.paySlip && <InputErrorMessage message={error.paySlip} />}
+            </div>
+            <div>
+                <h1 className='pl-2'>Select Package</h1>
+                <select className='w-[360px] mb-12 flex items-start flex-col cursor-pointer' onChange={handleChange}>
+                    {allpackage.map((el) => {
+
+                        return (
+                            <option key={el.id} name='packageId' value={el.id} label={`${el.price}฿ / ${el.userCount} People`}></option>
+                        )
+                    })
+                    }
+
+                </select>
+            </div>
+            <div className=' p-1 w-[360px] h-[80px]'>
+                <RegisterInput placeholder="Company Name"
+                    value={input.companyName}
+                    onChange={handleChangeInput}
+                    name='companyName'
+                    hasError={error.companyName} />
+                {error.companyName && <InputErrorMessage message={error.companyName} />}
+            </div>
+            {/* <div className=' p-1 w-[360px] h-[80px]'>
+                <RegisterInput placeholder="packageId"
+                    value={input.packageId}
+                    onChange={handleChangeInput}
+                    name='packageId'
+                    hasError={error.packageId} />
+                {error.packageId && <InputErrorMessage message={error.packageId} />}
+            </div> */}
+            <div className=' p-1 w-[360px] h-[80px]'>
+                <RegisterInput placeholder="latitudeCompany"
+                    value={input.latitudeCompany}
+                    onChange={handleChangeInput}
+                    name='latitudeCompany'
+                    hasError={error.latitudeCompany} />
+                {error.latitudeCompany && <InputErrorMessage message={error.latitudeCompany} />}
+            </div>
+            <div className=' p-1 w-[360px] h-[80px]'>
+                <RegisterInput placeholder="longitudeCompany"
+                    value={input.longitudeCompany}
+                    onChange={handleChangeInput}
+                    name='longitudeCompany'
+                    hasError={error.longitudeCompany} />
+                {error.longitudeCompany && <InputErrorMessage message={error.longitudeCompany} />}
             </div>
             <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Employee Id"
@@ -104,6 +177,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='employeeId'
                     hasError={error.employeeId} />
+                {error.employeeId && <InputErrorMessage message={error.employeeId} />}
             </div>
             <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder=" First name"
@@ -111,6 +185,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='firstName'
                     hasError={error.firstName} />
+                {error.firstName && <InputErrorMessage message={error.firstName} />}
             </div>
             <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Last Name"
@@ -118,6 +193,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='lastName'
                     hasError={error.lastName} />
+                {error.lastName && <InputErrorMessage message={error.lastName} />}
             </div>
             <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Email"
@@ -125,6 +201,7 @@ export default function RegisterFrom() {
                     onChange={handleChangeInput}
                     name='email'
                     hasError={error.email} />
+                {error.email && <InputErrorMessage message={error.email} />}
             </div>
             <div className='p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Phone Number"
@@ -133,13 +210,6 @@ export default function RegisterFrom() {
                     name='mobile'
                     hasError={error.mobile} />
                 {error.mobile && <InputErrorMessage message={error.mobile} />}
-            </div>
-            <div className=' p-1 w-[360px] h-[80px]'>
-                <RegisterInput placeholder="companyProfileId"
-                    value={input.companyProfileId}
-                    onChange={handleChangeInput}
-                    name='companyProfileId'
-                    hasError={error.companyProfileId} />
             </div>
             <div className=' p-1 w-[360px] h-[80px]'>
                 <RegisterInput placeholder="Password"
@@ -157,3 +227,18 @@ export default function RegisterFrom() {
         </form>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
