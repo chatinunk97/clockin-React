@@ -83,13 +83,13 @@ export default function RegisterFrom() {
       const formData = new FormData();
       formData.append("paySlip", input.paySlip);
       formData.append("data", JSON.stringify(input));
-      console.log(input.paySlip)
       if (validationError) {
         return setError(validationError);
       }
       setError({});
       if (file === null) {
         alert('Require PaySlip!!!')
+        return
       }
       setLoading(true)
       const response = await axios.post("/user/registerCompany", formData);
