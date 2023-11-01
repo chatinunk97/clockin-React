@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { GoogleAPI_KEY } from "../env";
+import { GoogleAPI_KEY } from "../../../env";
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
