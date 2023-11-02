@@ -15,7 +15,6 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-
     if (getAccessTokenDB()) {
       axios
         .get("/user/me")
@@ -41,6 +40,7 @@ export default function ManageContextProvider({ children }) {
   const logout = () => {
     removeAccessTokenDB();
     setManageUser(null);
+    setInitialLoading(false);
   };
 
   return (
