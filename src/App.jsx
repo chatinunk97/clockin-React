@@ -5,10 +5,10 @@ import useAuth from "./hooks/use-auth";
 import Loading from "./components/Loading";
 
 function App() {
-  const { isLoading } = useAuth();
+  const { initialLoading } = useAuth();
   return (
     <>
-      {isLoading ? (
+      {initialLoading ? (
         <Loading/>
       ) : (
         <>
