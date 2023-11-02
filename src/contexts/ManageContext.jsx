@@ -28,7 +28,6 @@ export default function ManageContextProvider({ children }) {
       setInitialLoading(false);
     }
   }, []);
-
   const login = async (credential) => {
     credential.loginType = "dashboard";
     const res = await axios.post("/user/login", credential);

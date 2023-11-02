@@ -16,6 +16,5 @@ export default function Authenticated({ children, pageType }) {
       return <Navigate to="/manage/login"/>
     }
   }
-  console.log(children)
   return children;
 }
