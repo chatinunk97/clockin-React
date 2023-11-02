@@ -29,7 +29,10 @@ export default function AuthContextProvider({ children }) {
     }
   }, []);
 
-  const login = async (credential) => {
+  const login = async (credential,loginType) => {
+    if(loginType === 'dashboard'){
+      credential.loginType = 'dashboard'
+    }
     const res = await axios.post("/user/login", credential);
     addAccessToken(res.data.user.accessToken);
     setAuthUser(res.data.user);
