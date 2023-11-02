@@ -1,10 +1,20 @@
 import useAuth from "../../hooks/use-auth";
+import useManage from "../../hooks/use-manage";
 import { Navigate } from "react-router-dom";
 
-export default function Authenticated({ children }) {
+export default function Authenticated(pageType, { children }) {
   const { authUser } = useAuth();
-  if (!authUser) {
-    return <Navigate to="/login" />;
+  const { manageUser } = useManage();
+  console.log("first");
+  if (pageType === "clock") {
+    if (!authUser) {
+      return <Navigate to="/login" />;
+    }
+  }
+  if (pageType === "dashboard") {
+    if (!manageUser) {
+      return <Navigate to="/manage/login" />;
+    }
   }
 
   return children;

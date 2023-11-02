@@ -1,7 +1,8 @@
 import { useState } from "react";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import InputBar from "../../../components/InputBar";
 import SubmitButton from "../../../components/SubmitButton";
+import useManage from "../../../hooks/use-manage";
 
 export default function ManageLoginForm() {
   const [input, setInput] = useState({
@@ -9,13 +10,13 @@ export default function ManageLoginForm() {
     password: "",
   });
 
-  //  const { login } = useAuth();
+  const { login } = useManage();
 
   const handleLoginForm = (e) => {
     e.preventDefault();
-    // login(input).catch((err) => {
-    //   toast.error(err.response.data.message);
-    // });
+    login(input, "dashboard").catch((err) => {
+      toast.error(err.response.data.message);
+    });
   };
 
   return (

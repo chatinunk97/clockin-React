@@ -41,7 +41,7 @@ export default function Route() {
     {
       path: "/",
       element: (
-        <Authenticated>
+        <Authenticated pageType="clock">
           <MainLayout />
         </Authenticated>
       ),
@@ -83,7 +83,11 @@ export default function Route() {
     { path: "/manage/login", element: <ManageLoginMainPage /> },
     {
       path: "/manage",
-      element: <Layoutmanage />,
+      element: (
+        <Authenticated>
+          <Layoutmanage />
+        </Authenticated>
+      ),
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
         { path: "/manage/employees", element: <ManageEmployees /> },
