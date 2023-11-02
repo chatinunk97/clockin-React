@@ -27,8 +27,7 @@ import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 
 export default function Route() {
   const router = createBrowserRouter([
-    {
-      path: "/login",
+    {path: "/login",
       element: (
         <RedirectIfAuthenticated pageType={"clock"}>
           <LoginMainPage />
@@ -38,8 +37,7 @@ export default function Route() {
     { path: "/register", element: <RegisterMainPage /> },
     { path: "/setpassword", element: <SetPasswordMainPage /> },
     { path: "/forgetpassword", element: <ForgetPasswordMainPage /> },
-    {
-      path: "/",
+    {path: "/",
       element: (
         <Authenticated pageType="clock">
           <MainLayout />
@@ -52,30 +50,29 @@ export default function Route() {
           path: "/profile",
           element: <ProfileMainPage />,
           children: [
-            { path: "/profile/", element: <PersonalProfilePage /> },
+            { path: "/profile", element: <PersonalProfilePage /> },
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
             { path: "/profile/people", element: <PeoplePage /> },
-            {
-              path: "/profile",
+          ],
+        },
+        {path: "/leave",
               element: <ProfileLeaveMainPage />,
               children: [
-                { path: "/profile/leave", element: <LeaveFormPage /> },
-                { path: "/profile/myleave", element: <MyLeavePage /> },
+                { path: "/leave/leaveform", element: <LeaveFormPage /> },
+                { path: "/leave/myleave", element: <MyLeavePage /> },
               ],
             },
             {
-              path: "/profile",
+              path: "/ot",
               element: <ProfileOTMainPage />,
               children: [
-                { path: "/profile/ot", element: <OTForm /> },
+                { path: "/ot/otform", element: <OTForm /> },
                 {
-                  path: "/profile/myot",
+                  path: "/ot/myot",
                   element: <MyOTForm />,
                 },
               ],
             },
-          ],
-        },
       ],
     },
 

@@ -13,6 +13,7 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [isLoading , setIsLoading] = useState(true)
 
   useEffect(() => {
     if (getAccessToken()) {
@@ -23,6 +24,7 @@ export default function AuthContextProvider({ children }) {
         })
         .finally(() => {
           setInitialLoading(false);
+          setIsLoading(false)
         });
     } else {
       setInitialLoading(false);
@@ -42,7 +44,7 @@ export default function AuthContextProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ login, logout, initialLoading, authUser }}>
+    <AuthContext.Provider value={{ login, logout, initialLoading, authUser , isLoading }}>
       {children}
     </AuthContext.Provider>
   );

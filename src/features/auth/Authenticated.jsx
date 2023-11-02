@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 export default function Authenticated({ children, pageType }) {
   const { authUser } = useAuth();
   const { manageUser } = useManage();
+  
   if (pageType === "clock") {
     if (!authUser) {
       return <Navigate to="/login" />;
@@ -15,5 +16,6 @@ export default function Authenticated({ children, pageType }) {
       return <Navigate to="/manage/login"/>
     }
   }
+  console.log(children)
   return children;
 }

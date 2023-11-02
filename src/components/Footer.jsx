@@ -13,8 +13,8 @@ const menus = [
   { id: 1, to: "/profile", Icon: BsPersonFill, text: 'Profile' },
   { id: 2, to: "/clockin", Icon: BsFillAlarmFill, text: 'Clockin' },
   { id: 3, to: "/profile/people", Icon: BsFillPeopleFill, text: 'people' },
-  { id: 4, to: "/profile/leave", Icon: BsCalendarEvent, text: 'Leave' },
-  { id: 5, to: "/profile/ot", Icon: BsClockFill, text: 'OT' },
+  { id: 4, to: "/leave/leaveform", Icon: BsCalendarEvent, text: 'Leave' },
+  { id: 5, to: "/ot/otform", Icon: BsClockFill, text: 'OT' },
 ];
 
 
