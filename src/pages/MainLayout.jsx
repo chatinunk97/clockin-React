@@ -9,7 +9,9 @@ export default function MainLayout() {
   const page = useLocation().pathname;
   return (
     <div>
-      <Header onClick={logout}>{page}</Header>
+      <div className="sticky top-0">
+        <Header onClick={logout}>{page}</Header>
+      </div>
       <div className="h-screen">
         <Outlet />
       </div>
