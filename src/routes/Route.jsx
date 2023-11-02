@@ -19,6 +19,7 @@ import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
 import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import Authenticated from "../features/auth/Authenticated";
+import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -75,6 +76,7 @@ export default function Route() {
     },
 
     ,
+    { path: "/manage/login", element: <ManageLoginMainPage /> },
     {
       path: "/manage",
       element: (
