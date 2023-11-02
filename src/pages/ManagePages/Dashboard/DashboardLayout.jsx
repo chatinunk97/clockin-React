@@ -7,6 +7,7 @@ import {
 } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
 import DashboardMenuItems from "../../../components/DashboardMenuItems";
+import { SlLogout } from "react-icons/sl";
 
 
 
@@ -26,7 +27,7 @@ export default function DashboardLayout() {
     const { pathname } = useLocation()
 
     return (
-        <div className=" bg-blue-950 w-60 h-screen max-h-screen flex flex-col gap-2 justify-start rounded-sm">
+        <div className=" bg-blue-950 w-60 h-screen max-h-screen flex flex-col gap-2 rounded-sm">
             <div className=" flex justify-center items-center">
                 <div className="flex flex-col justify-center items-center pt-4 pb-4 gap-6 w-full">
                     <img src="https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU" className="w-40 h-40 rounded-full" />
@@ -35,7 +36,7 @@ export default function DashboardLayout() {
             </div>
             <hr />
             <nav>
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-2 p-2">
                     {DashboardMenu.map((items) => (
                         <DashboardMenuItems
                             key={items.id}
@@ -47,6 +48,13 @@ export default function DashboardLayout() {
                     ))}
                 </div>
             </nav>
+            <div className="absolute bottom-5 left-5 w-32 p-2 transition-transform hover:scale-105 rounded-xl hover:bg-slate-100 text-red-600 font-semibold">
+                <div className="flex justify-center items-center gap-2">
+                    <SlLogout />
+                    <button>Log Out</button>
+                </div>
+
+            </div>
         </div>
     );
 }
