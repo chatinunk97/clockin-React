@@ -19,6 +19,10 @@ import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
 import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import Authenticated from "../features/auth/Authenticated";
+import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
+import ManageEmployees from '../pages/ManagePages/Dashboard/ManageEmployees'
+import MangeLeaveRequest from "../pages/ManagePages/Dashboard/MangeLeaveRequest";
+import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -73,22 +77,14 @@ export default function Route() {
         },
       ],
     },
-
-    ,
     {
       path: "/manage",
-      element: (
-        <div>
-          Manage Page
-          <Outlet />
-        </div>
-      ),
+      element: <Layoutmanage />,
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
-        {
-          path: "/manage/incomingrequest",
-          element: <IncomingRequestMainPage />,
-        },
+        { path: "/manage/employees", element: <ManageEmployees /> },
+        { path: "/manage/leave-request", element: <MangeLeaveRequest /> },
+        { path: "/manage/ot-Request", element: <ManageOTRequest /> },
       ],
     },
   ]);
