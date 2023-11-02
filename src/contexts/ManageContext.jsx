@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { createContext } from "react";
-import axios from "../config/axios";
+import axios from "../config/axiosManage";
 import {
-  addAccessToken,
-  getAccessToken,
-  removeAccessToken,
+  addAccessTokenDB,
+  getAccessTokenDB,
+  removeAccessTokenDB,
 } from "../utils/local-storage";
 import { useEffect } from "react";
 
@@ -15,7 +15,8 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    if (getAccessToken()) {
+
+    if (getAccessTokenDB()) {
       axios
         .get("/user/me")
         .then((res) => {
@@ -29,17 +30,16 @@ export default function ManageContextProvider({ children }) {
     }
   }, []);
 
-  const login = async (credential, loginType) => {
-    if (loginType === "dashboard") {
-      credential.loginType = "dashboard";
-    }
+  const login = async (credential) => {
+    credential.loginType = "dashboard";
     const res = await axios.post("/user/login", credential);
-    addAccessToken(res.data.user.accessToken);
+    console.log(res);
+    addAccessTokenDB(res.data.user.accessToken_db);
     setManageUser(res.data.user);
   };
 
   const logout = () => {
-    removeAccessToken();
+    removeAccessTokenDB();
     setManageUser(null);
   };
 

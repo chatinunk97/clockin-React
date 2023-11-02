@@ -30,7 +30,7 @@ export default function Route() {
     {
       path: "/login",
       element: (
-        <RedirectIfAuthenticated>
+        <RedirectIfAuthenticated pageType={"clock"}>
           <LoginMainPage />
         </RedirectIfAuthenticated>
       ),
@@ -41,7 +41,7 @@ export default function Route() {
     {
       path: "/",
       element: (
-        <Authenticated>
+        <Authenticated pageType="clock">
           <MainLayout />
         </Authenticated>
       ),
@@ -80,10 +80,22 @@ export default function Route() {
     },
 
     ,
-    { path: "/manage/login", element: <ManageLoginMainPage /> },
+    {
+      path: "/manage/login",
+      element: (
+        <RedirectIfAuthenticated pageType={"dashboard"}>
+          <ManageLoginMainPage />
+        </RedirectIfAuthenticated>
+      ),
+    },
+
     {
       path: "/manage",
-      element: <Layoutmanage />,
+      element: (
+        <Authenticated pageType={"dashboard"}>
+          <Layoutmanage />
+        // </Authenticated>
+      ),
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
         { path: "/manage/employees", element: <ManageEmployees /> },
