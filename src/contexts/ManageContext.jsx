@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import axios from "../config/axios";
+import axios from "../config/axiosManage";
 import {
   addAccessTokenDB,
   getAccessTokenDB,
@@ -15,6 +15,7 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
+
     if (getAccessTokenDB()) {
       axios
         .get("/user/me")
