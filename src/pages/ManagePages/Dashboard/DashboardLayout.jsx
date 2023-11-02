@@ -27,7 +27,7 @@ export default function DashboardLayout() {
     const { pathname } = useLocation()
 
     return (
-        <div className=" bg-blue-950 w-60 h-screen max-h-screen flex flex-col gap-2 rounded-sm">
+        <div className=" bg-blue-950 w-60 h-screen flex flex-col gap-2 rounded-sm">
             <div className=" flex justify-center items-center">
                 <div className="flex flex-col justify-center items-center pt-4 pb-4 gap-6 w-full">
                     <img src="https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU" className="w-40 h-40 rounded-full" />
