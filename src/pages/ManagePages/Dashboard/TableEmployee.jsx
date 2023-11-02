@@ -1,23 +1,18 @@
 import { useState } from "react";
-import { render } from "react-dom";
 import { AgGridReact } from "ag-grid-react";
-
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Modal from "../../../components/Modal";
 import EditemployeeForm from "../Edit/AddEmployeeForm";
 
-
 export default function TableEmployee() {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
     const [rowData] = useState([
         { FistName: "Bob", LastName: "Celica", Position: 'HR', Supervisor: "Jonh", EmployeeID: "010HY221", PhoneNumber: "0899919191", Email: "BOb@email.com" },
         { FistName: "Toyota", LastName: "Celica", Position: 35000, Supervisor: "Celica", EmployeeID: "Celica", PhoneNumber: "Celica", Email: "Celica" },
         { FistName: "Toyota", LastName: "Celica", Position: 35000, Supervisor: "Celica", EmployeeID: "Celica", PhoneNumber: "Celica", Email: "Celica" },
         { FistName: "Toyota", LastName: "Celica", Position: 35000, Supervisor: "Celica", EmployeeID: "Celica", PhoneNumber: "Celica", Email: "Celica" },
-
-
     ]);
 
     const [columnDefs] = useState([
@@ -32,15 +27,14 @@ export default function TableEmployee() {
             field: "actionButtons",
             headerName: "",
             cellRenderer: (params) => (
-                <div className="flex gap-2">
-                    <div>
+                <div className="flex gap-2 justify-center items-center h-full">
+                    <div className="p-2">
                         <button
                             onClick={(e) => {
-                                console.log(params.data)
-                                setIsOpen(true)
+                                console.log(params.data);
+                                setIsOpen(true);
                             }}
-
-                            className="font-bold text-white w-20 bg-green-600 rounded-xl flex justify-center items-center px-2"
+                            className="font-bold text-white w-14 h-6 bg-green-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-green-400"
                         >
                             Edit
                         </button>
@@ -48,33 +42,30 @@ export default function TableEmployee() {
                     <div>
                         <button
                             onClick={(e) => {
-                                console.log(params.data)
+                                console.log(params.data);
                             }}
-                            className="font-bold text-white w-20 bg-blue-500 rounded-xl flex justify-center items-center px-2"
+                            className="font-bold text-white w-14 h-6 bg-blue-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-blue-400"
                         >
                             View
                         </button>
                     </div>
-                </div>)
-        }
-
+                </div>
+            ),
+        },
     ]);
+
     const gridOptions = {
         defaultColDef: {
             resizable: true,
         },
-
+        getRowStyle: (params) => {
+            return { marginBottom: "200px" }; // ปรับแต่งระยะห่างในแนวตั้งที่นี่
+        },
     };
-    return (
 
-        <div className="ag-theme-alpine" style={{ height: 700, width: '100%' }}>
-            {/* <Modal title="Add User " open={isOpen} onClose={() => setIsOpen(false)}>
-                <EditemployeeForm />
-            </Modal> */}
+    return (
+        <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
             <AgGridReact rowData={rowData} gridOptions={gridOptions} columnDefs={columnDefs}></AgGridReact>
         </div>
-
-
     );
 }
-
