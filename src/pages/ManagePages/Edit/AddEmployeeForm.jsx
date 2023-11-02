@@ -1,4 +1,5 @@
-import axios from 'axios';
+import {dashboardAxios} from '../../../config/axios';
+import { toast } from "react-toastify";
 import Joi from 'joi';
 import { useState } from 'react';
 import RegisterInput from '../../AuthPages/Register/RegisterInput';
@@ -73,12 +74,12 @@ export default function AddmployeeForm() {
                 return
             }
             setLoading(true)
-            const response = await axios.post("/user/createUser", formData);
+            const response = await dashboardAxios.post("/user/createUser", formData);
             if (response.status === 201) {
                 alert("Add User Done");
             }
         } catch (err) {
-            console.log(err);
+            toast.error(err.response.data.message);
         } finally {
             setLoading(false)
         }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import axios from "../config/axiosManage";
+import {dashboardAxios} from "../config/axios";
 import {
   addAccessTokenDB,
   getAccessTokenDB,
@@ -16,7 +16,7 @@ export default function ManageContextProvider({ children }) {
 
   useEffect(() => {
     if (getAccessTokenDB()) {
-      axios
+      dashboardAxios
         .get("/user/me")
         .then((res) => {
           setManageUser(res.data.user);
@@ -30,8 +30,7 @@ export default function ManageContextProvider({ children }) {
   }, []);
   const login = async (credential) => {
     credential.loginType = "dashboard";
-    const res = await axios.post("/user/login", credential);
-    console.log(res);
+    const res = await dashboardAxios.post("/user/login", credential);
     addAccessTokenDB(res.data.user.accessToken_db);
     setManageUser(res.data.user);
   };

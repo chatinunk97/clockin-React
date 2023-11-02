@@ -1,9 +1,9 @@
-import axios from 'axios';
 import Joi from 'joi';
 import { useState } from 'react';
 import RegisterInput from '../../AuthPages/Register/RegisterInput';
 import Loading from '../../../components/Loading';
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
+import { dashboardAxios } from '../../../config/axios';
 
 const EditSchema = Joi.object({
     profileImage: Joi.string(),
@@ -73,7 +73,7 @@ export default function EditemployeeForm() {
                 return
             }
             setLoading(true)
-            const response = await axios.post("/user/createUser", formData);
+            const response = await dashboardAxios.post("/user/createUser", formData);
             if (response.status === 201) {
                 alert("Add User Done");
             }
