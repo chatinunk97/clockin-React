@@ -19,8 +19,9 @@ import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
 import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import Authenticated from "../features/auth/Authenticated";
+import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage";
 import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
-import ManageEmployees from '../pages/ManagePages/Dashboard/ManageEmployees'
+import ManageEmployees from "../pages/ManagePages/Dashboard/ManageEmployees";
 import MangeLeaveRequest from "../pages/ManagePages/Dashboard/MangeLeaveRequest";
 import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 
@@ -77,6 +78,9 @@ export default function Route() {
         },
       ],
     },
+
+    ,
+    { path: "/manage/login", element: <ManageLoginMainPage /> },
     {
       path: "/manage",
       element: <Layoutmanage />,
