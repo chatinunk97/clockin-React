@@ -1,12 +1,12 @@
-import {dashboardAxios} from '../../../config/axios';
-import { toast } from "react-toastify";
 import Joi from 'joi';
 import { useState } from 'react';
 import RegisterInput from '../../AuthPages/Register/RegisterInput';
 import Loading from '../../../components/Loading';
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
+import useManage from "../../../hooks/use-manage";
 
-const EditSchema = Joi.object({
+
+const AddUserSchema = Joi.object({
     profileImage: Joi.required(),
     employeeId: Joi.string().trim().required(),
     firstName: Joi.string().trim().required(),
@@ -22,7 +22,7 @@ const EditSchema = Joi.object({
 
 
 const validateregister = (input) => {
-    const { error } = EditSchema.validate(input, { abortEarly: false });
+    const { error } = AddUserSchema.validate(input, { abortEarly: false });
     if (error) {
         const result = error.details.reduce((acc, el) => {
             const { message, path } = el;
@@ -49,6 +49,9 @@ export default function AddmployeeForm() {
         userBossId: "",
 
     });
+
+    const { addemployee } = useManage()
+
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false)
 
@@ -74,12 +77,10 @@ export default function AddmployeeForm() {
                 return
             }
             setLoading(true)
-            const response = await dashboardAxios.post("/user/createUser", formData);
-            if (response.status === 201) {
-                alert("Add User Done");
-            }
+            await addemployee(formData)
+
         } catch (err) {
-            toast.error(err.response.data.message);
+            console.log(error)
         } finally {
             setLoading(false)
         }
@@ -88,12 +89,12 @@ export default function AddmployeeForm() {
 
     return (
         <form
-            className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6"
+            className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-24 "
             onSubmit={handleSubmitAddUser}
         >
             {loading && <Loading />}
-            <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
-                <h1>ProdileImage</h1>
+            <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2 ">
+                <h1>ProfileImage</h1>
                 <RegisterInput
                     type="file"
                     onChange={(e) => {

@@ -4,9 +4,10 @@ import RegisterInput from '../../AuthPages/Register/RegisterInput';
 import Loading from '../../../components/Loading';
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
 import { dashboardAxios } from '../../../config/axios';
+import useManage from "../../../hooks/use-manage";
 
 const EditSchema = Joi.object({
-    profileImage: Joi.string(),
+    profileImage: Joi.required(),
     employeeId: Joi.string().trim(),
     firstName: Joi.string().trim(),
     lastName: Joi.string().trim(),
@@ -16,6 +17,7 @@ const EditSchema = Joi.object({
         .required(),
     position: Joi.string().trim(),
     userBossId: Joi.string().trim(),
+    id: Joi.string().trim(),
 
 });
 
@@ -34,29 +36,34 @@ const validateregister = (input) => {
 
 
 
-export default function EditemployeeForm() {
-
+export default function EditemployeeForm({ UserbyId }) {
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
-        profileImage: "",
-        employeeId: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobile: "",
-        position: "",
-        userBossId: "",
+        profileImage: UserbyId.PhotoImg,
+        employeeId: UserbyId.EmployeeID,
+        firstName: UserbyId.FistName,
+        lastName: UserbyId.LastName,
+        email: UserbyId.Email,
+        mobile: UserbyId.PhoneNumber,
+        position: UserbyId.Position,
+        userBossId: UserbyId.Supervisor,
+        id: UserbyId.id,
 
     });
+
+    const { updateuser } = useManage()
+
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false)
+
+
 
     const handleChangeInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
 
-    const handleSubmitAddUser = async (e) => {
+    const handleSubmitEditUser = async (e) => {
         try {
             e.preventDefault();
             const validationError = validateregister(input);
@@ -73,12 +80,10 @@ export default function EditemployeeForm() {
                 return
             }
             setLoading(true)
-            const response = await dashboardAxios.post("/user/createUser", formData);
-            if (response.status === 201) {
-                alert("Add User Done");
-            }
+            await updateuser(formData)
+
         } catch (err) {
-            console.log(err);
+            console.log(error)
         } finally {
             setLoading(false)
         }
@@ -87,11 +92,11 @@ export default function EditemployeeForm() {
 
     return (
         <form
-            className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6"
-            onSubmit={handleSubmitAddUser}
+            className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-24 "
+            onSubmit={handleSubmitEditUser}
         >
             {loading && <Loading />}
-            <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+            <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2 ">
                 <h1>ProdileImage</h1>
                 <RegisterInput
                     type="file"
@@ -110,7 +115,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>First name</h1>
                 <RegisterInput
-                    placeholder=" First name"
+                    placeholder={UserbyId.FistName}
                     value={input.firstName}
                     onChange={handleChangeInput}
                     name="firstName"
@@ -121,7 +126,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Last Name</h1>
                 <RegisterInput
-                    placeholder="Last Name"
+                    placeholder={UserbyId.LastName}
                     value={input.lastName}
                     onChange={handleChangeInput}
                     name="lastName"
@@ -133,7 +138,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Employee Id</h1>
                 <RegisterInput
-                    placeholder="Employee Id"
+                    placeholder={UserbyId.EmployeeID}
                     value={input.employeeId}
                     onChange={handleChangeInput}
                     name="employeeId"
@@ -144,7 +149,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Supervisor</h1>
                 <RegisterInput
-                    placeholder="Supervisor"
+                    placeholder={UserbyId.Supervisor}
                     value={input.userBossId}
                     onChange={handleChangeInput}
                     name="userBossId"
@@ -160,6 +165,7 @@ export default function EditemployeeForm() {
                     value={input.position}
                     name="position"
                 >
+                    <option value={UserbyId.Position} name="position">{UserbyId.Position} (Current)</option>
                     <option value="ADMIN" name="position">ADMIN</option>
                     <option value="USER" name="position">USER</option>
                     <option value="HR" name="position">HR</option>
@@ -170,7 +176,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Email</h1>
                 <RegisterInput
-                    placeholder="Email"
+                    placeholder={UserbyId.Email}
                     value={input.email}
                     onChange={handleChangeInput}
                     name="email"
@@ -181,7 +187,7 @@ export default function EditemployeeForm() {
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Phone Number</h1>
                 <RegisterInput
-                    placeholder="Phone Number"
+                    placeholder={UserbyId.PhoneNumber}
                     value={input.mobile}
                     onChange={handleChangeInput}
                     name="mobile"
@@ -190,10 +196,9 @@ export default function EditemployeeForm() {
                 {error.mobile && <InputErrorMessage message={error.mobile} />}
             </div>
 
-
             <div className="mx-auto col-span-full">
                 <button className="bg-orange-500 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
-                    ADD User
+                    Edit user
                 </button>
             </div>
         </form>
