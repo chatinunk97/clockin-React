@@ -24,10 +24,12 @@ export default function DashboardLayout() {
 
 
   return (
-    <div className=" bg-blue-950 w-60 h-screen flex flex-col gap-2 rounded-sm">
+    <div className=" bg-blue-950 w-60 h-screen flex flex-col gap-2 rounded-sm flex-shrink-0">
       <div className=" flex justify-center items-center">
         <div className="flex flex-col justify-center items-center pt-4 pb-4 gap-6 w-full">
-          <img src="https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU" className="w-40 h-40 rounded-full" />
+          <div className="bg-white rounded-full w-40 h-40">
+            <img src="https://img.freepik.com/premium-vector/clock-location-icon-realtime-geotag-icon-traffic-jam-symbol-travel-time-symbol-vector-illustration_756957-2275.jpg?w=740" className="w-full h-full object-contain rounded-full" />
+          </div>
           <h1 className="text-2xl text-white font-bold">Clock IN</h1>
         </div>
       </div>

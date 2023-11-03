@@ -1,4 +1,5 @@
 export default function Modal({ title, children, maxWidth = 60, open, onClose }) {
+
     return (
         <>
 
