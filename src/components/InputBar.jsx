@@ -4,6 +4,7 @@ export default function InputBar({
   className = "bg-inputGray rounded-sm p-3",
   value,
   onChange,
+  isDisabled,
 }) {
   return (
     <input
@@ -12,6 +13,7 @@ export default function InputBar({
       className={className}
       value={value}
       onChange={onChange}
+      disabled={isDisabled}
     />
   );
 }
