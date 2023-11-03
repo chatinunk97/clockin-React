@@ -52,7 +52,7 @@ export default function Route() {
           path: "/profile",
           element: <ProfileMainPage />,
           children: [
-            { path: "/profile", element: <PersonalProfilePage /> },
+            { path: "/profile/:userId", element: <PersonalProfilePage /> },
             { path: "/profile/record", element: <ProfileRecordMainPage /> },
             { path: "/profile/people", element: <PeoplePage /> },
           ],
