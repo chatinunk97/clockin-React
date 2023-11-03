@@ -65,6 +65,7 @@ export default function EditemployeeForm({ UserbyId }) {
 
     const handleSubmitEditUser = async (e) => {
         try {
+            console.log('xxxxx')
             e.preventDefault();
             const validationError = validateregister(input);
             const formData = new FormData();
@@ -80,8 +81,10 @@ export default function EditemployeeForm({ UserbyId }) {
                 return
             }
             setLoading(true)
-            await updateuser(formData)
-
+            const res = await dashboardAxios.patch("/user/updateUser", formData)
+            if (res.status === 200) {
+                alert('Yayyyyy')
+            }
         } catch (err) {
             console.log(error)
         } finally {
@@ -197,7 +200,7 @@ export default function EditemployeeForm({ UserbyId }) {
             </div>
 
             <div className="mx-auto col-span-full">
-                <button className="bg-orange-500 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
+                <button className="bg-orange-500 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]"  >
                     Edit user
                 </button>
             </div>
