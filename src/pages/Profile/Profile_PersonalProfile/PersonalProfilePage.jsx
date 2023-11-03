@@ -17,9 +17,8 @@ export default function PersonalProfilePage() {
   const isAuthUser = authUser.id === +userId;
 
   useEffect(() => {
-    setLoading(true);
     clockAxios
-      .get(`/user/${userId}`)
+      .get(`/user/getUser/${userId}`)
       .then((res) => {
         setProfileUser(res.data.user);
       })
@@ -27,6 +26,7 @@ export default function PersonalProfilePage() {
         console.log(err);
       })
       .finally(() => {
+        console.log(profileUser)
         setLoading(false);
       });
   }, [userId]);
@@ -61,7 +61,7 @@ export default function PersonalProfilePage() {
               404 !!! user not found
             </h1>
           )}
-          )
+          
         </>
       )}
     </div>
