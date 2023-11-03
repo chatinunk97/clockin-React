@@ -7,14 +7,17 @@ import { useState } from "react";
 import useAuth from "../../../hooks/use-auth";
 import { useEffect } from "react";
 import { clockAxios } from "../../../config/axios";
+import Loading from "../../../components/Loading";
 
 export default function PersonalProfilePage() {
   const [profileUser, setProfileUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { userId } = useParams();
   const { authUser } = useAuth();
   const isAuthUser = authUser.id === +userId;
 
   useEffect(() => {
+    setLoading(true);
     clockAxios
       .get(`/user/${userId}`)
       .then((res) => {
@@ -22,55 +25,45 @@ export default function PersonalProfilePage() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [userId]);
 
   return (
     <div>
-      {profileUser ? (
-        <>
-          <div className="relative flex justify-center items-center bg-primaryGreen w-full py-11">
-            <Avatar
-              src={
-                isAuthUser ? authUser.profileImage : profileUser?.profileImage
-              }
-              className="w-[158px] h-[158px] border rounded-full absolute"
-            />
-          </div>
-          <PersonalDetails profileUser={profileUser} />
-          <div className="text-center mt-10">
-            <Link to="/profile/record">
-              <SubmitButton>View Calendar</SubmitButton>
-            </Link>
-          </div>
-        </>
+      {loading ? (
+        <Loading />
       ) : (
-        <h1 className="text-center p-8 text-3xl font-bold">
-          404 !!! user not found
-        </h1>
+        <>
+          {profileUser ? (
+            <>
+              <div className="relative flex justify-center items-center bg-primaryGreen w-full py-11">
+                <Avatar
+                  src={
+                    isAuthUser
+                      ? authUser.profileImage
+                      : profileUser?.profileImage
+                  }
+                  className="w-[158px] h-[158px] border rounded-full absolute"
+                />
+              </div>
+              <PersonalDetails profileUser={profileUser} />
+              <div className="text-center mt-10">
+                <Link to="/profile/record">
+                  <SubmitButton>View Calendar</SubmitButton>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <h1 className="text-center p-8 text-3xl font-bold">
+              404 !!! user not found
+            </h1>
+          )}
+          )
+        </>
       )}
     </div>
   );
-}
-
-{
-  /* <div className="bg-gradient-to-b from-gray-200 to-white shadow pb-4">
-  {profileUser ? (
-    <>
-      <ProfileCover
-        coverImage={isAuthUser ? authUser.coverImage : profileUser?.coverImage}
-      />
-      <ProfileInfo
-        profileUser={isAuthUser ? authUser : profileUser}
-        statusWithAuthUser={statusWithAuthUser}
-        setStatusWithAuthUser={setStatusWithAuthUser}
-        profileFriends={profileFriends}
-      />
-    </>
-  ) : (
-    <h1 className="text-center p-8 text-3xl font-bold">
-      404 !!! user not found
-    </h1>
-  )}
-</div>; */
 }

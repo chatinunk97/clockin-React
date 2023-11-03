@@ -15,7 +15,7 @@ export default function Footer() {
   const menus = [
     {
       id: 1,
-      to: `/profile/${authUser.id}`,
+      to: `/profile/${authUser?.id}`,
       Icon: BsPersonFill,
       text: "Profile",
     },
