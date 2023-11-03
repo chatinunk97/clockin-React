@@ -94,7 +94,6 @@ export default function Route() {
       element: (
         <Authenticated pageType={"dashboard"}>
           <Layoutmanage />
-          //{" "}
         </Authenticated>
       ),
       children: [

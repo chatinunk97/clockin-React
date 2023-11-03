@@ -10,7 +10,7 @@ export default function ManageEmployees() {
 
     return (
 
-        <div className=" flex flex-col justify-center items-start w-full overflow-x-auto">
+        <div className=" flex flex-col justify-center w-full p-2">
             <div className="flex flex-col gap-4 w-full">
                 <div className="grid grid-cols-3 items-baseline p-4">
                     <div>
@@ -21,9 +21,10 @@ export default function ManageEmployees() {
                         <input type="text" className="w-[400px] p-2 rounded-2xl border bg-stone-100" placeholder="....." />
                     </div>
                     <div>
-                        <button className="w-32 p-2 bg-orange-400 rounded-2xl" onClick={() => {
-                            setIsOpen(true)
-                        }}>Add User</button>
+                        <button className="w-32 p-2 bg-orange-500 rounded-2xl transition-transform hover:scale-105 hover:bg-orange-200 text-white font-bold"
+                            onClick={() => {
+                                setIsOpen(true)
+                            }}>Add User</button>
                     </div>
                 </div>
                 <div>

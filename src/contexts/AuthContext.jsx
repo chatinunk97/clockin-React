@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import {clockAxios} from "../config/axios";
+import { clockAxios } from "../config/axios";
 import {
   addAccessToken,
   getAccessToken,
@@ -14,15 +14,14 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
+  const [time, setTime] = useState('time');
 
   useEffect(() => {
     if (getAccessToken()) {
-      clockAxios
-        .get("/user/me")
-        .then((res) => {
-          setAuthUser(res.data.user);
-        })
-    } 
+      clockAxios.get("/user/me").then((res) => {
+        setAuthUser(res.data.user);
+      });
+    }
 
     if (navigator.geolocation) {
       setInitialLoading(true);
@@ -69,7 +68,15 @@ export default function AuthContextProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ login, logout, initialLoading, authUser, location }}
+      value={{
+        login,
+        logout,
+        initialLoading,
+        authUser,
+        location,
+        time,
+        setTime,
+      }}
     >
       {children}
     </AuthContext.Provider>

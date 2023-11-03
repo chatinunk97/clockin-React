@@ -3,17 +3,41 @@ import ClockInlocation from "./ClockInlocation";
 import ClockInHeader from "./ClockInHeader";
 import GoogleMap from "../../config/GoogleMap/Map";
 import useAuth from "../../hooks/use-auth";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 export default function ClockinMainPage() {
-  const { location, initialLoading, authUser } = useAuth();
+  const { location, authUser, initialLoading } = useAuth();
+  const [waitTimer, setWaitTimer] = useState(true);
+  const [time, setTime] = useState(null);
 
   const handleClock = async () => {
     console.log(location);
     console.log(authUser);
+    console.log(time);
   };
+  useEffect(() => {
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/timezone/json?location=
+    ${location.lat}
+    ,
+    ${location.lng}
+    &timestamp=1331161200&key=AIzaSyALKm5K2JFpte9A8cXryHMa2cJR3j7jemo`
+      )
+      .then((res) => {
+        axios
+          .get(`http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`)
+          .then((time) => {
+            setTime(new Date(time.data.datetime));
+            setWaitTimer(false);
+          });
+      });
+  }, []);
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div>
-        <ClockInHeader />
+        <ClockInHeader time={time} setTime={setTime} waitTimer={waitTimer} />
       </div>
       <div className="overflow-hidden border border-black w-[360px] h-[800px]  md:w-[800px] md:h-[1200x]">
         {initialLoading ? (
