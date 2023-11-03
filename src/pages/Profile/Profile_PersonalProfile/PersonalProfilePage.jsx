@@ -52,25 +52,3 @@ export default function PersonalProfilePage() {
     </div>
   );
 }
-
-{
-  /* <div className="bg-gradient-to-b from-gray-200 to-white shadow pb-4">
-  {profileUser ? (
-    <>
-      <ProfileCover
-        coverImage={isAuthUser ? authUser.coverImage : profileUser?.coverImage}
-      />
-      <ProfileInfo
-        profileUser={isAuthUser ? authUser : profileUser}
-        statusWithAuthUser={statusWithAuthUser}
-        setStatusWithAuthUser={setStatusWithAuthUser}
-        profileFriends={profileFriends}
-      />
-    </>
-  ) : (
-    <h1 className="text-center p-8 text-3xl font-bold">
-      404 !!! user not found
-    </h1>
-  )}
-</div>; */
-}
