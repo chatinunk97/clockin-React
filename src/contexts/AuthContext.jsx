@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState('time');
 
   useEffect(() => {
     if (getAccessToken()) {

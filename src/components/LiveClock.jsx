@@ -1,31 +1,21 @@
-import useAuth from "../hooks/use-auth";
-import axios from "axios";
-import { useState } from "react";
 import { useEffect } from "react";
-export default function LiveClock() {
-  const { time, setTime } = useAuth();
-  const [timerWait, setTimerWait] = useState(true);
-
-
+export default function LiveClock({ time, setTime }) {
   useEffect(() => {
-    axios
-      .get("http://worldtimeapi.org/api/timezone/Asia/Bangkok")
-      .then((res) => new Date(res.data.datetime))
-      .then((datetime) => {
-        setInterval(() => {
-          datetime.setSeconds(datetime.getSeconds() + 1);
-          setTime(datetime);
-          setTimerWait(false);
-          console.log('first')
-        }, 1000);
-      });
+    const timer = setInterval(() => {
+   setTime((prev)=>{
+    const newDate = new Date(prev.getTime())
+    newDate.setSeconds(newDate.getSeconds() + 1);
+    return newDate
+   })
 
-    // setInterval(() => {
-    //   console.log("first");
-    //   axios
-    //     .get("http://worldtimeapi.org/api/timezone/Asia/Bangkok")
-    //     .then((res) => setTime(res.data.datetime.split("T")[1].split(".")[0]));
-    // }, 1000);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
-  return <div>{timerWait ? <h1>Loading ... </h1> : <>{'time'}</>}</div>;
+  return (
+    <div>
+      <h1>{time.toTimeString().split(" ")[0]}</h1>
+    </div>
+  );
 }
