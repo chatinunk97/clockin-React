@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { useEffect, useState } from "react";
-import axios from "../../../config/axios";
+import {clockAxios} from "../../../config/axios";
 import RegisterInput from "./RegisterInput";
 import InputErrorMessage from "./InputErrorMessage";
 import Loading from '../../../components/Loading'
@@ -65,7 +65,7 @@ export default function RegisterFrom() {
   };
 
   useEffect(() => {
-    axios
+    clockAxios
       .get("/user/showpackage")
       .then((res) => {
         setInput({ ...input, packageId: res.data.packages[0].id });
@@ -92,7 +92,7 @@ export default function RegisterFrom() {
         return
       }
       setLoading(true)
-      const response = await axios.post("/user/registerCompany", formData);
+      const response = await clockAxios.post("/user/registerCompany", formData);
       if (response.status === 201) {
         alert("Registed");
       }

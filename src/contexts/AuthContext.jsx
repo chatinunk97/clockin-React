@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import axios from "../config/axios";
+import {clockAxios} from "../config/axios";
 import {
   addAccessToken,
   getAccessToken,
@@ -17,7 +17,7 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     if (getAccessToken()) {
-      axios
+      clockAxios
         .get("/user/me")
         .then((res) => {
           setAuthUser(res.data.user);
@@ -53,7 +53,7 @@ export default function AuthContextProvider({ children }) {
   }, []);
 
   const login = async (credential) => {
-    const res = await axios.post("/user/login", credential);
+    const res = await clockAxios.post("/user/login", credential);
     addAccessToken(res.data.user.accessToken);
     setAuthUser(res.data.user);
     setInitialLoading(false);

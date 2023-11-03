@@ -1,10 +1,18 @@
 import axios from "axios";
-import { BACKEND_URL } from '../../env';
-import { getAccessToken, removeAccessToken } from "../utils/local-storage";
+import { BACKEND_URL } from "../../env";
+import {
+  getAccessToken,
+  removeAccessToken,
+  getAccessTokenDB,
+  removeAccessTokenDB,
+} from "../utils/local-storage";
 
 axios.defaults.baseURL = BACKEND_URL;
 
-axios.interceptors.request.use((config) => {
+export const clockAxios = axios.create();
+export const dashboardAxios = axios.create();
+
+clockAxios.interceptors.request.use((config) => {
   const token = getAccessToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -12,7 +20,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-axios.interceptors.response.use(
+clockAxios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
@@ -23,4 +31,22 @@ axios.interceptors.response.use(
   }
 );
 
-export default axios;
+dashboardAxios.interceptors.request.use((config) => {
+  const token = getAccessTokenDB();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+dashboardAxios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      console.log(error);
+      removeAccessTokenDB();
+      window.location.href = "/manage/login";
+    }
+    return Promise.reject(error);
+  }
+);
