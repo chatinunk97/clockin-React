@@ -7,12 +7,8 @@ import { useEffect } from "react";
 import axios from "axios";
 
 export default function SetPasswordMainPage() {
-  useEffect(() => {
-    console.log(token);
-    axios
-      .get("/user/me", { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => console.log(res));
-  });
+  const [user, setUser] = useState(null);
+  const token = useLocation().search.split("token=")[1];
   const [input, setInput] = useState({
     employeeId: "",
     email: "",
@@ -21,7 +17,12 @@ export default function SetPasswordMainPage() {
     password: "",
     confirmPassword: "",
   });
-  const token = useLocation().search.split("token=")[1];
+  useEffect(() => {
+    axios
+      .get("/user/me", { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => setUser(res.data));
+  },[]);
+
   const handleSubmitButton = (e) => {
     e.preventDefault();
     console.log(input);
@@ -41,28 +42,24 @@ export default function SetPasswordMainPage() {
           type="text"
           isDisabled={true}
           value={input.employeeId}
-          onChange={(e) => setInput({ ...input, employeeId: e.target.value })}
         />
         <InputBar
           placeholder="Email"
           type="email"
           isDisabled={true}
           value={input.email}
-          onChange={(e) => setInput({ ...input, email: e.target.value })}
         />
         <InputBar
           placeholder="First Name"
           type="text"
           isDisabled={true}
           value={input.firstName}
-          onChange={(e) => setInput({ ...input, firstName: e.target.value })}
         />
         <InputBar
           placeholder="Last Name"
           type="text"
           isDisabled={true}
           value={input.lastName}
-          onChange={(e) => setInput({ ...input, lastName: e.target.value })}
         />
 
         <InputBar
