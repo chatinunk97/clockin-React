@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import {dashboardAxios} from "../config/axios";
+import { dashboardAxios } from "../config/axios";
 import {
   addAccessTokenDB,
   getAccessTokenDB,
@@ -41,9 +41,27 @@ export default function ManageContextProvider({ children }) {
     setInitialLoading(false);
   };
 
+  const addemployee = async (credential) => {
+    const response = await dashboardAxios.post("/user/createUser", credential)
+    if (response.status === 201) {
+      alert("Add User Done");
+    }
+  }
+
+  const getalluser = async () => {
+    await dashboardAxios.get('/user/getAllUser')
+  }
+
+  const updateuser = async (credential) => {
+    const response = await dashboardAxios.patch("/user/updateUser", credential)
+    if (response.status === 201) {
+      alert(":)");
+    }
+  }
+
   return (
     <ManageContext.Provider
-      value={{ login, logout, initialLoading, manageUser }}
+      value={{ login, logout, initialLoading, manageUser, addemployee, setInitialLoading, getalluser, updateuser }}
     >
       {children}
     </ManageContext.Provider>
