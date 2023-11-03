@@ -1,29 +1,28 @@
 import PersonalDetailList from "./PersonalDetailList";
 
 export default function PersonalDetails({ profileUser }) {
-  console.log(profileUser[0]);
   return (
     <div>
-      {profileUser[0] && (
+      {profileUser && (
         <h1 className="pt-14 font-bold text-[36px] text-center">
-          {profileUser[0].firstName} {profileUser[0].lastName}
+          {profileUser.firstName} {profileUser.lastName}
         </h1>
       )}
       <div className="flex flex-col px-8">
         <PersonalDetailList
           listName="Employee ID"
-          listInfo={profileUser[0].employeeId}
+          listInfo={profileUser.employeeId}
         />
         <PersonalDetailList
           listName="Position"
-          listInfo={profileUser[0].position}
+          listInfo={profileUser.position}
         />
         <PersonalDetailList listName="Supervisor" listInfo="Jack Maa" />
         <PersonalDetailList
           listName="Phone Number"
-          listInfo={profileUser[0].mobile}
+          listInfo={profileUser.mobile}
         />
-        <PersonalDetailList listName="Email" listInfo={profileUser[0].email} />
+        <PersonalDetailList listName="Email" listInfo={profileUser.email} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import Loading from '../../../components/Loading';
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
 
 const EditSchema = Joi.object({
-    profileImage: Joi.required(),
+    profileImage: Joi.allow(null,"").required(),
     employeeId: Joi.string().trim().required(),
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim().required(),
@@ -45,7 +45,7 @@ export default function AddmployeeForm() {
         lastName: "",
         email: "",
         mobile: "",
-        position: "",
+        position: "USER",
         userBossId: "",
 
     });
@@ -60,19 +60,15 @@ export default function AddmployeeForm() {
     const handleSubmitAddUser = async (e) => {
         try {
             e.preventDefault();
+            console.log(input)
             const validationError = validateregister(input);
             const formData = new FormData();
             formData.append("profileImage", input.profileImage);
-            delete input.profileImage
             formData.append("data", JSON.stringify(input));
             if (validationError) {
                 return setError(validationError);
             }
             setError({});
-            if (file === null) {
-                alert('Require ProfileImage')
-                return
-            }
             setLoading(true)
             const response = await dashboardAxios.post("/user/createUser", formData);
             if (response.status === 201) {
@@ -107,7 +103,6 @@ export default function AddmployeeForm() {
                 />
                 {error.profileImage && <InputErrorMessage message={error.profileImage} />}
             </div>
-
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>First name</h1>
                 <RegisterInput
@@ -130,7 +125,6 @@ export default function AddmployeeForm() {
                 />
                 {error.lastName && <InputErrorMessage message={error.lastName} />}
             </div>
-
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Employee Id</h1>
                 <RegisterInput
@@ -161,13 +155,11 @@ export default function AddmployeeForm() {
                     value={input.position}
                     name="position"
                 >
-                    <option value="ADMIN" name="position">ADMIN</option>
                     <option value="USER" name="position">USER</option>
                     <option value="HR" name="position">HR</option>
                     <option value="MANAGER" name="position">MANAGER</option>
                 </select>
             </div>
-
             <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                 <h1>Email</h1>
                 <RegisterInput
@@ -190,8 +182,6 @@ export default function AddmployeeForm() {
                 />
                 {error.mobile && <InputErrorMessage message={error.mobile} />}
             </div>
-
-
             <div className="mx-auto col-span-full">
                 <button className="bg-orange-500 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
                     ADD User
