@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
-  const [time, setTime] = useState('time');
+  const [time, setTime] = useState("time");
 
   useEffect(() => {
     if (getAccessToken()) {
@@ -65,7 +65,14 @@ export default function AuthContextProvider({ children }) {
     setInitialLoading(false);
     console.log("logout");
   };
-
+  const clockIn = async (input) => {
+    try {
+      const result = await clockAxios.post("/clock/clockin", input);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -74,8 +81,10 @@ export default function AuthContextProvider({ children }) {
         initialLoading,
         authUser,
         location,
+        setLocation,
         time,
         setTime,
+        clockIn,
       }}
     >
       {children}

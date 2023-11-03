@@ -1,10 +1,11 @@
 import Joi from "joi";
 import { useEffect, useState } from "react";
-import {clockAxios} from "../../../config/axios";
+import { clockAxios } from "../../../config/axios";
 import RegisterInput from "./RegisterInput";
 import InputErrorMessage from "./InputErrorMessage";
-import Loading from '../../../components/Loading'
-
+import Loading from "../../../components/Loading";
+import useAuth from "../../../hooks/use-auth";
+import GoogleMap from "../../../config/GoogleMap/Map";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -36,6 +37,7 @@ const validateregister = (input) => {
 };
 
 export default function RegisterFrom() {
+  const { location, setLocation } = useAuth();
   const [file, setFile] = useState(null);
   const [allpackage, setallPackage] = useState([]);
   const [input, setInput] = useState({
@@ -54,11 +56,7 @@ export default function RegisterFrom() {
 
   const [error, setError] = useState({});
 
-  const [loading, setLoading] = useState(false)
-
-
-
-
+  const [loading, setLoading] = useState(false);
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -79,19 +77,30 @@ export default function RegisterFrom() {
   const handleSubmitRegister = async (e) => {
     try {
       e.preventDefault();
-      const validationError = validateregister(input);
+      const data = {
+        ...input,
+        latitudeCompany: location.lat,
+        longitudeCompany: location.lng,
+      }
+      const validationError = validateregister(data);
       const formData = new FormData();
       formData.append("paySlip", input.paySlip);
-      formData.append("data", JSON.stringify(input));
+      formData.append(
+        "data",
+        JSON.stringify(data)
+      );
+
       if (validationError) {
         return setError(validationError);
       }
       setError({});
+
       if (file === null) {
-        alert('Require PaySlip!!!')
-        return
+        alert("Require PaySlip!!!");
+        return;
       }
-      setLoading(true)
+      setLoading(true);
+
       const response = await clockAxios.post("/user/registerCompany", formData);
       if (response.status === 201) {
         alert("Registed");
@@ -99,7 +108,7 @@ export default function RegisterFrom() {
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -152,30 +161,6 @@ export default function RegisterFrom() {
           hasError={error.companyName}
         />
         {error.companyName && <InputErrorMessage message={error.companyName} />}
-      </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="latitudeCompany"
-          value={input.latitudeCompany}
-          onChange={handleChangeInput}
-          name="latitudeCompany"
-          hasError={error.latitudeCompany}
-        />
-        {error.latitudeCompany && (
-          <InputErrorMessage message={error.latitudeCompany} />
-        )}
-      </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="longitudeCompany"
-          value={input.longitudeCompany}
-          onChange={handleChangeInput}
-          name="longitudeCompany"
-          hasError={error.longitudeCompany}
-        />
-        {error.longitudeCompany && (
-          <InputErrorMessage message={error.longitudeCompany} />
-        )}
       </div>
       <div className=" p-1 w-[360px] h-[80px]">
         <RegisterInput
@@ -237,6 +222,13 @@ export default function RegisterFrom() {
         />
         {error.password && <InputErrorMessage message={error.password} />}
       </div>
+
+      <GoogleMap
+        location={location}
+        enableSelect={true}
+        setLocation={setLocation}
+      />
+
       <div className="mx-auto col-span-full">
         <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
           Sign Up

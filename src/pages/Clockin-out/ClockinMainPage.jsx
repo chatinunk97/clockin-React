@@ -7,14 +7,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 export default function ClockinMainPage() {
-  const { location, authUser, initialLoading } = useAuth();
+  const { location, initialLoading, clockIn } = useAuth();
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
 
   const handleClock = async () => {
-    console.log(location);
-    console.log(authUser);
-    console.log(time);
+    const input = {
+      latitudeClockIn: location.lat,
+      longitudeClockIn: location.lat,
+      clockInTime: time,
+    };
+    clockIn(input);
   };
   useEffect(() => {
     axios
