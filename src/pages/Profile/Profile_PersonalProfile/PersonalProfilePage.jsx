@@ -59,9 +59,12 @@ export default function PersonalProfilePage() {
           ) : (
             <h1 className="text-center p-8 text-3xl font-bold">
               404 !!! user not found
+              <br></br>
+              <Link to="/profile/people">
+                  <SubmitButton>Back to people List ?</SubmitButton>
+                </Link>
             </h1>
           )}
-          
         </>
       )}
     </div>

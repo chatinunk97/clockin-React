@@ -1,7 +1,6 @@
 import PersonalDetailList from "./PersonalDetailList";
 
 export default function PersonalDetails({ profileUser }) {
-  console.log(profileUser);
   return (
     <div>
       {profileUser && (

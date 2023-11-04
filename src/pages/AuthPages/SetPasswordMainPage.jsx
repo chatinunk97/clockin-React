@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import axios from "axios";
 
 export default function SetPasswordMainPage() {
-  const [user, setUser] = useState(null);
   const token = useLocation().search.split("token=")[1];
   const [input, setInput] = useState({
     employeeId: "",
@@ -20,12 +19,38 @@ export default function SetPasswordMainPage() {
   useEffect(() => {
     axios
       .get("/user/me", { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => setUser(res.data));
-  },[]);
+      .then((res) => {
+        setInput({
+          employeeId: res.data.user.employeeId,
+          email: res.data.user.email,
+          firstName: res.data.user.firstName,
+          lastName: res.data.user.lastName,
+          password: "",
+          confirmPassword: "",
+        });
+      })
+      .catch((err) => {
+        if (err.response.statusText === "Unauthorized") {
+          alert(
+            "Your password set token has expired. Please contact your Admin"
+          );
+        }
+      });
+  }, []);
 
-  const handleSubmitButton = (e) => {
-    e.preventDefault();
-    console.log(input);
+  const handleSubmitButton = async (e) => {
+    try {
+      e.preventDefault();
+      console.log(token);
+      const result = await axios.patch(
+        "/user/resetPassword",
+        { password: input.password, confirmPassword: input.confirmPassword },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert(result.data.message)
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
