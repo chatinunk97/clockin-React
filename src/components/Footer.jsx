@@ -20,7 +20,7 @@ export default function Footer() {
       text: "Profile",
     },
     { id: 2, to: "/clockin", Icon: BsFillAlarmFill, text: "Clockin" },
-    { id: 3, to: "/profile/people", Icon: BsFillPeopleFill, text: "people" },
+    { id: 3, to: "/profile/people", Icon: BsFillPeopleFill, text: "People" },
     { id: 4, to: "/leave/leaveform", Icon: BsCalendarEvent, text: "Leave" },
     { id: 5, to: "/ot/otform", Icon: BsClockFill, text: "OT" },
   ];

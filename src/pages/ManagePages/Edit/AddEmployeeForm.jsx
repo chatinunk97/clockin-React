@@ -22,7 +22,6 @@ const AddUserSchema = Joi.object({
 
 });
 
-
 const validateregister = (input) => {
     const { error } = AddUserSchema.validate(input, { abortEarly: false });
     if (error) {
@@ -35,10 +34,7 @@ const validateregister = (input) => {
     }
 };
 
-
-
-export default function AddmployeeForm() {
-
+export default function AddmployeeForm({ allUser }) {
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
         profileImage: "",
@@ -49,18 +45,16 @@ export default function AddmployeeForm() {
         mobile: "",
         position: "USER",
         userBossId: "",
-
     });
 
-    const { addemployee } = useManage()
+    const { addemployee } = useManage();
 
     const [error, setError] = useState({});
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const handleChangeInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
-
 
     const handleSubmitAddUser = async (e) => {
         try {

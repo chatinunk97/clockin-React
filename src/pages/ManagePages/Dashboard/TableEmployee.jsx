@@ -4,44 +4,12 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Modal from "../../../components/Modal";
 import EditemployeeForm from "../Edit/EditEmployeeFrom";
-import { useEffect } from "react";
-import { dashboardAxios } from "../../../config/axios";
 import Loading from "../../../components/Loading";
 import { useMemo } from "react";
 
-export default function TableEmployee() {
+export default function TableEmployee({allUser,loading}) {
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false)
-    const [allUser, setAllUser] = useState([]);
     const [UserbyId, setUserById] = useState({})
-
-
-
-    useEffect(() => {
-        setLoading(true)
-        dashboardAxios.get('/user/getAllUser')
-            .then(res => {
-                const userData = res.data.allUser.map(user => ({
-                    PhotoImg: user.profileImage,
-                    FistName: user.firstName,
-                    LastName: user.lastName,
-                    Position: user.position,
-                    Supervisor: user.userBossId || '',
-                    EmployeeID: user.employeeId,
-                    PhoneNumber: user.mobile,
-                    Email: user.email,
-                    id: user.id
-                }));
-                setAllUser(userData);
-            })
-            .catch(err => {
-                console.log(err);
-            }).finally(() => {
-                setLoading(false);
-            });
-    }, []);
-
-
     const [columnDefs] = useState([
         { field: "FistName", flex: 1 },
         { field: "LastName", flex: 1 },

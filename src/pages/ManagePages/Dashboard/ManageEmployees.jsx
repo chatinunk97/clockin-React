@@ -1,11 +1,39 @@
 import { useState } from "react";
+import { dashboardAxios } from "../../../config/axios";
 import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
 import CustomizedButtons from "../../../components/ButtonCustomization";
-
+import { useEffect } from "react";
 
 export default function ManageEmployees() {
+    const [loading, setLoading] = useState(false);
+    const [allUser, setAllUser] = useState([]);
+    useEffect(() => {
+        setLoading(true);
+        dashboardAxios
+            .get("/user/getAllUser")
+            .then((res) => {
+                const userData = res.data.allUser.map((user) => ({
+                    PhotoImg: user.profileImage,
+                    FistName: user.firstName,
+                    LastName: user.lastName,
+                    Position: user.position,
+                    Supervisor: user.userBossId || "",
+                    EmployeeID: user.employeeId,
+                    PhoneNumber: user.mobile,
+                    Email: user.email,
+                    id: user.id,
+                }));
+                setAllUser(userData);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -27,15 +55,19 @@ export default function ManageEmployees() {
                         <CustomizedButtons />
                     </div>
                 </div>
-                <div>
-                    <TableEmployee />
-                    <Modal title="Add User " open={isOpen} onClose={() => setIsOpen(false)}>
-                        <AddmployeeForm />
-                    </Modal>
-                </div>
+
+            </div>
+            <div>
+                <TableEmployee allUser={allUser} loading={loading} />
+                <Modal
+                    title="Add User "
+                    open={isOpen}
+                    onClose={() => setIsOpen(false)}
+                >
+                    <AddmployeeForm allUser={allUser} />
+                </Modal>
             </div>
         </div>
 
     );
 }
-

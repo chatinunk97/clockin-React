@@ -1,5 +1,4 @@
 import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
 import LoginForgetPassword from "./LoginForgetPassword";
 import LoginForm from "./LoginForm";
 
@@ -14,7 +13,6 @@ export default function LoginMainPage() {
       </Header>
       <LoginForm />
       <LoginForgetPassword />
-      <Footer />
     </div>
   );
 }
