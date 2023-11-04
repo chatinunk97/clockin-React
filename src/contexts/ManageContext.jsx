@@ -7,6 +7,7 @@ import {
   removeAccessTokenDB,
 } from "../utils/local-storage";
 import { useEffect } from "react";
+import Swal from 'sweetalert2'
 
 export const ManageContext = createContext();
 
@@ -42,12 +43,29 @@ export default function ManageContextProvider({ children }) {
   };
 
   const addemployee = async (credential) => {
-    const response = await dashboardAxios.post("/user/createUser", credential)
-    if (response.status === 201) {
-      alert("Add User Done");
+    try {
+      const response = await dashboardAxios.post("/user/createUser", credential);
+
+      if (response.status === 201) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Add user success!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Something Went Wrong',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      console.error('Error:', error);
     }
   }
-
   const getalluser = async () => {
     await dashboardAxios.get('/user/getAllUser')
   }
