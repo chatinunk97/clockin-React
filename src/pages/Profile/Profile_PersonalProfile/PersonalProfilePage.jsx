@@ -26,7 +26,6 @@ export default function PersonalProfilePage() {
         console.log(err);
       })
       .finally(() => {
-        console.log(profileUser)
         setLoading(false);
       });
   }, [userId]);
@@ -61,8 +60,8 @@ export default function PersonalProfilePage() {
               404 !!! user not found
               <br></br>
               <Link to="/profile/people">
-                  <SubmitButton>Back to people List ?</SubmitButton>
-                </Link>
+                <SubmitButton>Back to people List ?</SubmitButton>
+              </Link>
             </h1>
           )}
         </>
