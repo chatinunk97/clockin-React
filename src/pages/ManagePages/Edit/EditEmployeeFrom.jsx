@@ -6,6 +6,7 @@ import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
 import { dashboardAxios } from '../../../config/axios';
 import IconLabelButtons from "../../../components/SendButton";
 import InputFileUpload from "../../../components/Uploadbutton";
+import Swal from 'sweetalert2'
 
 
 const EditSchema = Joi.object({
@@ -75,17 +76,26 @@ export default function EditemployeeForm({ UserbyId }) {
                 return setError(validationError);
             }
             setError({});
-            if (file === null) {
-                alert('Require ProfileImage')
-                return
-            }
             setLoading(true)
             const res = await dashboardAxios.patch("/user/updateUser", formData)
             if (res.status === 200) {
-                alert('Yayyyyy')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Edit user success!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         } catch (err) {
-            console.log(error)
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Something Went Wrong',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            console.error('Error:', error);
         } finally {
             setLoading(false)
         }

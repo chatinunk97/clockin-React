@@ -6,6 +6,7 @@ import InputErrorMessage from "./InputErrorMessage";
 import Loading from "../../../components/Loading";
 import useAuth from "../../../hooks/use-auth";
 import GoogleMap from "../../../config/GoogleMap/Map";
+import Swal from 'sweetalert2'
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -96,7 +97,11 @@ export default function RegisterFrom() {
       setError({});
 
       if (file === null) {
-        alert("Require PaySlip!!!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Require PaySlip!',
+        })
         return;
       }
       setLoading(true);
