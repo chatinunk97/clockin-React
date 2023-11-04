@@ -22,7 +22,6 @@ export default function ClockinMainPage() {
   const handleClock = async (type) => {
     if (type === "clockOut") {
       const input = {
-        id: authUser.clockId,
         latitudeClockOut: location.lat,
         longitudeClockOut: location.lat,
         clockOutTime: time,
