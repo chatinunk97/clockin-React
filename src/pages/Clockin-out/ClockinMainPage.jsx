@@ -3,9 +3,8 @@ import ClockInlocation from "./ClockInlocation";
 import ClockInHeader from "./ClockInHeader";
 import GoogleMap from "../../config/GoogleMap/Map";
 import useAuth from "../../hooks/use-auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 export default function ClockinMainPage() {
   const { location, initialLoading, clockIn } = useAuth();
   const [waitTimer, setWaitTimer] = useState(true);
@@ -17,7 +16,7 @@ export default function ClockinMainPage() {
       longitudeClockIn: location.lat,
       clockInTime: time,
     };
-    clockIn(input);
+    const result = await clockIn(input);
   };
   useEffect(() => {
     axios

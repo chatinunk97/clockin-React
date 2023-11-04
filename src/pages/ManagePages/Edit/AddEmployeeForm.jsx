@@ -53,9 +53,11 @@ export default function AddmployeeForm({ allUser }) {
   const [loading, setLoading] = useState(false);
 
   const handleChangeInput = (e) => {
+    console.log(e)
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleChangeDropdown = (data, name) => {
+    console.log(data)
     setInput({ ...input, [name]: data.value });
   };
   const handleSubmitAddUser = async (e) => {

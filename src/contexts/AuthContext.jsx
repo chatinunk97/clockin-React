@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { createContext } from "react";
 import { clockAxios } from "../config/axios";
 import {
@@ -6,7 +6,6 @@ import {
   getAccessToken,
   removeAccessToken,
 } from "../utils/local-storage";
-import { useEffect } from "react";
 
 export const AuthContext = createContext();
 
@@ -68,7 +67,6 @@ export default function AuthContextProvider({ children }) {
   const clockIn = async (input) => {
     try {
       const result = await clockAxios.post("/clock/clockin", input);
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
