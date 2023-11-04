@@ -2,8 +2,26 @@ import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import PeopleList from "./PeopleList";
 import InputBar from "../../../components/InputBar";
+import useAuth from "../../../hooks/use-auth";
+import { useState } from "react";
+import { clockAxios } from "../../../config/axios";
+import { useEffect } from "react";
 
 export default function PeoplePage() {
+  const { authUser } = useAuth();
+  const [allPeople, setAllPeople] = useState([]);
+
+  useEffect(() => {
+    clockAxios
+      .get("/user/getAllUser")
+      .then((res) => {
+        setAllPeople(res.data.allUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <div className="flex justify-center relative">
@@ -15,15 +33,17 @@ export default function PeoplePage() {
         />
       </div>
       <Link to="/profile/">
-        <PeopleList
-          image="https://cdn.pixabay.com/photo/2018/01/27/07/24/nature-3110567_1280.jpg"
-          firstName="Jane"
-          lastName="Bin"
-          position="Accountant"
-        />
+        <PeopleList allPeople={allPeople} />
       </Link>
-      <PeopleList image="https://cdn.pixabay.com/photo/2018/01/27/07/24/nature-3110567_1280.jpg" />
-      <PeopleList image="https://cdn.pixabay.com/photo/2018/01/27/07/24/nature-3110567_1280.jpg" />
     </div>
   );
+}
+
+{
+  /* <PeopleList
+  image="https://cdn.pixabay.com/photo/2018/01/27/07/24/nature-3110567_1280.jpg"
+  firstName="Jane"
+  lastName="Bin"
+  position="Accountant"
+/> */
 }
