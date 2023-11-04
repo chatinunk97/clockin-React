@@ -4,7 +4,7 @@ import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import Loading from "../../../components/Loading";
 import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
 import useManage from "../../../hooks/use-manage";
-import { useEffect } from "react";
+import SelectSearch from "../../../components/DropdownSearch";
 
 const AddUserSchema = Joi.object({
   profileImage: Joi.allow(null, "").required(),
@@ -31,7 +31,7 @@ const validateregister = (input) => {
   }
 };
 
-export default function AddmployeeForm() {
+export default function AddmployeeForm({allUser}) {
   const [file, setFile] = useState(null);
   const [input, setInput] = useState({
     profileImage: "",
@@ -81,6 +81,7 @@ export default function AddmployeeForm() {
       {loading && <Loading />}
       <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2 ">
         <h1>ProfileImage</h1>
+        <SelectSearch/>
         <RegisterInput
           type="file"
           onChange={(e) => {

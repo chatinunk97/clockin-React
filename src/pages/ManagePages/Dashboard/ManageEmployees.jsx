@@ -70,7 +70,7 @@ export default function ManageEmployees() {
             open={isOpen}
             onClose={() => setIsOpen(false)}
           >
-            <AddmployeeForm />
+            <AddmployeeForm allUser={allUser} />
           </Modal>
         </div>
       </div>
