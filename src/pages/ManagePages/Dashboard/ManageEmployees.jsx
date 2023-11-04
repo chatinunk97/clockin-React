@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
+import CustomizedButtons from "../../../components/ButtonCustomization";
 
 
 export default function ManageEmployees() {
@@ -20,11 +21,10 @@ export default function ManageEmployees() {
                         <h1>ICON</h1>
                         <input type="text" className="w-[400px] p-2 rounded-2xl border bg-stone-100" placeholder="....." />
                     </div>
-                    <div>
-                        <button className="w-32 p-2 bg-orange-500 rounded-2xl transition-transform hover:scale-105 hover:bg-orange-200 text-white font-bold"
-                            onClick={() => {
-                                setIsOpen(true)
-                            }}>Add User</button>
+                    <div onClick={() => {
+                        setIsOpen(true)
+                    }} className="rounded-3xl w-28 p-1 ml-9 ">
+                        <CustomizedButtons />
                     </div>
                 </div>
                 <div>

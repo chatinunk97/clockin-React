@@ -1,4 +1,7 @@
-import { LoaderIcon } from "../icons/index"
+
+import LinearIndeterminate from "./LoadingBar"
+
+
 
 export default function Loading() {
     return (
@@ -6,7 +9,7 @@ export default function Loading() {
             <div className="fixed inset-0 bg-black opacity-20 z-40"></div>
             <div className="fixed inset-0 z-50">
                 <div className="flex items-center justify-center min-h-full">
-                    <LoaderIcon className="fill-blue-600 animate-spin" />
+                    <LinearIndeterminate />
                 </div>
             </div>
         </>
