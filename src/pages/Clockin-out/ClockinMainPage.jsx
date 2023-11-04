@@ -28,7 +28,6 @@ export default function ClockinMainPage() {
       };
       setIsClockIn(true);
       clockOut(input);
-      setAuthUser({...authUser , clockId : authUser.clockId ++})
       return
     }
     const input = {
@@ -37,7 +36,7 @@ export default function ClockinMainPage() {
       clockInTime: time,
     };
     setIsClockIn(false);
-    const result = await clockIn(input);
+    clockIn(input);
   };
   useEffect(() => {
     axios
