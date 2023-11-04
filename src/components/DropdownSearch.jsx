@@ -1,5 +1,4 @@
-import SelectSearch from "react-select-search";
-import "react-select-search/style.css";
+import Select from "react-select";
 
 /**
  * The options array should contain objects.
@@ -15,16 +14,15 @@ const options = [
   },
 ];
 
-/* Simple example */
-export default function DropdownSearch() {
+
+const DropdownSearch = ({  }) => {
   return (
-    <div>
-      <SelectSearch
-        options={options}
-        value="sv"
-        name="language"
-        placeholder="Choose your language"
+    <div className="h=full w-full ">
+      <Select
+        options={options} // Pass the value pro
       />
     </div>
   );
-}
+};
+
+export default DropdownSearch;

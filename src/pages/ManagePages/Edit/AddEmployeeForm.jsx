@@ -6,6 +6,7 @@ import useManage from "../../../hooks/use-manage";
 import LinearIndeterminate from '../../../components/LoadingBar';
 import IconLabelButtons from '../../../components/SendButton';
 import InputFileUpload from '../../../components/Uploadbutton';
+import DropdownSearch from '../../../components/DropdownSearch';
 
 
 const AddUserSchema = Joi.object({
@@ -121,13 +122,7 @@ export default function AddmployeeForm({ allUser }) {
                 </div>
                 <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                     <h1>Supervisor</h1>
-                    <RegisterInput
-                        placeholder="Supervisor"
-                        value={input.userBossId}
-                        onChange={handleChangeInput}
-                        name="userBossId"
-                        hasError={error.userBossId}
-                    />
+                    <DropdownSearch/>
                     {error.userBossId && <InputErrorMessage message={error.userBossId} />}
                 </div>
                 <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
