@@ -6,8 +6,9 @@ import Modal from "../../../components/Modal";
 import EditemployeeForm from "../Edit/EditEmployeeFrom";
 import Loading from "../../../components/Loading";
 import { useMemo } from "react";
+import LinearIndeterminate from "../../../components/LoadingBar";
 
-export default function TableEmployee({allUser,loading}) {
+export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
     const [UserbyId, setUserById] = useState({})
     const [columnDefs] = useState([
@@ -65,7 +66,7 @@ export default function TableEmployee({allUser,loading}) {
 
     return (
         <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
-            {loading && <Loading />}
+            {loading && <LinearIndeterminate />}
             <AgGridReact rowData={allUser} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
             <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
                 <EditemployeeForm UserbyId={UserbyId} />
