@@ -7,7 +7,7 @@ import LinearIndeterminate from '../../../components/LoadingBar';
 import IconLabelButtons from '../../../components/SendButton';
 import InputFileUpload from '../../../components/Uploadbutton';
 import DropdownSearch from '../../../components/DropdownSearch';
-
+import supervisorList from '../../../utils/StructureChange/supervisorList';
 
 const AddUserSchema = Joi.object({
     profileImage: Joi.allow(null, "").required(),
@@ -122,7 +122,7 @@ export default function AddmployeeForm({ allUser }) {
                 </div>
                 <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
                     <h1>Supervisor</h1>
-                    <DropdownSearch/>
+                    <DropdownSearch data={supervisorList(allUser)}/>
                     {error.userBossId && <InputErrorMessage message={error.userBossId} />}
                 </div>
                 <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
