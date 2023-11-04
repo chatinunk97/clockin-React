@@ -1,9 +1,27 @@
+const currentDate = new Date();
+const isoDate = currentDate.toISOString();
 import LeaveInfo from "./LeaveInfo";
 import LeaveList from "./LeaveList";
 import LeaveDropdown from "./LeaveDropdown";
 import SubmitButton from "../../../../components/SubmitButton";
+import { useState } from "react";
+import useAuth from "../../../../hooks/use-auth";
 
 export default function LeaveFormPage() {
+  const { leaveRequest } = useAuth();
+  const [leaveData, setLeaveData] = useState({
+    userLeaveId: null,
+    startDate: isoDate,
+    endDate: isoDate,
+    halfDate: false,
+    statusRequest: "PENDING",
+    messageLeave: " ",
+  });
+
+  const handleLeaveDataChange = (newData) => {
+    setLeaveData(newData);
+  };
+
   return (
     <div>
       <div className="bg-inputGray m-6 p-6 rounded-md">
@@ -15,13 +33,14 @@ export default function LeaveFormPage() {
         <div className="flex flex-col gap-4">
           <LeaveDropdown />
           <div>
-            <LeaveInfo />
+            <LeaveInfo leaveData={leaveData} onChange={handleLeaveDataChange} />
           </div>
         </div>
-        <div>
-        </div>
+        <div></div>
         <div className="mt-10">
-          <SubmitButton p="px-20 py-3">Submit</SubmitButton>
+          <SubmitButton p="px-20 py-3" onClick={leaveRequest(leaveData)}>
+            Submit
+          </SubmitButton>
         </div>
       </div>
     </div>

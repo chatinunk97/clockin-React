@@ -4,10 +4,22 @@ import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import LeaveDropdown from "./LeaveDropdown";
-export default function LeaveInfo() {
 
+export default function LeaveInfo({ leaveData, onChange }) {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+
+  const handleDateChange = (update) => {
+    setDateRange(update);
+
+    const newLeaveData = {
+      ...leaveData,
+      startDate: update[0].toISOString(),
+      endDate: update[1].toISOString(),
+      messageLeave: leaveData.messageLeave,
+    };
+    onChange(newLeaveData);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -20,12 +32,9 @@ export default function LeaveInfo() {
           startDate={startDate}
           endDate={endDate}
           placeholderText="Select Date"
-          className='w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1'
-          onChange={(update) => {
-            setDateRange(update);
-          }}
+          className="w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1"
+          onChange={handleDateChange}
           isClearable={true}
-
         />
       </div>
       <div>
@@ -37,7 +46,14 @@ export default function LeaveInfo() {
         </div>
         <input
           type="text"
-          placeholder="Leave Information"
+          placeholder="Leave Message"
+          value={leaveData.messageLeave}
+          onChange={(e) =>
+            onChange({
+              ...leaveData,
+              messageLeave: e.target.value,
+            })
+          }
           className="border-b border-b-neutral-400  text-start p-4 focus:ring focus:ring-green-300  focus:border-green-500 outline-none"
         />
       </div>

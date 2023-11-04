@@ -1,4 +1,4 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createContext } from "react";
 import { clockAxios } from "../config/axios";
 import {
@@ -64,6 +64,7 @@ export default function AuthContextProvider({ children }) {
     setInitialLoading(false);
     console.log("logout");
   };
+
   const clockIn = async (input) => {
     try {
       const result = await clockAxios.post("/clock/clockin", input);
@@ -71,6 +72,15 @@ export default function AuthContextProvider({ children }) {
       console.log(error);
     }
   };
+
+  const leaveRequest = async (leaveData) => {
+    try {
+      const res = await clockAxios.post("/leave/createRequestLeave", leaveData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -83,6 +93,7 @@ export default function AuthContextProvider({ children }) {
         time,
         setTime,
         clockIn,
+        leaveRequest,
       }}
     >
       {children}
