@@ -4,7 +4,7 @@ import RegisterInput from '../../AuthPages/Register/RegisterInput';
 import Loading from '../../../components/Loading';
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
 import { dashboardAxios } from '../../../config/axios';
-import useManage from "../../../hooks/use-manage";
+
 
 const EditSchema = Joi.object({
     profileImage: Joi.required(),
@@ -17,7 +17,7 @@ const EditSchema = Joi.object({
         .required(),
     position: Joi.string().trim(),
     userBossId: Joi.string().trim(),
-    id: Joi.string().trim(),
+    id: Joi.number(),
 
 });
 
@@ -51,8 +51,6 @@ export default function EditemployeeForm({ UserbyId }) {
 
     });
 
-    const { updateuser } = useManage()
-
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false)
 
@@ -65,7 +63,6 @@ export default function EditemployeeForm({ UserbyId }) {
 
     const handleSubmitEditUser = async (e) => {
         try {
-            console.log('xxxxx')
             e.preventDefault();
             const validationError = validateregister(input);
             const formData = new FormData();
