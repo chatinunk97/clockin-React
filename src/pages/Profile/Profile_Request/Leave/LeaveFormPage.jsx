@@ -38,7 +38,7 @@ export default function LeaveFormPage() {
         </div>
         <div></div>
         <div className="mt-10">
-          <SubmitButton p="px-20 py-3" onClick={leaveRequest(leaveData)}>
+          <SubmitButton p="px-20 py-3" onClick={() => leaveRequest(leaveData)}>
             Submit
           </SubmitButton>
         </div>

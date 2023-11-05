@@ -14,8 +14,8 @@ export default function LeaveInfo({ leaveData, onChange }) {
 
     const newLeaveData = {
       ...leaveData,
-      startDate: update[0].toISOString(),
-      endDate: update[1].toISOString(),
+      startDate: update[0]?.toISOString() || "",
+      endDate: update[1]?.toISOString() || "",
       messageLeave: leaveData.messageLeave,
     };
     onChange(newLeaveData);

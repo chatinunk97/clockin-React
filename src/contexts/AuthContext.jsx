@@ -91,6 +91,7 @@ export default function AuthContextProvider({ children }) {
   const leaveRequest = async (leaveData) => {
     try {
       const res = await clockAxios.post("/leave/createRequestLeave", leaveData);
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
