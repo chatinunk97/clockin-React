@@ -6,17 +6,37 @@ import useAuth from "../../hooks/use-auth";
 import { useState, useEffect } from "react";
 import axios from "axios";
 export default function ClockinMainPage() {
-  const { location, initialLoading, clockIn } = useAuth();
+  const {
+    location,
+    initialLoading,
+    clockIn,
+    isClockin,
+    clockOut,
+    authUser,
+    setIsClockIn,
+    setAuthUser
+  } = useAuth();
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
 
-  const handleClock = async () => {
+  const handleClock = async (type) => {
+    if (type === "clockOut") {
+      const input = {
+        latitudeClockOut: location.lat,
+        longitudeClockOut: location.lat,
+        clockOutTime: time,
+      };
+      setIsClockIn(true);
+      clockOut(input);
+      return
+    }
     const input = {
       latitudeClockIn: location.lat,
       longitudeClockIn: location.lat,
       clockInTime: time,
     };
-    const result = await clockIn(input);
+    setIsClockIn(false);
+    clockIn(input);
   };
   useEffect(() => {
     axios
@@ -56,12 +76,23 @@ export default function ClockinMainPage() {
         <InfoClockinItem />
       </div>
       <div className="mt-20 md:mt-8 h-screen">
-        <button
-          onClick={handleClock}
-          className="bg-green-600 w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400"
-        >
-          Clock In
-        </button>
+        {isClockin ? (
+          <button
+            onClick={handleClock}
+            className="bg-green-600 w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400"
+          >
+            Clock In
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              handleClock("clockOut");
+            }}
+            className="bg-red-500 w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-red-700"
+          >
+            Clock Out
+          </button>
+        )}
       </div>
     </div>
   );

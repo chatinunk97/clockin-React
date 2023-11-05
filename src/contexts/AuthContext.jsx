@@ -10,6 +10,7 @@ import {
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
+  const [isClockin, setIsClockIn] = useState(true);
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
@@ -18,7 +19,12 @@ export default function AuthContextProvider({ children }) {
   useEffect(() => {
     if (getAccessToken()) {
       clockAxios.get("/user/me").then((res) => {
-        setAuthUser(res.data.user);
+        setAuthUser({ ...res.data.user, clockId: res.data.newestClock.id });
+        if (res.data.newestClock.clockOutTime) {
+          setIsClockIn(true);
+        } else {
+          setIsClockIn(false);
+        }
       });
     }
 
@@ -68,6 +74,15 @@ export default function AuthContextProvider({ children }) {
   const clockIn = async (input) => {
     try {
       const result = await clockAxios.post("/clock/clockin", input);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const clockOut = async (input) => {
+    try {
+      const result = await clockAxios.patch("/clock/clockout", input);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -88,12 +103,16 @@ export default function AuthContextProvider({ children }) {
         logout,
         initialLoading,
         authUser,
+        setAuthUser,
         location,
         setLocation,
         time,
         setTime,
         clockIn,
         leaveRequest,
+        clockOut,
+        isClockin,
+        setIsClockIn,
       }}
     >
       {children}
