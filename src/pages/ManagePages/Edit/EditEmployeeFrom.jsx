@@ -7,22 +7,26 @@ import { dashboardAxios } from '../../../config/axios';
 import IconLabelButtons from "../../../components/SendButton";
 import InputFileUpload from "../../../components/Uploadbutton";
 import Swal from 'sweetalert2'
+import DropdownSearch from '../../../components/DropdownSearch';
+import supervisorList from '../../../utils/StructureChange/supervisorList';
 
 
 const EditSchema = Joi.object({
-    profileImage: Joi.allow(null).required(),
-    employeeId: Joi.string().trim(),
-    firstName: Joi.string().trim(),
-    lastName: Joi.string().trim(),
-    email: Joi.string().email({ tlds: false }),
+    profileImage: Joi.allow(null, ""),
+    employeeId: Joi.string().trim().required(),
+    firstName: Joi.string().trim().required(),
+    lastName: Joi.string().trim().required(),
+    email: Joi.string().email({ tlds: false }).required(),
     mobile: Joi.string()
         .pattern(/^[0-9]{10}$/)
         .required(),
-    position: Joi.string().trim(),
-    userBossId: Joi.string().trim(),
+    position: Joi.string().trim().required(),
+    userBossId: Joi.number().required(),
+    userType: Joi.string(),
+    isActive: Joi.boolean(),
+    checkLocation: Joi.boolean(),
     id: Joi.number(),
-
-});
+})
 
 
 const validateregister = (input) => {
@@ -39,7 +43,7 @@ const validateregister = (input) => {
 
 
 
-export default function EditemployeeForm({ UserbyId }) {
+export default function EditemployeeForm({ UserbyId, allUser }) {
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
         profileImage: UserbyId.PhotoImg,
@@ -51,6 +55,9 @@ export default function EditemployeeForm({ UserbyId }) {
         position: UserbyId.Position,
         userBossId: UserbyId.Supervisor,
         id: UserbyId.id,
+        userType: UserbyId.userType,
+        isActive: UserbyId.isActive,
+        checkLocation: UserbyId.checkLocation,
 
     });
 
@@ -62,12 +69,17 @@ export default function EditemployeeForm({ UserbyId }) {
     const handleChangeInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
+    const handleChangeDropdown = (data, name) => {
+        console.log(data)
+        setInput({ ...input, [name]: data.value });
+    };
 
 
     const handleSubmitEditUser = async (e) => {
         try {
             e.preventDefault();
             const validationError = validateregister(input);
+            console.log(validationError)
             const formData = new FormData();
             formData.append("profileImage", input.profileImage);
             delete input.profileImage
@@ -105,14 +117,13 @@ export default function EditemployeeForm({ UserbyId }) {
     return (
         <>
             <form
-                className="grid grid-cols-2 gap-x-6 gap-y-4 items-center p-6 md:p-24 "
+                className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6 md:pt-4 md:pl-20 md:pr-20 md:pb-12 overflow-x-auto"
                 onSubmit={handleSubmitEditUser}
             >
-
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>First name</h1>
                     <RegisterInput
-                        placeholder={UserbyId.FistName}
+                        placeholder=" First name"
                         value={input.firstName}
                         onChange={handleChangeInput}
                         name="firstName"
@@ -123,7 +134,7 @@ export default function EditemployeeForm({ UserbyId }) {
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Last Name</h1>
                     <RegisterInput
-                        placeholder={UserbyId.LastName}
+                        placeholder="Last Name"
                         value={input.lastName}
                         onChange={handleChangeInput}
                         name="lastName"
@@ -131,11 +142,10 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.lastName && <InputErrorMessage message={error.lastName} />}
                 </div>
-
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Employee Id</h1>
                     <RegisterInput
-                        placeholder={UserbyId.EmployeeID}
+                        placeholder="Employee Id"
                         value={input.employeeId}
                         onChange={handleChangeInput}
                         name="employeeId"
@@ -145,16 +155,14 @@ export default function EditemployeeForm({ UserbyId }) {
                 </div>
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Supervisor</h1>
-                    <RegisterInput
-                        placeholder={UserbyId.Supervisor}
-                        value={input.userBossId}
-                        onChange={handleChangeInput}
-                        name="userBossId"
-                        hasError={error.userBossId}
+                    <DropdownSearch
+                        data={supervisorList(allUser)}
+                        onChange={handleChangeDropdown}
+                        name={"userBossId"}
                     />
                     {error.userBossId && <InputErrorMessage message={error.userBossId} />}
                 </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col md:gap-2 mt-10 md:mt-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1 className="pl-2">Select Employee Position</h1>
                     <select
                         className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
@@ -162,18 +170,69 @@ export default function EditemployeeForm({ UserbyId }) {
                         value={input.position}
                         name="position"
                     >
-                        <option value={UserbyId.Position} name="position">{UserbyId.Position} (Current)</option>
-                        <option value="ADMIN" name="position">ADMIN</option>
-                        <option value="USER" name="position">USER</option>
-                        <option value="HR" name="position">HR</option>
-                        <option value="MANAGER" name="position">MANAGER</option>
+                        <option value="USER" name="position">
+                            USER
+                        </option>
+                        <option value="HR" name="position">
+                            HR
+                        </option>
+                        <option value="MANAGER" name="position">
+                            MANAGER
+                        </option>
                     </select>
                 </div>
-
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+                    <h1 className="pl-2">Select UserType</h1>
+                    <select
+                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+                        onChange={handleChangeInput}
+                        value={input.userType}
+                        name="userType"
+                    >
+                        <option value="FULLTIME" name="userType">
+                            FULL TIME
+                        </option>
+                        <option value="PARTTIME" name="userType">
+                            PART TIME
+                        </option>
+                    </select>
+                </div>
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+                    <h1 className="pl-2">UserActive</h1>
+                    <select
+                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+                        onChange={handleChangeInput}
+                        value={input.isActive}
+                        name="isActive"
+                    >
+                        <option value="true" name="isActive">
+                            True
+                        </option>
+                        <option value="false" name="isActive">
+                            False
+                        </option>
+                    </select>
+                </div>
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+                    <h1 className="pl-2">CheckLocation</h1>
+                    <select
+                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+                        onChange={handleChangeInput}
+                        value={input.checkLocation}
+                        name="checkLocation"
+                    >
+                        <option value="true" name="checkLocation">
+                            True
+                        </option>
+                        <option value="false" name="checkLocation">
+                            False
+                        </option>
+                    </select>
+                </div>
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Email</h1>
                     <RegisterInput
-                        placeholder={UserbyId.Email}
+                        placeholder="Email"
                         value={input.email}
                         onChange={handleChangeInput}
                         name="email"
@@ -184,7 +243,7 @@ export default function EditemployeeForm({ UserbyId }) {
                 <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Phone Number</h1>
                     <RegisterInput
-                        placeholder={UserbyId.PhoneNumber}
+                        placeholder="Phone Number"
                         value={input.mobile}
                         onChange={handleChangeInput}
                         name="mobile"
@@ -192,28 +251,29 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.mobile && <InputErrorMessage message={error.mobile} />}
                 </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>ProfileImage</h1>
-                    <InputFileUpload
-                        type="file"
-                        onChange={(e) => {
-                            if (e.target.files[0]) {
-                                setFile(e.target.files[0]);
-                                setInput({ ...input, profileImage: e.target.files[0] });
-                            }
-                        }}
-                        name="profileImage"
-                        hasError={error.profileImage}
-                    />
-                    {error.profileImage && (
-                        <InputErrorMessage message={error.profileImage} />
-                    )}
-                </div>
-
-                <div className="mx-auto col-span-full mt-6">
-                    <label onClick={handleSubmitEditUser}>
-                        <IconLabelButtons />
-                    </label>
+                <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
+                    <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+                        <h1>ProfileImage</h1>
+                        <InputFileUpload
+                            type="file"
+                            onChange={(e) => {
+                                if (e.target.files[0]) {
+                                    setFile(e.target.files[0]);
+                                    setInput({ ...input, profileImage: e.target.files[0] });
+                                }
+                            }}
+                            name="profileImage"
+                            hasError={error.profileImage}
+                        />
+                        {error.profileImage && (
+                            <InputErrorMessage message={error.profileImage} />
+                        )}
+                    </div>
+                    <div className="mx-auto col-span-full mt-6">
+                        <label onClick={handleSubmitEditUser}>
+                            <IconLabelButtons />
+                        </label>
+                    </div>
                 </div>
             </form>
             {loading && <LinearIndeterminate />}

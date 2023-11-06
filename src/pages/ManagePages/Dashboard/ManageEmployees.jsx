@@ -25,6 +25,9 @@ export default function ManageEmployees() {
                     PhoneNumber: user.mobile,
                     Email: user.email,
                     id: user.id,
+                    userType: user.userType,
+                    isActive: user.isActive,
+                    checkLocation: user.checkLocation,
                 }));
                 setAllUser(userData);
             })
