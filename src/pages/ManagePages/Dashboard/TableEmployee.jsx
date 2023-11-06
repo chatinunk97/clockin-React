@@ -67,7 +67,7 @@ export default function TableEmployee({ allUser, loading }) {
             {loading && <LinearIndeterminate />}
             <AgGridReact rowData={allUser} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
             <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
-                <EditemployeeForm UserbyId={UserbyId} />
+                <EditemployeeForm UserbyId={UserbyId} allUser={allUser} />
             </Modal>
         </div>
     );
