@@ -74,6 +74,9 @@ export default function AuthContextProvider({ children }) {
     try {
       const result = await clockAxios.post("/clock/clockin", input);
       const clockInTime = new Date(result.data.clockIn.clockInTime);
+      if(!result.data.clockIn.status){
+        return alert("You're freaking late !!! ")
+      }
       alert(`Clock in Successfully ! at ${clockInTime}`);
     } catch (error) {
       console.log(error);
