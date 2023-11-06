@@ -19,14 +19,27 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     if (getAccessToken()) {
-      clockAxios.get("/user/me").then((res) => {
-        setAuthUser({ ...res.data.user, clockId: res.data.newestClock.id });
-        if (res.data.newestClock.clockOutTime) {
-          setIsClockIn(true);
-        } else {
-          setIsClockIn(false);
-        }
-      });
+      clockAxios
+        .get("/user/me")
+        .then((res) => {
+          if (!res.data.newestClock || res.data.newestClock.clockOutTime) {
+            setAuthUser({ ...res.data.user });
+            console.log("first######");
+            setIsClockIn(true);
+          } else {
+            setAuthUser({ ...res.data.user, clockId: res.data.newestClock.id });
+            setIsClockIn(false);
+          }
+        })
+        .then(() => {
+          //Get first company location
+          clockAxios.get("/clock/location").then((res) => {
+            setCompanyLocation({
+              lat: res.data[0].latitudeCompany,
+              lng: res.data[0].longitudeCompany,
+            });
+          });
+        });
     }
     //Get location permission
     if (navigator.geolocation) {
@@ -55,10 +68,6 @@ export default function AuthContextProvider({ children }) {
     } else {
       console.error("Geolocation is not supported by your browser.");
     }
-    //Get first company location
-    clockAxios.get("/clock/location").then((res) => {
-      setCompanyLocation({ lat: res.data[0].latitudeCompany, lng: res.data[0].longitudeCompany });
-    });
   }, []);
 
   const login = async (credential) => {
@@ -117,7 +126,7 @@ export default function AuthContextProvider({ children }) {
         clockIn,
         clockOut,
         isClockin,
-        companyLocation
+        companyLocation,
       }}
     >
       {children}
