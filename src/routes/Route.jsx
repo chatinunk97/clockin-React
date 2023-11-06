@@ -24,6 +24,7 @@ import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
 import ManageEmployees from "../pages/ManagePages/Dashboard/ManageEmployees";
 import MangeLeaveRequest from "../pages/ManagePages/Dashboard/MangeLeaveRequest";
 import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
+import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -88,7 +89,6 @@ export default function Route() {
         </RedirectIfAuthenticated>
       ),
     },
-
     {
       path: "/manage",
       element: (
@@ -101,6 +101,7 @@ export default function Route() {
         { path: "/manage/employees", element: <ManageEmployees /> },
         { path: "/manage/leave-request", element: <MangeLeaveRequest /> },
         { path: "/manage/ot-Request", element: <ManageOTRequest /> },
+        { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],
     },
   ]);
