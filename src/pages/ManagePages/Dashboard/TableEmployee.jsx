@@ -4,9 +4,9 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Modal from "../../../components/Modal";
 import EditemployeeForm from "../Edit/EditEmployeeFrom";
-import Loading from "../../../components/Loading";
 import { useMemo } from "react";
 import LinearIndeterminate from "../../../components/LoadingBar";
+import { Link } from "react-router-dom"
 
 export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,18 +35,21 @@ export default function TableEmployee({ allUser, loading }) {
                             Edit
                         </button>
                     </div>
+
                     <div>
-                        <button
-                            onClick={(e) => {
-                                console.log(params.data);
-                                console.log(UserbyId);
-                            }}
-                            className="font-bold text-white w-14 h-6 bg-blue-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-blue-400"
-                        >
-                            View
-                        </button>
+                        <Link to={`/manage/employee/${params.data.id}`}>
+                            <button
+                                onClick={() => {
+                                    setUserById(params.data);
+                                }}
+                                className="font-bold text-white w-14 h-6 bg-blue-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-blue-400"
+                            >
+                                View
+                            </button>
+                        </Link>
                     </div>
-                </div>
+
+                </div >
             ),
         },
     ]);
