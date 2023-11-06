@@ -5,6 +5,7 @@ import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
 import CustomizedButtons from "../../../components/ButtonCustomization";
 import { useEffect } from "react";
+import CustomizedInputBase from "../../../components/SearchBar";
 
 export default function ManageEmployees() {
     const [loading, setLoading] = useState(false);
@@ -24,6 +25,9 @@ export default function ManageEmployees() {
                     PhoneNumber: user.mobile,
                     Email: user.email,
                     id: user.id,
+                    userType: user.userType,
+                    isActive: user.isActive,
+                    checkLocation: user.checkLocation,
                 }));
                 setAllUser(userData);
             })
@@ -39,19 +43,15 @@ export default function ManageEmployees() {
 
     return (
 
-        <div className=" flex flex-col justify-center w-full p-2">
-            <div className="flex flex-col gap-4 w-full">
-                <div className="grid grid-cols-3 items-baseline p-4">
-                    <div>
-                        <button className="w-32 p-2 bg-slate-200 rounded-2xl">Fliter</button>
-                    </div>
-                    <div className="flex justify-center items-center gap-2">
-                        <h1>ICON</h1>
-                        <input type="text" className="w-[400px] p-2 rounded-2xl border bg-stone-100" placeholder="....." />
+        <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
+            <div className="flex justify-center items-center gap-4 md:w-full">
+                <div className="flex justify-center items-center p-6">
+                    <div className="flex justify-center items-center gap-2 w-60">
+                        <CustomizedInputBase />
                     </div>
                     <div onClick={() => {
                         setIsOpen(true)
-                    }} className="rounded-3xl w-28 p-1 ml-9 ">
+                    }} className="rounded-3xl w-28 p-1 ml-9">
                         <CustomizedButtons />
                     </div>
                 </div>

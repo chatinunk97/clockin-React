@@ -20,6 +20,10 @@ const AddUserSchema = Joi.object({
     .required(),
   position: Joi.string().trim().required(),
   userBossId: Joi.number().required(),
+  userType: Joi.string(),
+  isActive: Joi.boolean(),
+  checkLocation: Joi.boolean()
+
 });
 
 const validateregister = (input) => {
@@ -45,6 +49,9 @@ export default function AddmployeeForm({ allUser }) {
     mobile: "",
     position: "USER",
     userBossId: "",
+    userType: "FULLTIME",
+    isActive: "true",
+    checkLocation: "true",
   });
 
   const { addemployee } = useManage();
@@ -65,6 +72,7 @@ export default function AddmployeeForm({ allUser }) {
       e.preventDefault();
       console.log(input);
       const validationError = validateregister(input);
+      console.log(validationError)
       const formData = new FormData();
       formData.append("profileImage", input.profileImage);
       formData.append("data", JSON.stringify(input));
@@ -84,10 +92,10 @@ export default function AddmployeeForm({ allUser }) {
   return (
     <>
       <form
-        className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-4 pl-20 pr-20 pb-12"
+        className="grid grid-cols-2 gap-x-1 gap-y-1 md:gap-x-3 md:gap-y-4 items-center pl-8 md:pt-4 md:pl-20 md:pr-20 md:pb-12 overflow-x-auto"
         onSubmit={handleSubmitAddUser}
       >
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>First name</h1>
           <RegisterInput
             placeholder=" First name"
@@ -98,7 +106,7 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.firstName && <InputErrorMessage message={error.firstName} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Last Name</h1>
           <RegisterInput
             placeholder="Last Name"
@@ -109,7 +117,7 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.lastName && <InputErrorMessage message={error.lastName} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Employee Id</h1>
           <RegisterInput
             placeholder="Employee Id"
@@ -120,7 +128,7 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.employeeId && <InputErrorMessage message={error.employeeId} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Supervisor</h1>
           <DropdownSearch
             data={supervisorList(allUser)}
@@ -129,10 +137,10 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.userBossId && <InputErrorMessage message={error.userBossId} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1 className="pl-2">Select Employee Position</h1>
           <select
-            className="w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+            className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
             onChange={handleChangeInput}
             value={input.position}
             name="position"
@@ -148,7 +156,55 @@ export default function AddmployeeForm({ allUser }) {
             </option>
           </select>
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2 mt-12 md:mt-0">
+          <h1 className="pl-2">Select UserType</h1>
+          <select
+            className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+            onChange={handleChangeInput}
+            value={input.userType}
+            name="userType"
+          >
+            <option value="FULLTIME" name="userType">
+              FULL TIME
+            </option>
+            <option value="PARTTIME" name="userType">
+              PART TIME
+            </option>
+          </select>
+        </div>
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+          <h1 className="pl-2">UserActive</h1>
+          <select
+            className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+            onChange={handleChangeInput}
+            value={input.isActive}
+            name="isActive"
+          >
+            <option value="true" name="isActive">
+              True
+            </option>
+            <option value="false" name="isActive">
+              False
+            </option>
+          </select>
+        </div>
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+          <h1 className="pl-2">CheckLocation</h1>
+          <select
+            className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+            onChange={handleChangeInput}
+            value={input.checkLocation}
+            name="checkLocation"
+          >
+            <option value="true" name="checkLocation">
+              True
+            </option>
+            <option value="false" name="checkLocation">
+              False
+            </option>
+          </select>
+        </div>
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Email</h1>
           <RegisterInput
             placeholder="Email"
@@ -159,7 +215,7 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.email && <InputErrorMessage message={error.email} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Phone Number</h1>
           <RegisterInput
             placeholder="Phone Number"
@@ -170,27 +226,29 @@ export default function AddmployeeForm({ allUser }) {
           />
           {error.mobile && <InputErrorMessage message={error.mobile} />}
         </div>
-        <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2 ">
-          <h1>ProfileImage</h1>
-          <InputFileUpload
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                setFile(e.target.files[0]);
-                setInput({ ...input, profileImage: e.target.files[0] });
-              }
-            }}
-            name="profileImage"
-            hasError={error.profileImage}
-          />
-          {error.profileImage && (
-            <InputErrorMessage message={error.profileImage} />
-          )}
-        </div>
-        <div className="mx-auto col-span-full mt-6">
-          <label onClick={handleSubmitAddUser}>
-            <IconLabelButtons />
-          </label>
+        <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
+          <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+            <h1>ProfileImage</h1>
+            <InputFileUpload
+              type="file"
+              onChange={(e) => {
+                if (e.target.files[0]) {
+                  setFile(e.target.files[0]);
+                  setInput({ ...input, profileImage: e.target.files[0] });
+                }
+              }}
+              name="profileImage"
+              hasError={error.profileImage}
+            />
+            {error.profileImage && (
+              <InputErrorMessage message={error.profileImage} />
+            )}
+          </div>
+          <div className="mx-auto col-span-full mt-6">
+            <label onClick={handleSubmitAddUser}>
+              <IconLabelButtons />
+            </label>
+          </div>
         </div>
       </form>
       {loading && <LinearIndeterminate />}
