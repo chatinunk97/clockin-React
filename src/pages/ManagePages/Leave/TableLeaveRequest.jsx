@@ -7,6 +7,8 @@ import LinearIndeterminate from "../../../components/LoadingBar";
 export default function TableLeaveRequest({ requestLeaves, loading }) {
   console.log(requestLeaves);
   const [columnDefs] = useState([
+    { field: "firstName", flex: 1 },
+    { field: "lastName", flex: 1 },
     { field: "startDate", flex: 1 },
     { field: "endDate", flex: 1 },
     { field: "halfDate", flex: 1 },
