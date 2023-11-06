@@ -14,6 +14,24 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
     { field: "halfDate", flex: 1 },
     { field: "statusRequest", flex: 1 },
     { field: "messageLeave", flex: 1 },
+    {
+      field: "actionButtons",
+      headerName: "",
+      cellRenderer: (params) => (
+        <div className="flex gap-2 justify-center items-center h-full">
+          <div className="p-2">
+            <button
+              onClick={(e) => {
+                console.log(params.data);
+              }}
+              className="font-bold text-white w-14 h-6 bg-blue-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-blue-400"
+            >
+              View
+            </button>
+          </div>
+        </div>
+      ),
+    },
   ]);
 
   const gridOptions = {
@@ -28,14 +46,16 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
   }, []);
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
-      {loading && <LinearIndeterminate />}
-      <AgGridReact
-        rowData={requestLeaves}
-        gridOptions={gridOptions}
-        columnDefs={columnDefs}
-        sortingOrder={sortingOrder}
-      ></AgGridReact>
-    </div>
+    <>
+      <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
+        {loading && <LinearIndeterminate />}
+        <AgGridReact
+          rowData={requestLeaves}
+          gridOptions={gridOptions}
+          columnDefs={columnDefs}
+          sortingOrder={sortingOrder}
+        ></AgGridReact>
+      </div>
+    </>
   );
 }
