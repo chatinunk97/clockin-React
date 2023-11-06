@@ -11,7 +11,12 @@ export default function ManageLeaveSetting() {
         <DefaultLeaveList />
       </div>
       <div>
-        <SubmitButton className="rounded-xl w-20">Add</SubmitButton>
+        <SubmitButton className="rounded-xl w-20 m-3 hover:bg-green-400">
+          Edit
+        </SubmitButton>
+        <SubmitButton className="rounded-xl w-20 bg-[#2463EB] hover:bg-blue-400">
+          Add
+        </SubmitButton>
       </div>
     </div>
   );
