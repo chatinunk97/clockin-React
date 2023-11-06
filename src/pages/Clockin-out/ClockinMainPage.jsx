@@ -12,9 +12,7 @@ export default function ClockinMainPage() {
     clockIn,
     isClockin,
     clockOut,
-    authUser,
     setIsClockIn,
-    setAuthUser
   } = useAuth();
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
@@ -28,7 +26,7 @@ export default function ClockinMainPage() {
       };
       setIsClockIn(true);
       clockOut(input);
-      return
+      return;
     }
     const input = {
       latitudeClockIn: location.lat,

@@ -105,11 +105,11 @@ export default function EditemployeeForm({ UserbyId }) {
     return (
         <>
             <form
-                className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-24 "
+                className="grid grid-cols-2 gap-x-6 gap-y-4 items-center p-6 md:p-24 "
                 onSubmit={handleSubmitEditUser}
             >
 
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>First name</h1>
                     <RegisterInput
                         placeholder={UserbyId.FistName}
@@ -120,7 +120,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.firstName && <InputErrorMessage message={error.firstName} />}
                 </div>
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Last Name</h1>
                     <RegisterInput
                         placeholder={UserbyId.LastName}
@@ -132,7 +132,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     {error.lastName && <InputErrorMessage message={error.lastName} />}
                 </div>
 
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Employee Id</h1>
                     <RegisterInput
                         placeholder={UserbyId.EmployeeID}
@@ -143,7 +143,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.employeeId && <InputErrorMessage message={error.employeeId} />}
                 </div>
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Supervisor</h1>
                     <RegisterInput
                         placeholder={UserbyId.Supervisor}
@@ -154,10 +154,10 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.userBossId && <InputErrorMessage message={error.userBossId} />}
                 </div>
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col md:gap-2 mt-10 md:mt-2">
                     <h1 className="pl-2">Select Employee Position</h1>
                     <select
-                        className="w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
+                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
                         onChange={handleChangeInput}
                         value={input.position}
                         name="position"
@@ -170,7 +170,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     </select>
                 </div>
 
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Email</h1>
                     <RegisterInput
                         placeholder={UserbyId.Email}
@@ -181,7 +181,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.email && <InputErrorMessage message={error.email} />}
                 </div>
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>Phone Number</h1>
                     <RegisterInput
                         placeholder={UserbyId.PhoneNumber}
@@ -192,7 +192,7 @@ export default function EditemployeeForm({ UserbyId }) {
                     />
                     {error.mobile && <InputErrorMessage message={error.mobile} />}
                 </div>
-                <div className=" p-1 w-[360px] h-[80px] flex flex-col gap-2 ">
+                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                     <h1>ProfileImage</h1>
                     <InputFileUpload
                         type="file"
