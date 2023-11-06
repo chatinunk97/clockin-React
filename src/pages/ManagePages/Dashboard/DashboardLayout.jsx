@@ -11,11 +11,17 @@ const DashboardMenu = [
   { id: 2, to: "/manage/employees", Icon: BsPersonFill, text: "Employees" },
   {
     id: 3,
+    to: "/manage/leave-setting",
+    Icon: BsCalendarEvent,
+    text: "Leave Setting",
+  },
+  {
+    id: 4,
     to: "/manage/leave-request",
     Icon: BsCalendarEvent,
     text: "Leave Request",
   },
-  { id: 4, to: "/manage/ot-Request", Icon: BsFillMoonFill, text: "OT Request" },
+  { id: 5, to: "/manage/ot-Request", Icon: BsFillMoonFill, text: "OT Request" },
 ];
 
 export default function DashboardLayout() {
@@ -30,7 +36,10 @@ export default function DashboardLayout() {
       <div className=" hidden md:flex md:justify-center md:items-center">
         <div className="flex flex-col justify-center items-center pt-4 pb-4 gap-6 w-full">
           <div className="bg-white rounded-full w-40 h-40">
-            <img src="https://img.freepik.com/premium-vector/clock-location-icon-realtime-geotag-icon-traffic-jam-symbol-travel-time-symbol-vector-illustration_756957-2275.jpg?w=740" className="w-full h-full object-contain rounded-full" />
+            <img
+              src="https://img.freepik.com/premium-vector/clock-location-icon-realtime-geotag-icon-traffic-jam-symbol-travel-time-symbol-vector-illustration_756957-2275.jpg?w=740"
+              className="w-full h-full object-contain rounded-full"
+            />
           </div>
           <h1 className="text-2xl text-white font-bold">Clock IN</h1>
         </div>
@@ -55,9 +64,7 @@ export default function DashboardLayout() {
               </div>
             </div>
           </div>
-
         </nav>
-
       </div>
     </div>
   );

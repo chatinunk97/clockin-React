@@ -2,7 +2,7 @@ import PersonalDetailList from "./PersonalDetailList";
 
 export default function PersonalDetails({ profileUser }) {
   return (
-    <div>
+    <div className="lg:w-96 lg:m-auto overflow-hidden overflow-y-auto pt-20">
       {profileUser && (
         <h1 className="pt-14 font-bold text-[36px] text-center">
           {profileUser.firstName} {profileUser.lastName}

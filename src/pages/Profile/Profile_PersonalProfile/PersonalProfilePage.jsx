@@ -38,7 +38,7 @@ export default function PersonalProfilePage() {
         <>
           {profileUser ? (
             <>
-              <div className="relative flex justify-center items-center bg-primaryGreen w-full py-11">
+              <div className="flex fixed justify-center items-center bg-primaryGreen w-full py-11">
                 <Avatar
                   src={
                     isAuthUser

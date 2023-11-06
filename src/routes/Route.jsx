@@ -22,8 +22,9 @@ import Authenticated from "../features/auth/Authenticated";
 import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage";
 import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
 import ManageEmployees from "../pages/ManagePages/Dashboard/ManageEmployees";
-import MangeLeaveRequest from "../pages/ManagePages/Dashboard/MangeLeaveRequest";
+import ManageLeaveRequest from "../pages/ManagePages/Leave/ManageLeaveRequest";
 import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
+import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 
 export default function Route() {
@@ -99,7 +100,8 @@ export default function Route() {
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
         { path: "/manage/employees", element: <ManageEmployees /> },
-        { path: "/manage/leave-request", element: <MangeLeaveRequest /> },
+        { path: "/manage/leave-setting", element: <ManageLeaveSetting /> },
+        { path: "/manage/leave-request", element: <ManageLeaveRequest /> },
         { path: "/manage/ot-Request", element: <ManageOTRequest /> },
         { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],

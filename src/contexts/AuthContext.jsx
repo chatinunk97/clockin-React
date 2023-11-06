@@ -6,28 +6,42 @@ import {
   getAccessToken,
   removeAccessToken,
 } from "../utils/local-storage";
-
+import getDistance from "../utils/getDistance";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [isClockin, setIsClockIn] = useState(true);
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
+  const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
   const [time, setTime] = useState("time");
 
   useEffect(() => {
     if (getAccessToken()) {
-      clockAxios.get("/user/me").then((res) => {
-        setAuthUser({ ...res.data.user, clockId: res.data.newestClock.id });
-        if (res.data.newestClock.clockOutTime) {
-          setIsClockIn(true);
-        } else {
-          setIsClockIn(false);
-        }
-      });
+      clockAxios
+        .get("/user/me")
+        .then((res) => {
+          if (!res.data.newestClock || res.data.newestClock.clockOutTime) {
+            setAuthUser({ ...res.data.user });
+            console.log("first######");
+            setIsClockIn(true);
+          } else {
+            setAuthUser({ ...res.data.user, clockId: res.data.newestClock.id });
+            setIsClockIn(false);
+          }
+        })
+        .then(() => {
+          //Get first company location
+          clockAxios.get("/clock/location").then((res) => {
+            setCompanyLocation({
+              lat: res.data[0].latitudeCompany,
+              lng: res.data[0].longitudeCompany,
+            });
+          });
+        });
     }
-
+    //Get location permission
     if (navigator.geolocation) {
       setInitialLoading(true);
       navigator.geolocation.getCurrentPosition(
@@ -72,8 +86,17 @@ export default function AuthContextProvider({ children }) {
   };
   const clockIn = async (input) => {
     try {
+      console.log(location, companyLocation);
+      if (getDistance(location, companyLocation) > 100) {
+        return alert(`You are out of clock in range !`);
+      }
       const result = await clockAxios.post("/clock/clockin", input);
-      console.log(result);
+      const clockInTime = new Date(result.data.clockIn.clockInTime);
+      if (result.data.clockIn.status === "LATE") {
+        alert("You're freaking late !!! ");
+      }
+      alert(`Clock in Successfully ! at ${clockInTime}`);
+      setIsClockIn(false);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +104,9 @@ export default function AuthContextProvider({ children }) {
   const clockOut = async (input) => {
     try {
       const result = await clockAxios.patch("/clock/clockout", input);
-      console.log(result);
+      const clockOutTime = new Date(result.data.clock.clockOutTime);
+      alert(`Clock out Successfully! at ${clockOutTime}`);
+      setIsClockIn(true);
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +126,7 @@ export default function AuthContextProvider({ children }) {
         clockIn,
         clockOut,
         isClockin,
-        setIsClockIn
+        companyLocation,
       }}
     >
       {children}
