@@ -10,7 +10,7 @@ import LinearIndeterminate from "../../../components/LoadingBar";
 
 export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [UserbyId, setUserById] = useState({})
+    const [UserbyId, setUserById] = useState({});
     const [columnDefs] = useState([
         { field: "FistName", flex: 1 },
         { field: "LastName", flex: 1 },
@@ -27,7 +27,7 @@ export default function TableEmployee({ allUser, loading }) {
                     <div className="p-2">
                         <button
                             onClick={() => {
-                                setUserById(params.data)
+                                setUserById(params.data);
                                 setIsOpen(true);
                             }}
                             className="font-bold text-white w-14 h-6 bg-green-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-green-400"
@@ -39,7 +39,7 @@ export default function TableEmployee({ allUser, loading }) {
                         <button
                             onClick={(e) => {
                                 console.log(params.data);
-                                console.log(UserbyId)
+                                console.log(UserbyId);
                             }}
                             className="font-bold text-white w-14 h-6 bg-blue-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-blue-400"
                         >
@@ -51,8 +51,6 @@ export default function TableEmployee({ allUser, loading }) {
         },
     ]);
 
-
-
     const gridOptions = {
         defaultColDef: {
             resizable: true,
@@ -61,11 +59,11 @@ export default function TableEmployee({ allUser, loading }) {
     };
 
     const sortingOrder = useMemo(() => {
-        return ['desc', 'asc', null];
+        return ["desc", "asc", null];
     }, []);
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
+        <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
             {loading && <LinearIndeterminate />}
             <AgGridReact rowData={allUser} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
             <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
