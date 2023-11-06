@@ -38,7 +38,7 @@ export default function MenuHamburger() {
     }, []);
 
     return (
-        <div className="z-40 min-w-[414px] min-h-[896px] " ref={dropdownRef}>
+        <div className="z-40 min-w-[414px] h-12 " ref={dropdownRef}>
             <div className="cursor-pointer text-slate-300 mt-4 ml-6 w-10" onClick={() => setIsOpen(!isOpen)}>
                 <MenuIcon />
             </div>
