@@ -73,7 +73,8 @@ export default function AuthContextProvider({ children }) {
   const clockIn = async (input) => {
     try {
       const result = await clockAxios.post("/clock/clockin", input);
-      console.log(result);
+      const clockInTime = new Date(result.data.clockIn.clockInTime);
+      alert(`Clock in Successfully ! at ${clockInTime}`);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +82,8 @@ export default function AuthContextProvider({ children }) {
   const clockOut = async (input) => {
     try {
       const result = await clockAxios.patch("/clock/clockout", input);
-      console.log(result);
+      const clockOutTime = new Date(result.data.clock.clockOutTime);
+      alert(`Clock out Successfully! at ${clockOutTime}`);
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +103,7 @@ export default function AuthContextProvider({ children }) {
         clockIn,
         clockOut,
         isClockin,
-        setIsClockIn
+        setIsClockIn,
       }}
     >
       {children}
