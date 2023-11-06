@@ -12,7 +12,7 @@ export default function ClockinMainPage() {
     clockIn,
     isClockin,
     clockOut,
-    setIsClockIn,
+    companyLocation,
   } = useAuth();
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
@@ -24,7 +24,6 @@ export default function ClockinMainPage() {
         longitudeClockOut: location.lat,
         clockOutTime: time,
       };
-      setIsClockIn(true);
       clockOut(input);
       return;
     }
@@ -33,17 +32,12 @@ export default function ClockinMainPage() {
       longitudeClockIn: location.lat,
       clockInTime: time,
     };
-    setIsClockIn(false);
     clockIn(input);
   };
   useEffect(() => {
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/timezone/json?location=
-    ${location.lat}
-    ,
-    ${location.lng}
-    &timestamp=1331161200&key=AIzaSyALKm5K2JFpte9A8cXryHMa2cJR3j7jemo`
+        `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1331161200&key=AIzaSyALKm5K2JFpte9A8cXryHMa2cJR3j7jemo`
       )
       .then((res) => {
         axios
@@ -63,7 +57,7 @@ export default function ClockinMainPage() {
         {initialLoading ? (
           <img src="https://media.tenor.com/Dz9GFJ9ngPQAAAAd/me-waiting-for-v-movie-trailer-on-prime-mr-bean.gif"></img>
         ) : (
-          <GoogleMap location={location} />
+          <GoogleMap location={location} companyLocation={companyLocation} />
         )}
       </div>
       <div>
