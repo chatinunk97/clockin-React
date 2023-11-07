@@ -6,27 +6,29 @@ import useAuth from "../../hooks/use-auth";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingBar from "../../components/LoadingBar";
+import { clockAxios } from "../../config/axios";
 export default function ClockinMainPage() {
-  const { location, companyLocation } = useAuth();
+  const { location } = useAuth();
+  const [companyLocation , setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
 
   useEffect(() => {
-    console.log(location)
-    axios
-      .get(
+    const fetchData = async () => {
+      const res = await axios.get(
         `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1331161200&key=AIzaSyALKm5K2JFpte9A8cXryHMa2cJR3j7jemo`
-      )
-      .then((res) => {
-        axios
-          .get(`http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`)
-          .then((time) => {
-            setTime(new Date(time.data.datetime));
-            setWaitTimer(false);
-            setIsLoading(false);
-          });
-      });
+      );
+      const time = await axios.get(
+        `http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
+      );
+      const {data} = await clockAxios.get(`/clock/location`)
+      setCompanyLocation({lat : data.latitudeCompany , lng : data.longitudeCompany})
+      setTime(new Date(time.data.datetime));
+      setWaitTimer(false);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
   return (
     <div>

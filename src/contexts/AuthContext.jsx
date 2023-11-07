@@ -27,13 +27,7 @@ export default function AuthContextProvider({ children }) {
         setLocation(location);
       })
       .catch((error) => {
-       alert('User dinied location permission, refreshing page')
-       setTimeout(() => {
-        console.log('bye')
-        window.location.href = "http://localhost:5173/login";
-       }, 1000);
-       
-
+       alert('User dinied location permission')
       })
       .finally(()=>{
         setInitialLoading(false)
