@@ -12,13 +12,13 @@ export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
     const [UserbyId, setUserById] = useState({});
     const [columnDefs] = useState([
-        { field: "FistName", flex: 1 },
-        { field: "LastName", flex: 1 },
-        { field: "Position", flex: 1 },
-        { field: "Supervisor", flex: 1 },
-        { field: "EmployeeID", flex: 1 },
-        { field: "PhoneNumber", flex: 1 },
-        { field: "Email", flex: 1 },
+        { field: "firstName", flex: 1 },
+        { field: "lastName", flex: 1 },
+        { field: "position", flex: 1 },
+        { field: "userBossId", flex: 1 },
+        { field: "employeeId", flex: 1 },
+        { field: "mobile", flex: 1 },
+        { field: "email", flex: 1 },
         { field: "isActive", flex: 1 },
         {
             field: "actionButtons",
