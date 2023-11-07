@@ -45,8 +45,6 @@ export default function ManageLeaveSetting() {
             leaveObj={el}
             value={el.defaultDateAmount}
             onChange={(e) => {
-              console.log(el.id);
-              console.log(e.target);
               handleChangeInput(e, el.id);
             }}
           />
