@@ -5,7 +5,7 @@ import { useState, useMemo } from "react";
 import LinearIndeterminate from "../../../components/LoadingBar";
 
 export default function TableLeaveRequest({ requestLeaves, loading }) {
-  console.log(requestLeaves);
+  // console.log(requestLeaves);
   const [columnDefs] = useState([
     { field: "firstName", flex: 1 },
     { field: "lastName", flex: 1 },
