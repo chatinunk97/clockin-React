@@ -9,11 +9,10 @@ import LoadingBar from "../../components/LoadingBar";
 import { clockAxios } from "../../config/axios";
 import SubmitButton from "../../components/SubmitButton";
 export default function ClockinMainPage() {
-  const { location, clockIn } = useAuth();
+  const { location, clockIn , clockOut } = useAuth();
   const [isClockIn, setIsClockIn] = useState(true);
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
-  const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
 
   useEffect(() => {
@@ -33,12 +32,11 @@ export default function ClockinMainPage() {
       setTime(new Date(time.data.datetime));
       //Latest Clock
       const latestClock = await clockAxios.get("/clock/latestClock");
-      if(!latestClock){
-        setIsClockIn(false)
-      }else{
+      if(!latestClock.data){
         setIsClockIn(true)
+      }else{
+        setIsClockIn(false)
       }
-      setWaitTimer(false);
       setIsLoading(false);
     };
     fetchData();
@@ -46,8 +44,10 @@ export default function ClockinMainPage() {
 
   const handleClock = async () => {
     if(isClockIn){
+      setIsClockIn(false)
       return clockIn(companyLocation, location, time);
     }
+    setIsClockIn(true)
     return clockOut(companyLocation, location, time)
   };
   return (
@@ -60,7 +60,6 @@ export default function ClockinMainPage() {
             <ClockInHeader
               time={time}
               setTime={setTime}
-              waitTimer={waitTimer}
             />
           </div>
           <div className="overflow-hidden border border-black w-[360px] h-[800px]  md:w-[800px] md:h-[1200x]">
@@ -74,12 +73,12 @@ export default function ClockinMainPage() {
             <InfoClockinItem />
           </div>
           <div className="mt-20 md:mt-8 h-screen">
-              <SubmitButton
+              <button
                 onClick={handleClock}
-                className={`${isClockIn ? 'bg-green-600':'bg-orange-600' } w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400`}
+                className={`${isClockIn ? 'bg-green-600 hover:bg-green-400':'bg-orange-600 hover:bg-orange-400' } w-[200px] p-4 font-semibold text-white rounded-3xl `}
               >
                 {isClockIn ? 'Clock In':'Clock Out' }
-              </SubmitButton>
+              </button>
           </div>
         </div>
       )}

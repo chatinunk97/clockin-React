@@ -53,18 +53,23 @@ export default function AuthContextProvider({ children }) {
   const clockIn = async (companyLocation, userLocation, time) => {
     try {
       console.log("Clock In");
-      if (getDistance(companyLocation, location) > 100) {
+      if (getDistance(companyLocation, location,) > 50) {
         return alert("You're out of clock in/out range ; 50 meters");
       }
-      const result = await clockAxios.post("clock/clockIn",clockObject(userLocation, time));
+      const result = await clockAxios.post("clock/clockIn",clockObject(userLocation, time,"clockIn"));
       console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
-  const clockOut = async (input) => {
+  const clockOut = async (companyLocation, userLocation, time) =>{
     try {
       console.log("Clock Out");
+      if (getDistance(companyLocation, location) > 50) {
+        return alert("You're out of clock in/out range ; 50 meters");
+      }
+      const result = await clockAxios.patch("clock/clockOut",clockObject(userLocation, time,"clockOut"));
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
