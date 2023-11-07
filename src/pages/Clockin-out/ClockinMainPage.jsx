@@ -8,7 +8,7 @@ import axios from "axios";
 import LoadingBar from "../../components/LoadingBar";
 import { clockAxios } from "../../config/axios";
 export default function ClockinMainPage() {
-  const { location } = useAuth();
+  const { location , clockIn } = useAuth();
   const [companyLocation , setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [waitTimer, setWaitTimer] = useState(true);
@@ -30,6 +30,10 @@ export default function ClockinMainPage() {
     };
     fetchData();
   }, []);
+
+const handleClockIn = async ()=>{
+  clockIn(companyLocation , location,time)
+}
   return (
     <div>
       {isLoading ? (
@@ -55,9 +59,7 @@ export default function ClockinMainPage() {
           </div>
           <div className="mt-20 md:mt-8 h-screen">
             <button
-              onClick={() => {
-                console.log("Clock button clicked");
-              }}
+              onClick={handleClockIn}
               className="bg-green-600 w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400"
             >
               Clock In

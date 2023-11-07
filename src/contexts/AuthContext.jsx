@@ -7,6 +7,8 @@ import {
   removeAccessToken,
 } from "../utils/local-storage";
 import locationPermission from "../utils/locationPermission";
+import clockObject from "../utils/clockObjectChange";
+import getDistance from "../utils/getDistance";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
@@ -27,10 +29,10 @@ export default function AuthContextProvider({ children }) {
         setLocation(location);
       })
       .catch((error) => {
-       alert('User dinied location permission')
+        alert("User dinied location permission");
       })
-      .finally(()=>{
-        setInitialLoading(false)
+      .finally(() => {
+        setInitialLoading(false);
       });
   }, []);
 
@@ -48,9 +50,14 @@ export default function AuthContextProvider({ children }) {
     setInitialLoading(false);
     console.log("logout");
   };
-  const clockIn = async (input) => {
+  const clockIn = async (companyLocation, userLocation, time) => {
     try {
       console.log("Clock In");
+      if (getDistance(companyLocation, location) > 100) {
+        return alert("You're out of clock in/out range ; 50 meters");
+      }
+      const result = await clockAxios.post("clock/clockIn",clockObject(userLocation, time));
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
