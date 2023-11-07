@@ -14,6 +14,8 @@ export const ManageContext = createContext();
 export default function ManageContextProvider({ children }) {
   const [manageUser, setManageUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [allUser, setAllUser] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -45,7 +47,22 @@ export default function ManageContextProvider({ children }) {
   const addemployee = async (credential) => {
     try {
       const response = await dashboardAxios.post("/user/createUser", credential);
-
+      const userData = response.data.user
+      const newUser = {
+        PhotoImg: userData.profileImage,
+        FistName: userData.firstName,
+        LastName: userData.lastName,
+        Position: userData.position,
+        Supervisor: userData.id || "",
+        EmployeeID: userData.employeeId,
+        PhoneNumber: userData.mobile,
+        Email: userData.email,
+        id: userData.id,
+        userType: userData.userType,
+        isActive: userData.isActive,
+        checkLocation: userData.checkLocation,
+      }
+      setAllUser((prev) => { return [newUser, ...prev] })
       if (response.status === 201) {
         Swal.fire({
           position: 'center',
@@ -53,7 +70,8 @@ export default function ManageContextProvider({ children }) {
           title: 'Add user success!',
           showConfirmButton: false,
           timer: 1500
-        });
+        })
+
       }
     } catch (error) {
       Swal.fire({
@@ -66,20 +84,69 @@ export default function ManageContextProvider({ children }) {
       console.error('Error:', error);
     }
   }
-  const getalluser = async () => {
-    await dashboardAxios.get('/user/getAllUser')
-  }
+
 
   const updateuser = async (credential) => {
-    const response = await dashboardAxios.patch("/user/updateUser", credential)
-    if (response.status === 201) {
-      alert(":)");
+    try {
+      const response = await dashboardAxios.patch("/user/updateUser", credential)
+      if (response.status === 201) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Edit user success!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Something Went Wrong',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      console.error('Error:', error);
     }
   }
 
+
+
+  const getalluser = async () => {
+    setLoading(true);
+    dashboardAxios
+      .get("/user/getAllUser")
+      .then((res) => {
+        const userData = res.data.allUser.map((user) => ({
+          PhotoImg: user.profileImage,
+          FistName: user.firstName,
+          LastName: user.lastName,
+          Position: user.position,
+          Supervisor: user.id || "",
+          EmployeeID: user.employeeId,
+          PhoneNumber: user.mobile,
+          Email: user.email,
+          id: user.id,
+          userType: user.userType,
+          isActive: user.isActive,
+          checkLocation: user.checkLocation,
+        }));
+        setAllUser(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+  }
+
+
+
   return (
     <ManageContext.Provider
-      value={{ login, logout, initialLoading, manageUser, addemployee, setInitialLoading, getalluser, updateuser }}
+      value={{ login, logout, initialLoading, manageUser, addemployee, setInitialLoading, getalluser, updateuser, allUser, loading }}
     >
       {children}
     </ManageContext.Provider>

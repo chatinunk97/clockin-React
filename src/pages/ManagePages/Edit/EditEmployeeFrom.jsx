@@ -43,7 +43,7 @@ const validateregister = (input) => {
 
 
 
-export default function EditemployeeForm({ UserbyId, allUser }) {
+export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
         profileImage: UserbyId.PhotoImg,
@@ -98,6 +98,7 @@ export default function EditemployeeForm({ UserbyId, allUser }) {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                onClose()
             }
         } catch (err) {
             Swal.fire({

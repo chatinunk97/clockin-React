@@ -19,6 +19,7 @@ export default function TableEmployee({ allUser, loading }) {
         { field: "EmployeeID", flex: 1 },
         { field: "PhoneNumber", flex: 1 },
         { field: "Email", flex: 1 },
+        { field: "isActive", flex: 1 },
         {
             field: "actionButtons",
             headerName: "",
@@ -70,7 +71,7 @@ export default function TableEmployee({ allUser, loading }) {
             {loading && <LinearIndeterminate />}
             <AgGridReact rowData={allUser} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
             <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
-                <EditemployeeForm UserbyId={UserbyId} allUser={allUser} />
+                <EditemployeeForm UserbyId={UserbyId} allUser={allUser} onClose={() => setIsOpen(false)} />
             </Modal>
         </div>
     );
