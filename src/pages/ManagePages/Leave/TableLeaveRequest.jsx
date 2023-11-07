@@ -11,7 +11,7 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
     { field: "lastName", flex: 1 },
     { field: "startDate", flex: 1 },
     { field: "endDate", flex: 1 },
-    { field: "halfDate", flex: 1 },
+    // { field: "halfDate", flex: 1 },
     { field: "statusRequest", flex: 1 },
     { field: "messageLeave", flex: 1 },
     {

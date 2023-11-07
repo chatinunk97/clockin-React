@@ -84,6 +84,14 @@ export default function ManageContextProvider({ children }) {
   const getAllLeaveProfile = async () =>
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
+  const updateLeaveProfile = async (updatedLeaveProfile) => {
+    const res = await dashboardAxios.patch(
+      `leave/updateLeaveProfile/${updatedLeaveProfile.id}`,
+      updatedLeaveProfile
+    );
+    console.log(res);
+  };
+
   return (
     <ManageContext.Provider
       value={{
@@ -96,6 +104,7 @@ export default function ManageContextProvider({ children }) {
         getalluser,
         updateuser,
         getAllLeaveProfile,
+        updateLeaveProfile,
       }}
     >
       {children}
