@@ -38,7 +38,7 @@ const validateregister = (input) => {
   }
 };
 
-export default function AddmployeeForm({ allUser }) {
+export default function AddmployeeForm({ allUser, onClose }) {
   const [file, setFile] = useState(null);
   const [input, setInput] = useState({
     profileImage: "",
@@ -60,7 +60,7 @@ export default function AddmployeeForm({ allUser }) {
   const [loading, setLoading] = useState(false);
 
   const handleChangeInput = (e) => {
-    console.log(e)
+
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleChangeDropdown = (data, name) => {
@@ -70,9 +70,7 @@ export default function AddmployeeForm({ allUser }) {
   const handleSubmitAddUser = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validationError = validateregister(input);
-      console.log(validationError)
       const formData = new FormData();
       formData.append("profileImage", input.profileImage);
       formData.append("data", JSON.stringify(input));
@@ -81,11 +79,13 @@ export default function AddmployeeForm({ allUser }) {
       }
       setError({});
       setLoading(true);
-      await addemployee(formData);
+      await addemployee(formData)
+      onClose()
     } catch (err) {
       console.log(error);
     } finally {
       setLoading(false);
+
     }
   };
 
