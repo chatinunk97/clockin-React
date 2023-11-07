@@ -8,6 +8,7 @@ import {
 } from "../utils/local-storage";
 import { useEffect } from "react";
 import Swal from 'sweetalert2'
+import { AgMenuItemComponent } from "ag-grid-community";
 
 export const ManageContext = createContext();
 
@@ -88,8 +89,18 @@ export default function ManageContextProvider({ children }) {
 
   const updateuser = async (credential) => {
     try {
-      const response = await dashboardAxios.patch("/user/updateUser", credential)
-      if (response.status === 201) {
+      const res = await dashboardAxios.patch("/user/updateUser", credential)
+      const newUser = [...allUser]
+      const foundIdx = newUser.findIndex(
+        (item) => item.id === res.data.user.id
+      )
+      newUser.splice(foundIdx, 1, res.data.user)
+      console.log(newUser, "=========")
+      console.log(allUser)
+      setAllUser(newUser)
+      // console.log(allUser)
+
+      if (res.status === 200) {
         Swal.fire({
           position: 'center',
           icon: 'success',

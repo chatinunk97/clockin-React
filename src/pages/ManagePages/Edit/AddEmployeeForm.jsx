@@ -70,9 +70,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
   const handleSubmitAddUser = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validationError = validateregister(input);
-      console.log(validationError)
       const formData = new FormData();
       formData.append("profileImage", input.profileImage);
       formData.append("data", JSON.stringify(input));
