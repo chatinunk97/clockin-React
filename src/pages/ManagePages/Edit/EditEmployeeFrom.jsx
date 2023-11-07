@@ -42,13 +42,14 @@ const validateregister = (input) => {
 
 
 export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
+    console.log(UserbyId.userBossId)
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
         profileImage: UserbyId.profileImage,
         firstName: UserbyId.firstName,
         lastName: UserbyId.lastName,
         position: UserbyId.position,
-        userBossId: UserbyId.id || "",
+        userBossId: UserbyId.userBossId || "",
         employeeId: UserbyId.employeeId,
         mobile: UserbyId.mobile,
         email: UserbyId.email,

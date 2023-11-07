@@ -8,7 +8,7 @@ import {
 } from "../utils/local-storage";
 import { useEffect } from "react";
 import Swal from 'sweetalert2'
-import { AgMenuItemComponent } from "ag-grid-community";
+
 
 export const ManageContext = createContext();
 
@@ -17,6 +17,7 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [allLeave, setAllLeave] = useState([]);
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -54,7 +55,7 @@ export default function ManageContextProvider({ children }) {
         firstName: userData.firstName,
         lastName: userData.lastName,
         position: userData.position,
-        userBossId: userData.id || "",
+        userBossId: userData.userRelationshipUser || "",
         employeeId: userData.employeeId,
         mobile: userData.mobile,
         email: userData.email,
@@ -66,9 +67,9 @@ export default function ManageContextProvider({ children }) {
       setAllUser((prev) => { return [newUser, ...prev] })
       if (response.status === 201) {
         Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Add user success!',
+          position: "center",
+          icon: "success",
+          title: "Add user success!",
           showConfirmButton: false,
           timer: 1500
         })
@@ -76,13 +77,13 @@ export default function ManageContextProvider({ children }) {
       }
     } catch (error) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Something Went Wrong',
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   }
 
@@ -90,13 +91,13 @@ export default function ManageContextProvider({ children }) {
   const updateuser = async (credential) => {
     try {
       const res = await dashboardAxios.patch("/user/updateUser", credential)
+      console.log(res.data, '-----------------------')
       const newUser = [...allUser]
       const foundIdx = newUser.findIndex(
         (item) => item.id === res.data.user.id
       )
-      newUser.splice(foundIdx, 1, res.data.user)
-      console.log(newUser, "=========")
-      console.log(allUser)
+      newUser.splice(foundIdx, 1, { ...res.data.user, userBossId: res.data.user.userRelationshipUser[0].userBossId })
+      console.log(console.log(newUser))
       setAllUser(newUser)
       // console.log(allUser)
 
@@ -119,7 +120,10 @@ export default function ManageContextProvider({ children }) {
       });
       console.error('Error:', error);
     }
-  }
+  };
+
+  const getAllLeaveProfile = async () =>
+    await dashboardAxios.get("/leave/getAllLeaveProfile");
 
 
 
@@ -133,7 +137,8 @@ export default function ManageContextProvider({ children }) {
           firstName: user.firstName,
           lastName: user.lastName,
           position: user.position,
-          userBossId: user.id || "",
+          userBossId: user.userRelationshipUser[0]?.userBossId
+            || "",
           employeeId: user.employeeId,
           mobile: user.mobile,
           email: user.email,
@@ -157,7 +162,19 @@ export default function ManageContextProvider({ children }) {
 
   return (
     <ManageContext.Provider
-      value={{ login, logout, initialLoading, manageUser, addemployee, setInitialLoading, getalluser, updateuser, allUser, loading }}
+      value={{
+        login,
+        logout,
+        initialLoading,
+        manageUser,
+        addemployee,
+        setInitialLoading,
+        getalluser,
+        updateuser,
+        getAllLeaveProfile,
+        loading,
+        allUser
+      }}
     >
       {children}
     </ManageContext.Provider>
