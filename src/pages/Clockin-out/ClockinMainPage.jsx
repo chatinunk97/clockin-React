@@ -7,9 +7,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingBar from "../../components/LoadingBar";
 import { clockAxios } from "../../config/axios";
+import SubmitButton from "../../components/SubmitButton";
 export default function ClockinMainPage() {
-  const { location , clockIn } = useAuth();
-  const [companyLocation , setCompanyLocation] = useState({ lat: "", lng: "" });
+  const { location, clockIn } = useAuth();
+  const [isClockIn, setIsClockIn] = useState(true);
+  const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [waitTimer, setWaitTimer] = useState(true);
   const [time, setTime] = useState(null);
@@ -22,18 +24,32 @@ export default function ClockinMainPage() {
       const time = await axios.get(
         `http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
       );
-      const {data} = await clockAxios.get(`/clock/location`)
-      setCompanyLocation({lat : data.latitudeCompany , lng : data.longitudeCompany})
+      //Compnay Location
+      const { data } = await clockAxios.get(`/clock/location`);
+      setCompanyLocation({
+        lat: data.latitudeCompany,
+        lng: data.longitudeCompany,
+      });
       setTime(new Date(time.data.datetime));
+      //Latest Clock
+      const latestClock = await clockAxios.get("/clock/latestClock");
+      if(!latestClock){
+        setIsClockIn(false)
+      }else{
+        setIsClockIn(true)
+      }
       setWaitTimer(false);
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
-const handleClockIn = async ()=>{
-  clockIn(companyLocation , location,time)
-}
+  const handleClock = async () => {
+    if(isClockIn){
+      return clockIn(companyLocation, location, time);
+    }
+    return clockOut(companyLocation, location, time)
+  };
   return (
     <div>
       {isLoading ? (
@@ -58,12 +74,12 @@ const handleClockIn = async ()=>{
             <InfoClockinItem />
           </div>
           <div className="mt-20 md:mt-8 h-screen">
-            <button
-              onClick={handleClockIn}
-              className="bg-green-600 w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400"
-            >
-              Clock In
-            </button>
+              <SubmitButton
+                onClick={handleClock}
+                className={`${isClockIn ? 'bg-green-600':'bg-orange-600' } w-[200px] p-4 font-semibold text-white rounded-3xl hover:bg-green-400`}
+              >
+                {isClockIn ? 'Clock In':'Clock Out' }
+              </SubmitButton>
           </div>
         </div>
       )}
