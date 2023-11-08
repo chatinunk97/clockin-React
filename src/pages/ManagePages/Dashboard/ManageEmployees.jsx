@@ -30,7 +30,7 @@ export default function ManageEmployees() {
                     </div>
                     <div onClick={() => {
                         setIsOpen(true)
-                    }} className="rounded-3xl w-28 p-1 ml-9">
+                    }} className="rounded-3xl w-32 p-1 ml-9">
                         <CustomizedButtons />
                     </div>
                 </div>
