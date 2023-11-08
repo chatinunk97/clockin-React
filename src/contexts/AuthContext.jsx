@@ -6,7 +6,6 @@ import {
   getAccessToken,
   removeAccessToken,
 } from "../utils/local-storage";
-import locationPermission from "../utils/locationPermission";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
@@ -21,17 +20,7 @@ export default function AuthContextProvider({ children }) {
         setAuthUser(res.data.user);
       });
     }
-    //Get location permission
-    locationPermission()
-      .then((location) => {
-        setLocation(location);
-      })
-      .catch((error) => {
-        alert("User dinied location permission");
-      })
-      .finally(() => {
-        setInitialLoading(false);
-      });
+    setInitialLoading(false);
   }, []);
 
   const login = async (credential) => {
@@ -46,7 +35,6 @@ export default function AuthContextProvider({ children }) {
     removeAccessToken();
     setAuthUser(null);
     setInitialLoading(false);
-    console.log("logout");
   };
 
   return (
@@ -59,7 +47,6 @@ export default function AuthContextProvider({ children }) {
         setAuthUser,
         location,
         setLocation,
-  
       }}
     >
       {children}

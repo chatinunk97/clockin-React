@@ -7,7 +7,8 @@ import LoadingBar from "../../components/LoadingBar";
 import useClock from "../../hooks/use-clock";
 import SubmitButton from "../../components/SubmitButton";
 export default function ClockinMainPage() {
-  const { location , authUser } = useAuth();
+  const { authUser } = useAuth();
+  const { location } = useClock();
   const {
     isClockIn,
     companyLocation,
@@ -30,8 +31,7 @@ export default function ClockinMainPage() {
         <LoadingBar />
       ) : (
         <div className="flex flex-col justify-center items-center h-screen">
-          <ClockInHeader time={time} setTime={setTime} authUser={authUser}/>
-
+          <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
           <div className="overflow-hidden border border-black w-[360px] h-[800px]  md:w-[800px] md:h-[1200x]">
             <GoogleMap location={location} companyLocation={companyLocation} />
           </div>
