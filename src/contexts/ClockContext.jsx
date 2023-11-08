@@ -4,6 +4,7 @@ import { createContext } from "react";
 import { clockAxios } from "../config/axios";
 import getDistance from "../utils/getDistance";
 import locationPermission from "../utils/locationPermission";
+import clockObjectChange from "../utils/clockObjectChange";
 
 export const ClockContext = createContext();
 export default function ClockContextProvider({ children }) {
@@ -51,7 +52,7 @@ export default function ClockContextProvider({ children }) {
       }
       await clockAxios.post(
         "clock/clockIn",
-        clockObject(userLocation, time, "clockIn")
+        clockObjectChange(userLocation, time, "clockIn")
       );
       setIsClockIn(false);
     } catch (error) {
@@ -66,9 +67,8 @@ export default function ClockContextProvider({ children }) {
       }
       await clockAxios.patch(
         "clock/clockOut",
-        clockObject(userLocation, time, "clockOut")
+        clockObjectChange(userLocation, time, "clockOut")
       );
-      console.log(result);
       setIsClockIn(true);
     } catch (error) {
       console.log(error);
