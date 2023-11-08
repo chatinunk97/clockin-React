@@ -7,15 +7,13 @@ import {
   removeAccessToken,
 } from "../utils/local-storage";
 import locationPermission from "../utils/locationPermission";
-import clockObject from "../utils/clockObjectChange";
-import getDistance from "../utils/getDistance";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [initialLoading, setInitialLoading] = useState(true);
-  const [time, setTime] = useState("time");
+
 
   useEffect(() => {
     if (getAccessToken()) {
@@ -50,30 +48,7 @@ export default function AuthContextProvider({ children }) {
     setInitialLoading(false);
     console.log("logout");
   };
-  const clockIn = async (companyLocation, userLocation, time) => {
-    try {
-      console.log("Clock In");
-      if (getDistance(companyLocation, location,) > 50) {
-        return alert("You're out of clock in/out range ; 50 meters");
-      }
-      const result = await clockAxios.post("clock/clockIn",clockObject(userLocation, time,"clockIn"));
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const clockOut = async (companyLocation, userLocation, time) =>{
-    try {
-      console.log("Clock Out");
-      if (getDistance(companyLocation, location) > 50) {
-        return alert("You're out of clock in/out range ; 50 meters");
-      }
-      const result = await clockAxios.patch("clock/clockOut",clockObject(userLocation, time,"clockOut"));
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -84,10 +59,7 @@ export default function AuthContextProvider({ children }) {
         setAuthUser,
         location,
         setLocation,
-        time,
-        setTime,
-        clockIn,
-        clockOut,
+  
       }}
     >
       {children}
