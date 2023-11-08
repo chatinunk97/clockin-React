@@ -28,9 +28,8 @@ export default function TableEmployee({ allUser, loading }) {
                     <div className="p-2">
                         <button
                             onClick={() => {
-                                console.log(params.data)
-                                // setUserById(params.data);
-                                // setIsOpen(true);
+                                setUserById(params.data);
+                                setIsOpen(true);
                             }}
                             className="font-bold text-white w-14 h-6 bg-green-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-green-400"
                         >
