@@ -14,6 +14,8 @@ export const ManageContext = createContext();
 export default function ManageContextProvider({ children }) {
   const [manageUser, setManageUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [allUser, setAllUser] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const [allLeave, setAllLeave] = useState([]);
 
   useEffect(() => {
@@ -49,7 +51,24 @@ export default function ManageContextProvider({ children }) {
         "/user/createUser",
         credential
       );
-
+      const userData = response.data.user;
+      const newUser = {
+        profileImage: userData.profileImage,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        position: userData.position,
+        userBossId: userData.userRelationshipUser || "",
+        employeeId: userData.employeeId,
+        mobile: userData.mobile,
+        email: userData.email,
+        id: userData.id,
+        userType: userData.userType,
+        isActive: userData.isActive,
+        checkLocation: userData.checkLocation,
+      };
+      setAllUser((prev) => {
+        return [newUser, ...prev];
+      });
       if (response.status === 201) {
         Swal.fire({
           position: "center",
@@ -70,14 +89,41 @@ export default function ManageContextProvider({ children }) {
       console.error("Error:", error);
     }
   };
-  const getalluser = async () => {
-    await dashboardAxios.get("/user/getAllUser");
-  };
 
   const updateuser = async (credential) => {
-    const response = await dashboardAxios.patch("/user/updateUser", credential);
-    if (response.status === 201) {
-      alert(":)");
+    try {
+      const res = await dashboardAxios.patch("/user/updateUser", credential);
+      console.log(res.data, "-----------------------");
+      const newUser = [...allUser];
+      const foundIdx = newUser.findIndex(
+        (item) => item.id === res.data.user.id
+      );
+      newUser.splice(foundIdx, 1, {
+        ...res.data.user,
+        userBossId: res.data.user.userRelationshipUser[0].userBossId,
+      });
+      console.log(console.log(newUser));
+      setAllUser(newUser);
+      // console.log(allUser)
+
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Edit user success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
     }
   };
 
@@ -90,6 +136,35 @@ export default function ManageContextProvider({ children }) {
       updatedLeaveProfile
     );
     console.log(res);
+  };
+
+  const getalluser = async () => {
+    setLoading(true);
+    dashboardAxios
+      .get("/user/getAllUser")
+      .then((res) => {
+        const userData = res.data.allUser.map((user) => ({
+          profileImage: user.profileImage,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          position: user.position,
+          userBossId: user.userRelationshipUser[0]?.userBossId || "",
+          employeeId: user.employeeId,
+          mobile: user.mobile,
+          email: user.email,
+          id: user.id,
+          userType: user.userType,
+          isActive: user.isActive,
+          checkLocation: user.checkLocation,
+        }));
+        setAllUser(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -105,6 +180,8 @@ export default function ManageContextProvider({ children }) {
         updateuser,
         getAllLeaveProfile,
         updateLeaveProfile,
+        loading,
+        allUser,
       }}
     >
       {children}
