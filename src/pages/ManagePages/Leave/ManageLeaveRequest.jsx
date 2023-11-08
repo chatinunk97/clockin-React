@@ -16,7 +16,7 @@ export default function ManageLeaveRequest() {
           lastName: leave.userLeave.user.lastName,
           startDate: leave.startDate,
           endDate: leave.endDate,
-          halfDate: leave.halfDate,
+          // halfDate: leave.halfDate,
           statusRequest: leave.statusRequest,
           messageLeave: leave.messageLeave,
         }));
