@@ -16,7 +16,8 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [allLeave, setAllLeave] = useState([]);
+  const [leaveProfiles, setLeaveProfiles] = useState([]);
+  const [leaveProfileById, setLeaveProfileById] = useState({});
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -132,10 +133,21 @@ export default function ManageContextProvider({ children }) {
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     const res = await dashboardAxios.patch(
-      `leave/updateLeaveProfile/${updatedLeaveProfile.id}`,
+      "leave/updateLeaveProfile",
       updatedLeaveProfile
     );
-    console.log(res);
+    setLeaveProfileById({
+      ...leaveProfileById,
+      ...res.data.updateLeaveProfile,
+    });
+
+    getAllLeaveProfile()
+      .then((res) => {
+        setLeaveProfiles(res.data.allLeaveProfile);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getalluser = async () => {
@@ -182,6 +194,10 @@ export default function ManageContextProvider({ children }) {
         updateLeaveProfile,
         loading,
         allUser,
+        leaveProfileById,
+        setLeaveProfileById,
+        leaveProfiles,
+        setLeaveProfiles,
       }}
     >
       {children}
