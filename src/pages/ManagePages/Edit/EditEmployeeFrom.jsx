@@ -42,7 +42,6 @@ const validateregister = (input) => {
 
 
 export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
-    console.log(UserbyId.userBossId)
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
         profileImage: UserbyId.profileImage,
@@ -96,6 +95,49 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
 
         }
     };
+    const inputList = [
+        { id: 1, label: "First name", placeholder: "First name", name: "firstName" },
+        { id: 2, label: "last name", placeholder: "Last name", name: "lastName" },
+        { id: 3, label: "Employee Id", placeholder: "Employee Id", name: "employeeId" },
+        { id: 4, label: "Email", placeholder: "Email", name: "email" },
+        { id: 5, label: "Phone Number", placeholder: "Phone Number", name: "mobile" },
+    ]
+    const dropdownlist = [
+        { id: 1, label: "Supervisor", placeholder: "Supervisor", name: "userBossId" },
+        { id: 2, label: "Select Employee Type", placeholder: "userType", name: "userType" },
+        { id: 3, label: "Select Employee Position", placeholder: "position", name: "position" },
+        { id: 4, label: "isActive", placeholder: "isActive", name: "isActive" },
+        { id: 4, label: "checkLocation", placeholder: "checkLocation", name: "checkLocation" },
+    ]
+
+
+    const userposition = [
+        { id: 1, label: "USER", value: "USER" },
+        { id: 2, label: "HR", value: "HR" },
+        { id: 3, label: "MANAGER", value: "MANAGER" },
+    ]
+    const usertype = [
+        { id: 1, label: "FULL TIME", value: "FULLTIME" },
+        { id: 2, label: "PART TIME", value: "PARTTIME" },
+    ]
+
+    const IsTrue = [
+        { id: 1, label: "True", value: true },
+        { id: 2, label: "False", value: false },
+    ]
+
+
+    const optionList = (arr) => {
+        return arr.map((item) => ({
+            id: item.id,
+            label: item.label,
+            value: item.value,
+        }));
+    };
+
+    const positionOptions = optionList(userposition);
+    const UsertypeOptions = optionList(usertype);
+    const isTrueOptions = optionList(IsTrue);
 
 
     return (
@@ -104,137 +146,56 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                 className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6 md:pt-4 md:pl-20 md:pr-20 md:pb-12 overflow-x-auto"
                 onSubmit={handleSubmitEditUser}
             >
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>First name</h1>
-                    <RegisterInput
-                        placeholder=" First name"
-                        value={input.firstName}
-                        onChange={handleChangeInput}
-                        name="firstName"
-                        hasError={error.firstName}
-                    />
-                    {error.firstName && <InputErrorMessage message={error.firstName} />}
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>Last Name</h1>
-                    <RegisterInput
-                        placeholder="Last Name"
-                        value={input.lastName}
-                        onChange={handleChangeInput}
-                        name="lastName"
-                        hasError={error.lastName}
-                    />
-                    {error.lastName && <InputErrorMessage message={error.lastName} />}
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>Employee Id</h1>
-                    <RegisterInput
-                        placeholder="Employee Id"
-                        value={input.employeeId}
-                        onChange={handleChangeInput}
-                        name="employeeId"
-                        hasError={error.employeeId}
-                    />
-                    {error.employeeId && <InputErrorMessage message={error.employeeId} />}
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>Supervisor</h1>
-                    <DropdownSearch
-                        data={supervisorList(allUser)}
-                        onChange={handleChangeDropdown}
-                        name={"userBossId"}
-                    />
-                    {error.userBossId && <InputErrorMessage message={error.userBossId} />}
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1 className="pl-2">Select Employee Position</h1>
-                    <select
-                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
-                        onChange={handleChangeInput}
-                        value={input.position}
-                        name="position"
-                    >
-                        <option value="USER" name="position">
-                            USER
-                        </option>
-                        <option value="HR" name="position">
-                            HR
-                        </option>
-                        <option value="MANAGER" name="position">
-                            MANAGER
-                        </option>
-                    </select>
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1 className="pl-2">Select UserType</h1>
-                    <select
-                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
-                        onChange={handleChangeInput}
-                        value={input.userType}
-                        name="userType"
-                    >
-                        <option value="FULLTIME" name="userType">
-                            FULL TIME
-                        </option>
-                        <option value="PARTTIME" name="userType">
-                            PART TIME
-                        </option>
-                    </select>
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1 className="pl-2">UserActive</h1>
-                    <select
-                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
-                        onChange={handleChangeInput}
-                        value={input.isActive}
-                        name="isActive"
-                    >
-                        <option value="true" name="isActive">
-                            True
-                        </option>
-                        <option value="false" name="isActive">
-                            False
-                        </option>
-                    </select>
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1 className="pl-2">CheckLocation</h1>
-                    <select
-                        className="w-32 md:w-[360px] mb-12 flex items-start flex-col cursor-pointer border rounded-lg "
-                        onChange={handleChangeInput}
-                        value={input.checkLocation}
-                        name="checkLocation"
-                    >
-                        <option value="true" name="checkLocation">
-                            True
-                        </option>
-                        <option value="false" name="checkLocation">
-                            False
-                        </option>
-                    </select>
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>Email</h1>
-                    <RegisterInput
-                        placeholder="Email"
-                        value={input.email}
-                        onChange={handleChangeInput}
-                        name="email"
-                        hasError={error.email}
-                    />
-                    {error.email && <InputErrorMessage message={error.email} />}
-                </div>
-                <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-                    <h1>Phone Number</h1>
-                    <RegisterInput
-                        placeholder="Phone Number"
-                        value={input.mobile}
-                        onChange={handleChangeInput}
-                        name="mobile"
-                        hasError={error.mobile}
-                    />
-                    {error.mobile && <InputErrorMessage message={error.mobile} />}
-                </div>
+                {inputList.map((el) => {
+                    return (
+                        <>
+                            <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2" key={el.id}>
+                                <h1>{el.label}</h1>
+                                <RegisterInput
+                                    placeholder={el.placeholder}
+                                    name={el.name}
+                                    value={input[el.name]}
+                                    onChange={handleChangeInput}
+                                    hasError={error[el.name]}
+                                />
+                            </div>
+                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                        </>)
+                })}
+
+
+
+                {dropdownlist.map((el) => {
+                    let options = [];
+                    if (el.name === "position") {
+                        options = positionOptions;
+                    } else if (el.name === "userType") {
+                        options = UsertypeOptions;
+                    } else if (el.name === "isActive" || el.name === "checkLocation") {
+                        options = isTrueOptions;
+                    } else if (el.name === "userBossId") {
+                        options = supervisorList(allUser)
+                    }
+
+                    return (
+                        <>
+                            <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+                                <h1>{el.label}</h1>
+                                <DropdownSearch
+                                    data={options}
+                                    onChange={handleChangeDropdown}
+                                    name={el.name}
+                                    value={input[el.name]}
+                                    hasError={error[el.name]}
+                                />
+                            </div>
+                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                        </>
+                    )
+                })
+                }
+
+
                 <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
                     <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                         <h1>ProfileImage</h1>
