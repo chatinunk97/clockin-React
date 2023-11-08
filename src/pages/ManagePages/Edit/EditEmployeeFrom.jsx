@@ -128,8 +128,9 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                                     onChange={handleChangeInput}
                                     hasError={error[el.name]}
                                 />
+                                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
                             </div>
-                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+
                         </>)
                 })}
 
@@ -158,8 +159,9 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                                     value={input[el.name]}
                                     hasError={error[el.name]}
                                 />
+                                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
                             </div>
-                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+
                         </>
                     )
                 })

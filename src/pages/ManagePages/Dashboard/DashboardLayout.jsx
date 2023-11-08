@@ -29,7 +29,7 @@ export default function DashboardLayout() {
   const { pathname } = useLocation();
 
   return (
-    <div className=" bg-blue-950 h-16  w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0">
+    <div className=" bg-blue-950 h-16  w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0 md:overflow-y-auto ">
       <div className="block md:hidden">
         <MenuHamburger />
       </div>
@@ -47,7 +47,7 @@ export default function DashboardLayout() {
       <div>
         <hr />
         <nav>
-          <div className="hidden md:flex md:flex-col gap-2 p-2">
+          <div className="hidden md:flex md:flex-col gap-2 p-2 h-full object-contain">
             {DashboardMenu.map((items) => (
               <DashboardMenuItems
                 key={items.id}
@@ -57,7 +57,7 @@ export default function DashboardLayout() {
                 text={items.text}
               />
             ))}
-            <div className="hidden md:block absolute bottom-5 left-5 w-32 p-2 transition-transform hover:scale-105 rounded-xl hover:bg-slate-100 text-red-600 font-semibold">
+            <div className="hidden md:block bottom-5 left-5 w-32 p-2 transition-transform hover:scale-105 rounded-xl hover:bg-slate-100 text-red-600 font-semibold">
               <div className="flex justify-center items-center gap-2">
                 <SlLogout />
                 <button onClick={logout}>Log Out</button>
