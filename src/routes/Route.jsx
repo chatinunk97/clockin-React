@@ -5,7 +5,6 @@ import ClockinMainPage from "../pages/Clockin-out/ClockinMainPage";
 import ProfileRecordMainPage from "../pages/Profile/Profile_Record/ProfileRecordMainPage";
 import ProfileLeaveMainPage from "../pages/Profile/Profile_Request/Leave/ProfileLeaveMainPage";
 import DashboardMainPage from "../pages/ManagePages/Dashboard/DashboardMainPage";
-import IncomingRequestMainPage from "../pages/ManagePages/IncomingRequest/IncomingRequestMainPage";
 import MainLayout from "../pages/MainLayout";
 import ProfileMainPage from "../pages/Profile/ProfileMainPage";
 import PersonalProfilePage from "../pages/Profile/Profile_PersonalProfile/PersonalProfilePage";
@@ -26,6 +25,7 @@ import ManageLeaveRequest from "../pages/ManagePages/Leave/ManageLeaveRequest";
 import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
+import ClockContextProvider from "../contexts/ClockContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -49,7 +49,14 @@ export default function Route() {
       ),
       errorElement: <h1>Not Found</h1>,
       children: [
-        { path: "/clockin", element: <ClockinMainPage /> },
+        {
+          path: "/clockin",
+          element: (
+            <ClockContextProvider>
+              <ClockinMainPage />
+            </ClockContextProvider>
+          ),
+        },
         {
           path: "/profile",
           element: <ProfileMainPage />,

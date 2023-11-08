@@ -3,13 +3,11 @@ import { useState } from 'react';
 import RegisterInput from '../../AuthPages/Register/RegisterInput';
 import LinearIndeterminate from "../../../components/LoadingBar";
 import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
-import { dashboardAxios } from '../../../config/axios';
 import IconLabelButtons from "../../../components/SendButton";
 import InputFileUpload from "../../../components/Uploadbutton";
-import Swal from 'sweetalert2'
 import DropdownSearch from '../../../components/DropdownSearch';
 import supervisorList from '../../../utils/StructureChange/supervisorList';
-
+import useManage from "../../../hooks/use-manage";
 
 const EditSchema = Joi.object({
     profileImage: Joi.allow(null, ""),
@@ -43,17 +41,18 @@ const validateregister = (input) => {
 
 
 
-export default function EditemployeeForm({ UserbyId, allUser }) {
+export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
+    console.log(UserbyId.userBossId)
     const [file, setFile] = useState(null);
     const [input, setInput] = useState({
-        profileImage: UserbyId.PhotoImg,
-        employeeId: UserbyId.EmployeeID,
-        firstName: UserbyId.FistName,
-        lastName: UserbyId.LastName,
-        email: UserbyId.Email,
-        mobile: UserbyId.PhoneNumber,
-        position: UserbyId.Position,
-        userBossId: UserbyId.Supervisor,
+        profileImage: UserbyId.profileImage,
+        firstName: UserbyId.firstName,
+        lastName: UserbyId.lastName,
+        position: UserbyId.position,
+        userBossId: UserbyId.userBossId || "",
+        employeeId: UserbyId.employeeId,
+        mobile: UserbyId.mobile,
+        email: UserbyId.email,
         id: UserbyId.id,
         userType: UserbyId.userType,
         isActive: UserbyId.isActive,
@@ -64,7 +63,7 @@ export default function EditemployeeForm({ UserbyId, allUser }) {
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false)
 
-
+    const { updateuser } = useManage();
 
     const handleChangeInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -79,7 +78,6 @@ export default function EditemployeeForm({ UserbyId, allUser }) {
         try {
             e.preventDefault();
             const validationError = validateregister(input);
-            console.log(validationError)
             const formData = new FormData();
             formData.append("profileImage", input.profileImage);
             delete input.profileImage
@@ -88,28 +86,14 @@ export default function EditemployeeForm({ UserbyId, allUser }) {
                 return setError(validationError);
             }
             setError({});
-            setLoading(true)
-            const res = await dashboardAxios.patch("/user/updateUser", formData)
-            if (res.status === 200) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Edit user success!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+            setLoading(true);
+            await updateuser(formData)
+            onClose()
         } catch (err) {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Something Went Wrong',
-                showConfirmButton: false,
-                timer: 1500
-            });
-            console.error('Error:', error);
+            console.log(error);
         } finally {
-            setLoading(false)
+            setLoading(false);
+
         }
     };
 
