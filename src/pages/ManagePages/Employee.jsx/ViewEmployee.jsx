@@ -8,10 +8,10 @@ import { useEffect } from "react";
 import { dashboardAxios } from "../../../config/axios";
 import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2'
-import { Navigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewEmployee() {
+    const navigate = useNavigate();
     const { userId } = useParams();
     const [employee, setEmployee] = useState({});
     const [clock, setClock] = useState([]);
@@ -60,12 +60,9 @@ export default function ViewEmployee() {
                     title: "Deactivate!",
                     text: "User has been deactivate.",
                     icon: "success"
-                });
+                })
                 if (res.status === 200) {
-                    window.location.replace(
-                        "/manage/employees",
-                    );
-
+                    return navigate('/manage/employees')
                 }
             }
 

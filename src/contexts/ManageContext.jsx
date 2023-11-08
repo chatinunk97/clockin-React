@@ -58,7 +58,7 @@ export default function ManageContextProvider({ children }) {
         firstName: userData.firstName,
         lastName: userData.lastName,
         position: userData.position,
-        userBossId: userData.userRelationshipUser || "",
+        userBossId: userData.userRelationshipUser[0].userBossId || "",
         employeeId: userData.employeeId,
         mobile: userData.mobile,
         email: userData.email,
@@ -93,9 +93,8 @@ export default function ManageContextProvider({ children }) {
 
   const updateuser = async (credential) => {
     try {
-      const res = await dashboardAxios.patch("/user/updateUser", credential);
-      console.log(res.data, "-----------------------");
-      const newUser = [...allUser];
+      const res = await dashboardAxios.patch("/user/updateUser", credential)
+      const newUser = [...allUser]
       const foundIdx = newUser.findIndex(
         (item) => item.id === res.data.user.id
       );
