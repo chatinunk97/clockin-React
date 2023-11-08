@@ -36,7 +36,7 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
         onSubmit={handleSubmitForm}
       >
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>First name</h1>
+          <h1>Leave Name</h1>
           <RegisterInput
             placeholder="Leave Name"
             value={input.leaveName}
@@ -45,7 +45,7 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
           />
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>Default Amount (days)</h1>
+          <h1>Leave Amount (days)</h1>
           <RegisterInput
             placeholder="Defaul Amount (days)"
             value={input.defaultDateAmount}
