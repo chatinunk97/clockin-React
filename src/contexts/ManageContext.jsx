@@ -7,8 +7,7 @@ import {
   removeAccessTokenDB,
 } from "../utils/local-storage";
 import { useEffect } from "react";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 export const ManageContext = createContext();
 
@@ -17,7 +16,8 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [allLeave, setAllLeave] = useState([]);
+  const [leaveProfiles, setLeaveProfiles] = useState([]);
+  const [leaveProfileById, setLeaveProfileById] = useState({});
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -48,8 +48,11 @@ export default function ManageContextProvider({ children }) {
 
   const addemployee = async (credential) => {
     try {
-      const response = await dashboardAxios.post("/user/createUser", credential);
-      const userData = response.data.user
+      const response = await dashboardAxios.post(
+        "/user/createUser",
+        credential
+      );
+      const userData = response.data.user;
       const newUser = {
         profileImage: userData.profileImage,
         firstName: userData.firstName,
@@ -63,17 +66,18 @@ export default function ManageContextProvider({ children }) {
         userType: userData.userType,
         isActive: userData.isActive,
         checkLocation: userData.checkLocation,
-      }
-      setAllUser((prev) => { return [newUser, ...prev] })
+      };
+      setAllUser((prev) => {
+        return [newUser, ...prev];
+      });
       if (response.status === 201) {
         Swal.fire({
           position: "center",
           icon: "success",
           title: "Add user success!",
           showConfirmButton: false,
-          timer: 1500
-        })
-
+          timer: 1500,
+        });
       }
     } catch (error) {
       Swal.fire({
@@ -85,8 +89,7 @@ export default function ManageContextProvider({ children }) {
       });
       console.error("Error:", error);
     }
-  }
-
+  };
 
   const updateuser = async (credential) => {
     try {
@@ -94,37 +97,57 @@ export default function ManageContextProvider({ children }) {
       const newUser = [...allUser]
       const foundIdx = newUser.findIndex(
         (item) => item.id === res.data.user.id
-      )
-      newUser.splice(foundIdx, 1, { ...res.data.user, userBossId: res.data.user.userRelationshipUser[0].userBossId })
-      console.log(console.log(newUser))
-      setAllUser(newUser)
+      );
+      newUser.splice(foundIdx, 1, {
+        ...res.data.user,
+        userBossId: res.data.user.userRelationshipUser[0].userBossId,
+      });
+      console.log(console.log(newUser));
+      setAllUser(newUser);
       // console.log(allUser)
 
       if (res.status === 200) {
         Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Edit user success!',
+          position: "center",
+          icon: "success",
+          title: "Edit user success!",
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
       }
     } catch (error) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Something Went Wrong',
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const getAllLeaveProfile = async () =>
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
+  const updateLeaveProfile = async (updatedLeaveProfile) => {
+    const res = await dashboardAxios.patch(
+      "leave/updateLeaveProfile",
+      updatedLeaveProfile
+    );
+    setLeaveProfileById({
+      ...leaveProfileById,
+      ...res.data.updateLeaveProfile,
+    });
 
+    getAllLeaveProfile()
+      .then((res) => {
+        setLeaveProfiles(res.data.allLeaveProfile);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getalluser = async () => {
     setLoading(true);
@@ -136,8 +159,7 @@ export default function ManageContextProvider({ children }) {
           firstName: user.firstName,
           lastName: user.lastName,
           position: user.position,
-          userBossId: user.userRelationshipUser[0]?.userBossId
-            || "",
+          userBossId: user.userRelationshipUser[0]?.userBossId || "",
           employeeId: user.employeeId,
           mobile: user.mobile,
           email: user.email,
@@ -154,10 +176,7 @@ export default function ManageContextProvider({ children }) {
       .finally(() => {
         setLoading(false);
       });
-
-  }
-
-
+  };
 
   return (
     <ManageContext.Provider
@@ -171,8 +190,13 @@ export default function ManageContextProvider({ children }) {
         getalluser,
         updateuser,
         getAllLeaveProfile,
+        updateLeaveProfile,
         loading,
-        allUser
+        allUser,
+        leaveProfileById,
+        setLeaveProfileById,
+        leaveProfiles,
+        setLeaveProfiles,
       }}
     >
       {children}
