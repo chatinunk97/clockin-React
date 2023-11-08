@@ -128,8 +128,8 @@ export default function ManageContextProvider({ children }) {
     }
   };
 
-  const getAllLeaveProfile = async () =>
-    await dashboardAxios.get("/leave/getAllLeaveProfile");
+  // const getAllLeaveProfile = async () =>
+  //   await dashboardAxios.get("/leave/getAllLeaveProfile");
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     const res = await dashboardAxios.patch(
@@ -190,7 +190,7 @@ export default function ManageContextProvider({ children }) {
         setInitialLoading,
         getalluser,
         updateuser,
-        getAllLeaveProfile,
+        // getAllLeaveProfile,
         updateLeaveProfile,
         loading,
         allUser,
