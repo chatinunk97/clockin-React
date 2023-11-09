@@ -9,6 +9,44 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
+
+  const createLeaveProfile = async (newAddedLeaveProfile) => {
+    try {
+      const res = await dashboardAxios.post(
+        "/leave/createLeaveProfile",
+        newAddedLeaveProfile
+      );
+      console.log(res);
+      const leaveProfileData = res.data.leaveProfile;
+      const newLeaveProfile = {
+        leaveName: leaveProfileData.leaveName,
+        defaultDateAmount: leaveProfileData.defaultDateAmount,
+      };
+      setLeaveProfiles((prev) => {
+        return [newLeaveProfile, ...prev];
+      });
+
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Add Leave Profile success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(err);
+    }
+  };
+
   const getAllLeaveProfile = async () =>
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
@@ -55,6 +93,7 @@ export default function LeaveContextProvider({ children }) {
   return (
     <LeaveContext.Provider
       value={{
+        createLeaveProfile,
         getAllLeaveProfile,
         updateLeaveProfile,
         loading,

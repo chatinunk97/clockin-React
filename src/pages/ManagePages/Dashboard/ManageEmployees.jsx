@@ -35,7 +35,7 @@ export default function ManageEmployees() {
             }}
             className="rounded-3xl w-32 p-1 ml-9"
           >
-            <CustomizedButtons />
+            <CustomizedButtons buttonName="Add User" />
           </div>
         </div>
       </div>
