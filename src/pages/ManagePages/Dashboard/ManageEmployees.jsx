@@ -22,8 +22,6 @@ export default function ManageEmployees() {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(false)
-
     return (
 
         <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] max-h-[896px] overflow-y-auto">
