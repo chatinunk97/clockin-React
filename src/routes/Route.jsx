@@ -111,7 +111,14 @@ export default function Route() {
         </Authenticated>
       ),
       children: [
-        { path: "/manage/dashboard", element: <DashboardMainPage /> },
+        {
+          path: "/manage/dashboard",
+          element: (
+            <UserContextProvider>
+              <DashboardMainPage />
+            </UserContextProvider>
+          ),
+        },
         {
           path: "/manage/employees",
           element: (

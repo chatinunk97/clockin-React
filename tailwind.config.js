@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       minWidth: { "360px": "360px" },
-      colors: { primaryGreen: "#5db075"  , inputGray : '#f6f6f6'},
+      colors: { primaryGreen: "#5db075", inputGray: "#f6f6f6" },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
