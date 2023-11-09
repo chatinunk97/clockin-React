@@ -13,6 +13,7 @@ export default function ClockContextProvider({ children }) {
 
   const [isClockIn, setIsClockIn] = useState(true);
   const [location, setLocation] = useState({ lat: "", lng: "" });
+  const [address, setAddress] = useState("HardCodeState");
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [time, setTime] = useState(null);
@@ -110,7 +111,8 @@ export default function ClockContextProvider({ children }) {
     clockIn,
     clockOut,
     location,
-    clockHistory
+    clockHistory,
+    address
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>
