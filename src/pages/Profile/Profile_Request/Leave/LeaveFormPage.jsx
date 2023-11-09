@@ -22,14 +22,6 @@ export default function LeaveFormPage() {
             leaveAmount={`${userLeave.dateAmount} days`}
           />
         ))}
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
-        <LeaveList leaveName="some day" leaveAmount="123days" />
       </div>
       <div className="  flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col gap-4">
