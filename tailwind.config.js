@@ -7,5 +7,6 @@ export default {
       colors: { primaryGreen: "#5db075", inputGray: "#f6f6f6" },
     },
   },
-  plugins: [require("daisyui")],
+  // Apply to all tailwind 
+  // plugins: [require("daisyui")],
 };
