@@ -59,6 +59,7 @@ export default function TableEmployee({ allUser, loading }) {
         defaultColDef: {
             resizable: true,
             sortable: true,
+            filter: true,
         },
     };
 
@@ -67,7 +68,7 @@ export default function TableEmployee({ allUser, loading }) {
     }, []);
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
+        <div className="ag-theme-alpine" style={{ height: 600, width: "auto" }}>
             {loading && <LinearIndeterminate />}
             <AgGridReact rowData={allUser} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
             <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
