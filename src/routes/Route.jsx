@@ -27,6 +27,7 @@ import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
+import UserContextProvider from "../contexts/UserContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -111,7 +112,14 @@ export default function Route() {
       ),
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
-        { path: "/manage/employees", element: <ManageEmployees /> },
+        {
+          path: "/manage/employees",
+          element: (
+            <UserContextProvider>
+              <ManageEmployees />
+            </UserContextProvider>
+          ),
+        },
         {
           path: "/manage/leave-setting",
           element: (
