@@ -1,4 +1,3 @@
-import InfoClockinItem from "./InfoClockinItem";
 import ClockInlocation from "./ClockInlocation";
 import ClockInHeader from "./ClockInHeader";
 import GoogleMap from "../../config/GoogleMap/Map";
@@ -6,6 +5,7 @@ import useAuth from "../../hooks/use-auth";
 import LoadingBar from "../../components/LoadingBar";
 import useClock from "../../hooks/use-clock";
 import SubmitButton from "../../components/SubmitButton";
+import InfoClockinList from "./InfoClockinList";
 export default function ClockinMainPage() {
   const { authUser } = useAuth();
   const { location } = useClock();
@@ -17,6 +17,7 @@ export default function ClockinMainPage() {
     setTime,
     clockIn,
     clockOut,
+    clockHistory
   } = useClock();
 
   const handleClock = async () => {
@@ -26,22 +27,27 @@ export default function ClockinMainPage() {
     return clockOut(companyLocation, location, time);
   };
   return (
-    <div>
+    <>
       {isLoading ? (
         <LoadingBar />
       ) : (
-        <div className="flex flex-col justify-center items-center h-screen">
-          <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
-          <div className="overflow-hidden border border-black w-[360px] h-[800px]  md:w-[800px] md:h-[1200x]">
+        <>
+          <div className="h-[20%]">
+            <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
+          </div>
+          <div className="h-[30%]">
             <GoogleMap location={location} companyLocation={companyLocation} />
           </div>
-          <ClockInlocation />
-          <hr className=" w-[360px] md:w-[800px] " />
-          <div className="overflow-hidden overflow-y-auto h-[1200px] p-2">
-            <InfoClockinItem />
+          <div className="h-[10%]">
+            <ClockInlocation />
           </div>
-          <div className="mt-20 md:mt-8 h-screen">
+          <hr></hr>
+          <div className="h-[23%] overflow-auto">
+            <InfoClockinList clockHistory={clockHistory} />
+          </div>
+          <div className="h-[17%] flex justify-center items-center px-2">
             <SubmitButton
+              w={"w-full"}
               bg={isClockIn ? "bg-green-600" : "bg-orange-600"}
               onClick={handleClock}
               className={`${
@@ -51,8 +57,28 @@ export default function ClockinMainPage() {
               {isClockIn ? "Clock In" : "Clock Out"}
             </SubmitButton>
           </div>
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 }
+
+// <div>
+//   <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
+//   <div className="w-full h-[200vh]">
+//     <GoogleMap location={location} companyLocation={companyLocation} />
+//   </div>
+//   <ClockInlocation />
+//   <hr className=" w-[360px] md:w-[800px] " />
+//   <InfoClockinItem />
+
+//   <SubmitButton
+//     bg={isClockIn ? "bg-green-600" : "bg-orange-600"}
+//     onClick={handleClock}
+//     className={`${
+//       isClockIn ? "hover:bg-green-400" : "hover:bg-orange-400"
+//     } w-[200px] p-4 font-semibold text-white rounded-3xl `}
+//   >
+//     {isClockIn ? "Clock In" : "Clock Out"}
+//   </SubmitButton>
+// </div>
