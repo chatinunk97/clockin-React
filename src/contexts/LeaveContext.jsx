@@ -9,9 +9,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
-<<<<<<< HEAD
   const [userLeave, setUserLeave] = useState([]);
-=======
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
     try {
@@ -51,7 +49,6 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
->>>>>>> origin/develop
   const getAllLeaveProfile = async () =>
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
@@ -95,13 +92,14 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
-<<<<<<< HEAD
   const getUserLeaveByUserId = async (data) => {
     try {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
     } catch (error) {
-=======
+      console.error("Error:", error);
+    }
+  };
   const deleteLeaveProfile = async (id) => {
     try {
       const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
@@ -116,7 +114,6 @@ export default function LeaveContextProvider({ children }) {
         });
       }
     } catch (err) {
->>>>>>> origin/develop
       Swal.fire({
         position: "center",
         icon: "error",
@@ -124,11 +121,8 @@ export default function LeaveContextProvider({ children }) {
         showConfirmButton: false,
         timer: 1500,
       });
-<<<<<<< HEAD
-      console.error("Error:", error);
-=======
+
       console.log(err);
->>>>>>> origin/develop
     }
   };
 
@@ -144,12 +138,9 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfileById,
         leaveProfiles,
         setLeaveProfiles,
-<<<<<<< HEAD
         getUserLeaveByUserId,
         userLeave,
-=======
         deleteLeaveProfile,
->>>>>>> origin/develop
       }}
     >
       {children}
