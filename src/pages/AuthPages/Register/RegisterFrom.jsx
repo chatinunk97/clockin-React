@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { clockAxios } from "../../../config/axios";
 import RegisterInput from "./RegisterInput";
 import InputErrorMessage from "./InputErrorMessage";
-import Loading from "../../../components/Loading";
-import useAuth from "../../../hooks/use-auth";
+import Loading from "../../../components/LoadingBar";
 import GoogleMap from "../../../config/GoogleMap/Map";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import locationPermission from "../../../utils/locationPermission";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -38,9 +38,11 @@ const validateregister = (input) => {
 };
 
 export default function RegisterFrom() {
-  const { location, setLocation } = useAuth();
+  const [location, setLocation] = useState("");
   const [file, setFile] = useState(null);
   const [allpackage, setallPackage] = useState([]);
+  const [error, setError] = useState({});
+  const [loading, setLoading] = useState(true);
   const [input, setInput] = useState({
     paySlip: "",
     companyName: "",
@@ -55,24 +57,28 @@ export default function RegisterFrom() {
     password: "",
   });
 
-  const [error, setError] = useState({});
-
-  const [loading, setLoading] = useState(false);
-
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
+  const fetchlocation = async () => {
+    const location = await locationPermission();
+    setLocation(location);
+  };
   useEffect(() => {
-    clockAxios
-      .get("/user/showpackage")
-      .then((res) => {
-        setInput({ ...input, packageId: res.data.packages[0].id });
-        setallPackage(res.data.packages);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchlocation().then(() => {
+      clockAxios
+        .get("/user/showpackage")
+        .then((res) => {
+          setInput({ ...input, packageId: res.data.packages[0].id });
+          setallPackage(res.data.packages);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
   }, []);
 
   const handleSubmitRegister = async (e) => {
@@ -82,14 +88,11 @@ export default function RegisterFrom() {
         ...input,
         latitudeCompany: location.lat,
         longitudeCompany: location.lng,
-      }
+      };
       const validationError = validateregister(data);
       const formData = new FormData();
       formData.append("paySlip", input.paySlip);
-      formData.append(
-        "data",
-        JSON.stringify(data)
-      );
+      formData.append("data", JSON.stringify(data));
 
       if (validationError) {
         return setError(validationError);
@@ -98,10 +101,10 @@ export default function RegisterFrom() {
 
       if (file === null) {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Require PaySlip!',
-        })
+          icon: "error",
+          title: "Oops...",
+          text: "Require PaySlip!",
+        });
         return;
       }
       setLoading(true);
@@ -122,7 +125,6 @@ export default function RegisterFrom() {
       className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6"
       onSubmit={handleSubmitRegister}
     >
-      {loading && <Loading />}
       <div className=" w-[360px] h-[80px]">
         <RegisterInput
           type="file"
@@ -227,13 +229,15 @@ export default function RegisterFrom() {
         />
         {error.password && <InputErrorMessage message={error.password} />}
       </div>
-
-      <GoogleMap
-        location={location}
-        enableSelect={true}
-        setLocation={setLocation}
-      />
-
+      {loading ? (
+        <Loading />
+      ) : (
+        <GoogleMap
+          location={location}
+          enableSelect={true}
+          setLocation={setLocation}
+        />
+      )}
       <div className="mx-auto col-span-full">
         <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
           Sign Up
