@@ -4,7 +4,6 @@ import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
 import CustomizedButtons from "../../../components/ButtonCustomization";
 import { useEffect } from "react";
-import CustomizedInputBase from "../../../components/SearchBar";
 import useUser from "../../../hooks/use-user";
 import SearchInput from "../../../components/Search";
 
