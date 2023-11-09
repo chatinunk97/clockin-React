@@ -24,17 +24,16 @@ export default function LeaveFormPage() {
         ))}
       </div>
       <div className="  flex flex-col justify-center items-center w-full h-full">
-        <div className="flex flex-col gap-4">
+        {/* <div className="flex flex-col gap-4">
           <LeaveDropdown />
           <div>
-            <LeaveInfo />
           </div>
-        </div>
-        <div></div>
+        </div> */}
+        <LeaveInfo />
       </div>
-      <div className="p-2 h-[15%]  flex justify-center items-center">
+      {/* <div className="p-2 h-[15%]  flex justify-center items-center">
         <SubmitButton p="px-20 py-3">Submit</SubmitButton>
-      </div>
+      </div> */}
     </div>
   );
 }

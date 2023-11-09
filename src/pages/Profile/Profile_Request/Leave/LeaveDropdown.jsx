@@ -1,4 +1,8 @@
+import useLeave from "../../../../hooks/use-leave";
+
 export default function LeaveDropdown({ type }) {
+  const { userLeave } = useLeave();
+
   return (
     <div>
       {/* <label htmlFor="leave"></label> */}
@@ -11,9 +15,11 @@ export default function LeaveDropdown({ type }) {
           </>
         ) : (
           <>
-            <option value="annual">Annual Leave</option>
-            <option value="sick">Sick Leave</option>
-            <option value="business">Business Leave</option>
+            {userLeave.map((userLeave) => (
+              <option key={userLeave.id} value={useLeave.id}>
+                {userLeave.leaveProfile.leaveName}
+              </option>
+            ))}
           </>
         )}
       </select>
