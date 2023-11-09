@@ -26,6 +26,8 @@ import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
+import LeaveContextProvider from "../contexts/LeaveContext";
+import UserContextProvider from "../contexts/UserContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -68,7 +70,11 @@ export default function Route() {
         },
         {
           path: "/leave",
-          element: <ProfileLeaveMainPage />,
+          element: (
+            <LeaveContextProvider>
+              <ProfileLeaveMainPage />
+            </LeaveContextProvider>
+          ),
           children: [
             { path: "/leave/leaveform", element: <LeaveFormPage /> },
             { path: "/leave/myleave", element: <MyLeavePage /> },
@@ -106,9 +112,30 @@ export default function Route() {
       ),
       children: [
         { path: "/manage/dashboard", element: <DashboardMainPage /> },
-        { path: "/manage/employees", element: <ManageEmployees /> },
-        { path: "/manage/leave-setting", element: <ManageLeaveSetting /> },
-        { path: "/manage/leave-request", element: <ManageLeaveRequest /> },
+        {
+          path: "/manage/employees",
+          element: (
+            <UserContextProvider>
+              <ManageEmployees />
+            </UserContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-setting",
+          element: (
+            <LeaveContextProvider>
+              <ManageLeaveSetting />
+            </LeaveContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-request",
+          element: (
+            <LeaveContextProvider>
+              <ManageLeaveRequest />
+            </LeaveContextProvider>
+          ),
+        },
         { path: "/manage/ot-Request", element: <ManageOTRequest /> },
         { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],

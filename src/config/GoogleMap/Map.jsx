@@ -32,7 +32,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
     <GoogleMap
       options={{
         mapTypeControl: false,
-        zoomControl: true,
+        zoomControl: enableSelect ? true : false,
         streetViewControl: false,
       }}
       zoom={17.8}

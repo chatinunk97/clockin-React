@@ -8,10 +8,10 @@ export default function MainLayout() {
   const { logout } = useAuth();
   const page = useLocation().pathname;
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen min-h-[667px] min-w-[375px]">
       <Header onClick={logout}>{page}</Header>
-      <div className="overflow-auto h-[73vh]">
-        <Outlet/>
+      <div className="overflow-auto h-full">
+        <Outlet />
       </div>
       <Footer />
     </div>

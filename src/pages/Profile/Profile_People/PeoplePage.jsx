@@ -20,8 +20,8 @@ export default function PeoplePage() {
   }, []);
 
   return (
-    <div>
-      <div className="flex justify-center relative">
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-center sticky top-0 bg-white">
         <AiOutlineSearch className="absolute bottom-[12px] left-[38px] text-lg" />
         <InputBar
           type="text"

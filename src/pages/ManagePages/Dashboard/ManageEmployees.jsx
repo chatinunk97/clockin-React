@@ -5,18 +5,22 @@ import AddmployeeForm from "../Edit/AddEmployeeForm";
 import CustomizedButtons from "../../../components/ButtonCustomization";
 import { useEffect } from "react";
 import CustomizedInputBase from "../../../components/SearchBar";
-import useManage from '../../../hooks/use-manage'
-
+import useUser from "../../../hooks/use-user";
 
 export default function ManageEmployees() {
-    const { getalluser, allUser, loading } = useManage()
+    const { getalluser, allUser, loading } = useUser();
 
     useEffect(() => {
         getalluser()
-            .then((res) => { console.log(res) })
-            .catch((err) => { console.log(err) })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
+    const [isOpen, setIsOpen] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -47,6 +51,5 @@ export default function ManageEmployees() {
                 </Modal>
             </div>
         </div>
-
     );
 }

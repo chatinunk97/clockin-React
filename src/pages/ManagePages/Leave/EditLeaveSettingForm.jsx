@@ -1,11 +1,11 @@
 import { useState } from "react";
-import useManage from "../../../hooks/use-manage";
+import useLeave from "../../../hooks/use-leave";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import IconLabelButtons from "../../../components/SendButton";
 
 export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
-  const { updateLeaveProfile } = useManage();
+  const { updateLeaveProfile } = useLeave();
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     id: leaveProfileById.id,

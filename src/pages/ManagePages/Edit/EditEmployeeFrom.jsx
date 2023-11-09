@@ -1,13 +1,13 @@
-import Joi from 'joi';
-import { useState } from 'react';
-import RegisterInput from '../../AuthPages/Register/RegisterInput';
+import Joi from "joi";
+import { useState } from "react";
+import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import LinearIndeterminate from "../../../components/LoadingBar";
-import InputErrorMessage from '../../AuthPages/Register/InputErrorMessage';
+import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
 import IconLabelButtons from "../../../components/SendButton";
 import InputFileUpload from "../../../components/Uploadbutton";
-import DropdownSearch from '../../../components/DropdownSearch';
-import supervisorList from '../../../utils/StructureChange/supervisorList';
-import useManage from "../../../hooks/use-manage";
+import DropdownSearch from "../../../components/DropdownSearch";
+import supervisorList from "../../../utils/StructureChange/supervisorList";
+import useUser from "../../../hooks/use-user";
 import {
     inputList,
     dropdownlist,
@@ -32,8 +32,7 @@ const EditSchema = Joi.object({
     isActive: Joi.boolean(),
     checkLocation: Joi.boolean(),
     id: Joi.number(),
-})
-
+});
 
 const validateregister = (input) => {
     const { error } = EditSchema.validate(input, { abortEarly: false });
@@ -46,8 +45,6 @@ const validateregister = (input) => {
         return result;
     }
 };
-
-
 
 export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
     const [file, setFile] = useState(null);
@@ -64,22 +61,20 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
         userType: UserbyId.userType,
         isActive: UserbyId.isActive,
         checkLocation: UserbyId.checkLocation,
-
     });
 
     const [error, setError] = useState({});
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
-    const { updateuser } = useManage();
+    const { updateuser } = useUser();
 
     const handleChangeInput = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
     const handleChangeDropdown = (data, name) => {
-        console.log(data)
+        console.log(data);
         setInput({ ...input, [name]: data.value });
     };
-
 
     const handleSubmitEditUser = async (e) => {
         try {
@@ -87,28 +82,25 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
             const validationError = validateregister(input);
             const formData = new FormData();
             formData.append("profileImage", input.profileImage);
-            delete input.profileImage
+            delete input.profileImage;
             formData.append("data", JSON.stringify(input));
             if (validationError) {
                 return setError(validationError);
             }
             setError({});
             setLoading(true);
-            await updateuser(formData)
-            onClose()
+            await updateuser(formData);
+            onClose();
         } catch (err) {
             console.log(error);
         } finally {
             setLoading(false);
-
         }
     };
-
 
     const positionOptions = optionList(userposition);
     const UsertypeOptions = optionList(usertype);
     const isTrueOptions = optionList(IsTrue);
-
 
     return (
         <>
@@ -119,7 +111,10 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                 {inputList.map((el) => {
                     return (
                         <>
-                            <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2" key={el.id}>
+                            <div
+                                className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2"
+                                key={el.id}
+                            >
                                 <h1>{el.label}</h1>
                                 <RegisterInput
                                     placeholder={el.placeholder}
@@ -128,13 +123,11 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                                     onChange={handleChangeInput}
                                     hasError={error[el.name]}
                                 />
-                                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
                             </div>
-
-                        </>)
+                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                        </>
+                    );
                 })}
-
-
 
                 {dropdownlist.map((el) => {
                     let options = [];
@@ -145,7 +138,7 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                     } else if (el.name === "isActive" || el.name === "checkLocation") {
                         options = isTrueOptions;
                     } else if (el.name === "userBossId") {
-                        options = supervisorList(allUser)
+                        options = supervisorList(allUser);
                     }
 
                     return (
@@ -159,14 +152,11 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                                     value={input[el.name]}
                                     hasError={error[el.name]}
                                 />
-                                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
                             </div>
-
+                            {error[el.name] && <InputErrorMessage message={error[el.name]} />}
                         </>
-                    )
-                })
-                }
-
+                    );
+                })}
 
                 <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
                     <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
