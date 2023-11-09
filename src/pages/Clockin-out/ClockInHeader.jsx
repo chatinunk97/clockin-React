@@ -1,15 +1,21 @@
 import Clock from "../../components/LiveClock";
 
-export default function ClockInHeader({ time, setTime , authUser }) {
+export default function ClockInHeader({ time, setTime, authUser }) {
+  const options = {
+    weekday: "long",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center text-xl p-2">
-        <h1>{authUser.firstName} {authUser.lastName}</h1>
-        <h1 className="text-3xl font-bold">
-          <Clock time={time} setTime={setTime} />
-        </h1>
-        <h1>{time.toDateString()}</h1>
-      </div>
+    <div className="h-full flex flex-col justify-center items-center">
+      <p className="font-bold">
+        {authUser.firstName} {authUser.lastName}
+      </p>
+      <Clock time={time} setTime={setTime} />
+      <p className="font-semibold">
+        {time.toLocaleDateString(undefined, options)}
+      </p>
     </div>
   );
 }

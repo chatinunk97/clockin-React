@@ -5,15 +5,15 @@ import { Navigate } from "react-router-dom";
 export default function Authenticated({ children, pageType }) {
   const { authUser } = useAuth();
   const { manageUser } = useManage();
-  
   if (pageType === "clock") {
     if (!authUser) {
       return <Navigate to="/login" />;
     }
   }
+  console.log("auth middleware");
   if (pageType === "dashboard") {
     if (!manageUser) {
-      return <Navigate to="/manage/login"/>
+      return <Navigate to="/manage/login" />;
     }
   }
   return children;

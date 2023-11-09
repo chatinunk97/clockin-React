@@ -5,6 +5,7 @@ import { clockAxios } from "../config/axios";
 import getDistance from "../utils/getDistance";
 import locationPermission from "../utils/locationPermission";
 import clockObjectChange from "../utils/clockObjectChange";
+import todayString from "../utils/getTodayString";
 
 export const ClockContext = createContext();
 export default function ClockContextProvider({ children }) {
@@ -12,13 +13,16 @@ export default function ClockContextProvider({ children }) {
 
   const [isClockIn, setIsClockIn] = useState(true);
   const [location, setLocation] = useState({ lat: "", lng: "" });
+  const [address, setAddress] = useState("HardCodeState");
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [time, setTime] = useState(null);
+  const [clockHistory, setClockHistory] = useState([]);
   const fetchLocationTime = async () => {
     //Get user location
-    const location = await locationPermission()
-    setLocation(location)
+
+    const location = await locationPermission();
+    setLocation(location);
 
     //Get user timezone based on location
     const res = await axios.get(
@@ -36,13 +40,28 @@ export default function ClockContextProvider({ children }) {
     });
     setTime(new Date(time.data.datetime));
     //Newest Clock
-    const newestClock = await clockAxios.get("/clock/latestClock");
-    if (!newestClock.data) {
+    const newestClock = await clockAxios.get(`/clock/latestClock/?today=${todayString()}`);
+
+    //If there's no newest clock from today or the newest clock already has clockout => clock in
+    if (!newestClock.data || newestClock.data.clockOutTime) {
       setIsClockIn(true);
     } else {
       setIsClockIn(false);
     }
     setIsLoading(false);
+  };
+  const fetchClockHistory = async () => {
+    try {
+      //Only the current date history
+
+      const clockHistory = await clockAxios.get(
+        `/clock/?dateStart=${todayString()}&dateEnd=`
+      );
+
+      setClockHistory(clockHistory.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const clockIn = async (companyLocation, userLocation, time) => {
     try {
@@ -54,6 +73,7 @@ export default function ClockContextProvider({ children }) {
         "clock/clockIn",
         clockObjectChange(userLocation, time, "clockIn")
       );
+      fetchClockHistory()
       setIsClockIn(false);
     } catch (error) {
       console.log(error);
@@ -69,14 +89,16 @@ export default function ClockContextProvider({ children }) {
         "clock/clockOut",
         clockObjectChange(userLocation, time, "clockOut")
       );
+      fetchClockHistory()
       setIsClockIn(true);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchLocationTime();
+    console.log('szzzz')
+    fetchClockHistory();
   }, []);
 
   const shareObj = {
@@ -88,7 +110,9 @@ export default function ClockContextProvider({ children }) {
     setIsClockIn,
     clockIn,
     clockOut,
-    location
+    location,
+    clockHistory,
+    address
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>

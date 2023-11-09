@@ -105,8 +105,8 @@ export default function ViewEmployee() {
                     <div className="text-4xl font-semibold md:pr-20">
                         <h1>{employee.firstName} {employee.lastName} </h1>
                     </div>
-                    <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200">
-                        <img src={employee.profileImage} alt="UserPhoto" className="w-full h-full object-contain rounded-full shadow-2xl" />
+                    <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200 ">
+                        <img src={employee.profileImage} alt="UserPhoto" className="w-full h-full rounded-full shadow-2xl" />
                     </div>
                 </div>
                 <div className="ag-theme-alpine flex flex-col gap-2" style={{ height: 600, width: "60%" }}>

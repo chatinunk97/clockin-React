@@ -4,8 +4,8 @@ import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
 import CustomizedButtons from "../../../components/ButtonCustomization";
 import { useEffect } from "react";
-import CustomizedInputBase from "../../../components/SearchBar";
 import useUser from "../../../hooks/use-user";
+import SearchInput from "../../../components/Search";
 
 export default function ManageEmployees() {
   const { getalluser, allUser, loading } = useUser();
@@ -26,8 +26,8 @@ export default function ManageEmployees() {
     <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
       <div className="flex justify-center items-center gap-4 md:w-full">
         <div className="flex justify-center items-center p-6">
-          <div className="flex justify-center items-center gap-2 w-60">
-            <CustomizedInputBase />
+          <div className="flex justify-center items-center gap-2 w-120">
+            <SearchInput />
           </div>
           <div
             onClick={() => {
@@ -35,7 +35,7 @@ export default function ManageEmployees() {
             }}
             className="rounded-3xl w-32 p-1 ml-9"
           >
-            <CustomizedButtons />
+            <CustomizedButtons buttonName="Add User" />
           </div>
         </div>
       </div>

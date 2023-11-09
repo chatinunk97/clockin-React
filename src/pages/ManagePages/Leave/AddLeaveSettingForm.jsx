@@ -1,17 +1,15 @@
 import { useState } from "react";
 import useLeave from "../../../hooks/use-leave";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
-import LinearIndeterminate from "../../../components/LoadingBar";
 import IconLabelButtons from "../../../components/SendButton";
 
-export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
-  const { updateLeaveProfile } = useLeave();
-  const [loading, setLoading] = useState(false);
+export default function AddLeaveSettingForm() {
   const [input, setInput] = useState({
-    id: leaveProfileById.id,
-    leaveName: leaveProfileById.leaveName,
-    defaultDateAmount: leaveProfileById.defaultDateAmount,
+    leaveName: "",
+    defaultDateAmount: "",
   });
+
+  const { createLeaveProfile } = useLeave();
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -20,12 +18,9 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
-      await updateLeaveProfile(input);
-      onClose();
+      await createLeaveProfile(input);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -38,7 +33,7 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Leave Name</h1>
           <RegisterInput
-            placeholder="Leave Name"
+            placeholder="Enter leave name"
             value={input.leaveName}
             onChange={handleChangeInput}
             name="leaveName"
@@ -47,7 +42,7 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Leave Amount (days)</h1>
           <RegisterInput
-            placeholder="Default Amount (days)"
+            placeholder="Enter number of leave days"
             value={input.defaultDateAmount}
             onChange={handleChangeInput}
             name="defaultDateAmount"
@@ -59,7 +54,6 @@ export default function EditLeaveSettingForm({ leaveProfileById, onClose }) {
           </label>
         </div>
       </form>
-      {loading && <LinearIndeterminate />}
     </>
   );
 }
