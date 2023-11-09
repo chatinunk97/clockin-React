@@ -70,7 +70,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
       ) : (
         ""
       )}
-      <Marker position={location}></Marker>
+      <Marker zIndex={100} position={location}></Marker>
     </GoogleMap>
   );
 }

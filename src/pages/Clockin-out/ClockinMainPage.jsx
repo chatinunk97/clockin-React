@@ -17,7 +17,8 @@ export default function ClockinMainPage() {
     setTime,
     clockIn,
     clockOut,
-    clockHistory
+    clockHistory,
+    address
   } = useClock();
 
   const handleClock = async () => {
@@ -39,7 +40,7 @@ export default function ClockinMainPage() {
             <GoogleMap location={location} companyLocation={companyLocation} />
           </div>
           <div className="h-[10%]">
-            <ClockInlocation />
+            <ClockInlocation address={address} />
           </div>
           <hr></hr>
           <div className="h-[23%] overflow-auto">
