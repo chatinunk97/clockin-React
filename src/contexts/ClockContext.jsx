@@ -97,7 +97,6 @@ export default function ClockContextProvider({ children }) {
   };
   useEffect(() => {
     fetchLocationTime();
-    console.log('szzzz')
     fetchClockHistory();
   }, []);
 
