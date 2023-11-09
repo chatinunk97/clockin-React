@@ -18,9 +18,10 @@ export default function AuthContextProvider({ children }) {
     if (getAccessToken()) {
       clockAxios.get("/user/me").then((res) => {
         setAuthUser(res.data.user);
+        setInitialLoading(false);
       });
     }
-    setInitialLoading(false);
+    
   }, []);
 
   const login = async (credential) => {
