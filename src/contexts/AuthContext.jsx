@@ -20,7 +20,10 @@ export default function AuthContextProvider({ children }) {
         setAuthUser(res.data.user);
         setInitialLoading(false);
       });
+    }else{
+      setInitialLoading(false);
     }
+    
     
   }, []);
 
