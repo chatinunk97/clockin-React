@@ -6,9 +6,9 @@ import AuthContextProvider from "./contexts/AuthContext.jsx";
 import ManageContextProvider from "./contexts/ManageContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ManageContextProvider>
-    <AuthContextProvider>
+  <AuthContextProvider>
+    <ManageContextProvider>
       <App />
-    </AuthContextProvider>
-  </ManageContextProvider>
+    </ManageContextProvider>
+  </AuthContextProvider>
 );

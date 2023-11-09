@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { dashboardAxios } from "../config/axios";
+import { clockAxios, dashboardAxios } from "../config/axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -9,6 +9,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
+  const [userLeave, setUserLeave] = useState([]);
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
     try {
@@ -19,11 +20,12 @@ export default function LeaveContextProvider({ children }) {
       console.log(res);
       const leaveProfileData = res.data.leaveProfile;
       const newLeaveProfile = {
+        id: leaveProfileData.id,
         leaveName: leaveProfileData.leaveName,
         defaultDateAmount: leaveProfileData.defaultDateAmount,
       };
       setLeaveProfiles((prev) => {
-        return [newLeaveProfile, ...prev];
+        return [...prev, newLeaveProfile];
       });
 
       if (res.status === 201) {
@@ -90,6 +92,40 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getUserLeaveByUserId = async (data) => {
+    try {
+      const res = await clockAxios.get("/leave/getUserLeave", data);
+      setUserLeave(res.data.userLeave);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const deleteLeaveProfile = async (id) => {
+    try {
+      const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
+      if (res.status === 200) {
+        setLeaveProfiles((prev) => prev.filter((el) => el.id !== id));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete Leave Profile success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(err);
+    }
+  };
+
   return (
     <LeaveContext.Provider
       value={{
@@ -102,6 +138,9 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfileById,
         leaveProfiles,
         setLeaveProfiles,
+        getUserLeaveByUserId,
+        userLeave,
+        deleteLeaveProfile,
       }}
     >
       {children}
