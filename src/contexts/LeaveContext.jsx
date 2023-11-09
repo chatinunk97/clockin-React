@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { dashboardAxios } from "../config/axios";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export const LeaveContext = createContext();
 
@@ -12,22 +13,43 @@ export default function LeaveContextProvider({ children }) {
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
-    const res = await dashboardAxios.patch(
-      "leave/updateLeaveProfile",
-      updatedLeaveProfile
-    );
-    setLeaveProfileById({
-      ...leaveProfileById,
-      ...res.data.updateLeaveProfile,
-    });
-
-    getAllLeaveProfile()
-      .then((res) => {
-        setLeaveProfiles(res.data.allLeaveProfile);
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const res = await dashboardAxios.patch(
+        "leave/updateLeaveProfile",
+        updatedLeaveProfile
+      );
+      setLeaveProfileById({
+        ...leaveProfileById,
+        ...res.data.updateLeaveProfile,
       });
+
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Edit Leave Profile success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+
+      getAllLeaveProfile()
+        .then((res) => {
+          setLeaveProfiles(res.data.allLeaveProfile);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
+    }
   };
 
   return (
