@@ -13,8 +13,8 @@ export default function LeaveFormPage() {
   }, []);
 
   return (
-    <div className="h-[50vh]">
-      <div className="bg-inputGray rounded-md">
+    <div className="h-[90%] p-4 flex flex-col items-center gap-5 ">
+      <div className="h-auto min-h-[30%] overflow-auto w-full flex flex-col justify-start gap-4 p-4 bg-inputGray rounded-md ">
         {userLeave.map((userLeave) => (
           <LeaveList
             key={userLeave.id}
@@ -22,8 +22,16 @@ export default function LeaveFormPage() {
             leaveAmount={`${userLeave.dateAmount} days`}
           />
         ))}
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
+        <LeaveList leaveName="some day" leaveAmount="123days" />
       </div>
-      <div className="flex flex-col justify-center items-center p-2">
+      <div className="  flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col gap-4">
           <LeaveDropdown />
           <div>
@@ -31,9 +39,9 @@ export default function LeaveFormPage() {
           </div>
         </div>
         <div></div>
-        <div className="mt-10">
-          <SubmitButton p="px-20 py-3">Submit</SubmitButton>
-        </div>
+      </div>
+      <div className="p-2 h-[15%]  flex justify-center items-center">
+        <SubmitButton p="px-20 py-3">Submit</SubmitButton>
       </div>
     </div>
   );
