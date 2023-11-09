@@ -9,6 +9,7 @@ import AddLeaveSettingForm from "./AddLeaveSettingForm";
 export default function ManageLeaveSetting() {
   const {
     getAllLeaveProfile,
+    deleteLeaveProfile,
     leaveProfileById,
     setLeaveProfileById,
     leaveProfiles,
@@ -54,6 +55,7 @@ export default function ManageLeaveSetting() {
       </div>
       <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
         <TableLeaveSetting
+          deleteLeaveProfile={deleteLeaveProfile}
           leaveProfiles={leaveProfiles}
           leaveProfileById={leaveProfileById}
           setLeaveProfileById={setLeaveProfileById}
