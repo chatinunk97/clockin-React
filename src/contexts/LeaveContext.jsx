@@ -116,11 +116,16 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getRequestLeaveById = async (requestLeaveId) => {
+    await dashboardAxios.get(`/leave/getRequestLeave/${requestLeaveId}`);
+  };
+
   return (
     <LeaveContext.Provider
       value={{
         createLeaveProfile,
         getAllLeaveProfile,
+        getRequestLeaveById,
         updateLeaveProfile,
         loading,
         setLoading,
