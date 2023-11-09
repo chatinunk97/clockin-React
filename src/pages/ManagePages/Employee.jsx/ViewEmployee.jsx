@@ -8,8 +8,10 @@ import { useEffect } from "react";
 import { dashboardAxios } from "../../../config/axios";
 import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewEmployee() {
+    const navigate = useNavigate();
     const { userId } = useParams();
     const [employee, setEmployee] = useState({});
     const [clock, setClock] = useState([]);
@@ -36,63 +38,10 @@ export default function ViewEmployee() {
             });
     }, [userId]);
 
-    console.log(employee)
-
-    // const hadleDelete = async (e) => {
-    //     try {
-    //         e.preventDefault();
-    //         const res = await dashboardAxios.delete(`/user/deleteUser/${userId}`)
-    //         if (res.status === 400) {
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'error',
-    //                 title: 'Oops...',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //             })
-    //         }
-    //         if (res.status === 200) {
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Delete success!',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //             })
-    //         }
-    //     } catch (err) {
-    //         Swal.fire({
-    //             position: 'center',
-    //             icon: 'error',
-    //             title: 'Oops...',
-    //             text: "you don't have permission to access",
-    //             showConfirmButton: false,
-    //             timer: 3000
-    //         })
-    //     }
-    // }
+    console.log(employee.isActive)
 
 
-    // Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!"
-    // }).then((result) => {
-    //     if (result.isConfirmed) {
-    //         Swal.fire({
-    //             title: "Deleted!",
-    //             text: "Your file has been deleted.",
-    //             icon: "success"
-    //         });
-    //     }
-    // });
-
-
-    const hadleDelete = async (e) => {
+    const handleDelete = async () => {
         try {
             const result = await Swal.fire({
                 title: "Are you sure?",
@@ -101,18 +50,22 @@ export default function ViewEmployee() {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Yes"
 
             });
 
             if (result.isConfirmed) {
-                await dashboardAxios.delete(`/user/deleteUser/${userId}`);
+                const res = await dashboardAxios.delete(`/user/deleteUser/${userId}`);
                 await Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    title: "Deactivate!",
+                    text: "User has been deactivate.",
                     icon: "success"
-                });
+                })
+                if (res.status === 200) {
+                    return navigate('/manage/employees')
+                }
             }
+
         } catch (error) {
             Swal.fire({
                 position: 'center',
@@ -150,7 +103,7 @@ export default function ViewEmployee() {
             <div className="flex w-[500px] md:w-full justify-center md:gap-20 items-center flex-col md:flex-row gap-10 ">
                 <div className="flex flex-col justify-center items-center gap-10 md:mb-32">
                     <div className="text-4xl font-semibold md:pr-20">
-                        <h1>{employee.firstName} {employee.lastName}</h1>
+                        <h1>{employee.firstName} {employee.lastName} </h1>
                     </div>
                     <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200">
                         <img src={employee.profileImage} alt="UserPhoto" className="w-full h-full object-contain rounded-full shadow-2xl" />
@@ -164,9 +117,11 @@ export default function ViewEmployee() {
                     </div>
                     <AgGridReact rowData={clock} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder}></AgGridReact>
                     <div className=" items-end justify-end flex pt-6">
-                        <div onClick={hadleDelete}>
-                            <DeleteButtons />
-                        </div>
+                        {employee.isActive ? (
+                            <div onClick={handleDelete}>
+                                <DeleteButtons />
+                            </div>
+                        ) : null}
                     </div>
                 </div>
 

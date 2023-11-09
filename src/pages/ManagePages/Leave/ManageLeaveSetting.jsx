@@ -1,23 +1,55 @@
-import DefaultLeaveList from "./DefaultLeaveList";
-import SubmitButton from "../../../components/SubmitButton";
+import { useEffect } from "react";
+import TableLeaveSetting from "./TableLeaveSetting";
+import useLeave from "../../../hooks/use-leave";
 
 export default function ManageLeaveSetting() {
+  const {
+    getAllLeaveProfile,
+    leaveProfileById,
+    setLeaveProfileById,
+    leaveProfiles,
+    setLeaveProfiles,
+    loading,
+    setLoading,
+  } = useLeave();
+  // const {
+  //   // getAllLeaveProfile,
+  //   leaveProfileById,
+  //   setLeaveProfileById,
+  //   leaveProfiles,
+  //   setLeaveProfiles,
+  // } = useManage();
+  // const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getAllLeaveProfile()
+      .then((res) => {
+        const leaveProfileData = res.data.allLeaveProfile.map(
+          (leaveProfile) => ({
+            id: leaveProfile.id,
+            leaveName: leaveProfile.leaveName,
+            defaultDateAmount: leaveProfile.defaultDateAmount,
+          })
+        );
+        setLeaveProfiles(leaveProfileData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
-    <div className="w-full flex flex-col m-auto items-center gap-3 p-10 mx-72 bg-gray-200 rounded-lg">
-      <h1 className="text-lg font-bold">Default Leaves</h1>
-      <div className="flex flex-col gap-3">
-        <DefaultLeaveList />
-        <DefaultLeaveList />
-        <DefaultLeaveList />
-      </div>
-      <div>
-        <SubmitButton className="rounded-xl w-20 m-3 hover:bg-green-400">
-          Edit
-        </SubmitButton>
-        <SubmitButton className="rounded-xl w-20 bg-[#2463EB] hover:bg-blue-400">
-          Add
-        </SubmitButton>
-      </div>
+    <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
+      <TableLeaveSetting
+        leaveProfiles={leaveProfiles}
+        leaveProfileById={leaveProfileById}
+        setLeaveProfileById={setLeaveProfileById}
+        loading={loading}
+      />
     </div>
   );
 }

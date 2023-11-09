@@ -9,8 +9,7 @@ export default function Header({
       ? { bg: "bg-white", text: "text-primaryGreen" }
       : { bg: "bg-primaryGreen", text: "text-white" };
   return (
-    <div className={`grid grid-cols-3 w-full py-11 ${profileTheme.bg}`}>
-      <div></div>
+    <div className={`h-[15vh] ${profileTheme.bg}`}>
       <div
         className={`flex justify-center items-center font-semibold text-3xl  ${profileTheme.text}`}
       >

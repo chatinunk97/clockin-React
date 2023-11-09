@@ -27,7 +27,7 @@ export default function Footer() {
 
   const { pathname } = useLocation();
   return (
-    <div className="bottom-0 flex fixed flex-col items-center w-full py-2 bg-blue-100 mt-0">
+    <div className="flex flex-col items-center justify-center w-full py-2 h-[12vh] bg-blue-100">
       <nav className="flex gap-2 ">
         <div className=" grid grid-cols-5 md:w-full ">
           {menus.map((items) => (

@@ -5,7 +5,7 @@ export default function DeleteButtons() {
     return (
 
         <Button variant="outlined" color="error">
-            Delete
+            Deactivate User
         </Button>
     );
 }

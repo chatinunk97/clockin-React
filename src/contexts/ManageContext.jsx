@@ -7,13 +7,14 @@ import {
   removeAccessTokenDB,
 } from "../utils/local-storage";
 import { useEffect } from "react";
-import Swal from 'sweetalert2'
 
 export const ManageContext = createContext();
 
 export default function ManageContextProvider({ children }) {
   const [manageUser, setManageUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  // const [allUser, setAllUser] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -29,6 +30,7 @@ export default function ManageContextProvider({ children }) {
       setInitialLoading(false);
     }
   }, []);
+
   const login = async (credential) => {
     credential.loginType = "dashboard";
     const res = await dashboardAxios.post("/user/login", credential);
@@ -42,44 +44,16 @@ export default function ManageContextProvider({ children }) {
     setInitialLoading(false);
   };
 
-  const addemployee = async (credential) => {
-    try {
-      const response = await dashboardAxios.post("/user/createUser", credential);
-
-      if (response.status === 201) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Add user success!',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Something Went Wrong',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      console.error('Error:', error);
-    }
-  }
-  const getalluser = async () => {
-    await dashboardAxios.get('/user/getAllUser')
-  }
-
-  const updateuser = async (credential) => {
-    const response = await dashboardAxios.patch("/user/updateUser", credential)
-    if (response.status === 201) {
-      alert(":)");
-    }
-  }
-
   return (
     <ManageContext.Provider
-      value={{ login, logout, initialLoading, manageUser, addemployee, setInitialLoading, getalluser, updateuser }}
+      value={{
+        login,
+        logout,
+        initialLoading,
+        manageUser,
+        setInitialLoading,
+        loading,
+      }}
     >
       {children}
     </ManageContext.Provider>
