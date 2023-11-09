@@ -8,23 +8,28 @@ import { useEffect } from "react";
 export default function PeoplePage() {
   const [allPeople, setAllPeople] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [filterResult , setFilterResult] = useState([])
+  const [filterResult, setFilterResult] = useState([]);
 
   useEffect(() => {
     clockAxios
       .get("/user/getAllUser")
       .then((res) => {
         setAllPeople(res.data.allUser);
-        setFilterResult(res.data.allUser)
+        setFilterResult(res.data.allUser);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
   const handleInputChange = (e) => {
-    const newAllPeople = allPeople.filter((el) =>
-      el.firstName.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    const newAllPeople = allPeople.filter((el) => {
+      if (
+        el.firstName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        el.lastName.toLowerCase().includes(e.target.value.toLowerCase())
+      ) {
+        return el;
+      }
+    });
     setSearchInput(e.target.value);
     setFilterResult(newAllPeople);
   };
