@@ -2,16 +2,28 @@ import LeaveInfo from "./LeaveInfo";
 import LeaveList from "./LeaveList";
 import LeaveDropdown from "./LeaveDropdown";
 import SubmitButton from "../../../../components/SubmitButton";
+import useLeave from "../../../../hooks/use-leave";
+import { useEffect } from "react";
 
 export default function LeaveFormPage() {
+  const { userLeave, getUserLeaveByUserId } = useLeave();
+
+  useEffect(() => {
+    getUserLeaveByUserId();
+  }, []);
+
   return (
-    <div className="w-96 m-auto">
-      <div className="bg-inputGray m-6 p-6 rounded-md">
-        <LeaveList leaveName="Sick Leave" leaveAmount="15 days" />
-        <LeaveList leaveName="Annual Leave" leaveAmount="30 days" />
-        <LeaveList leaveName="Business Leave" leaveAmount="3 days" />
+    <div className="h-[50vh]">
+      <div className="bg-inputGray rounded-md">
+        {userLeave.map((userLeave) => (
+          <LeaveList
+            key={userLeave.id}
+            leaveName={userLeave.leaveProfile.leaveName}
+            leaveAmount={`${userLeave.dateAmount} days`}
+          />
+        ))}
       </div>
-      <div className="flex flex-col justify-center items-center gap-4 p-2">
+      <div className="flex flex-col justify-center items-center p-2">
         <div className="flex flex-col gap-4">
           <LeaveDropdown />
           <div>

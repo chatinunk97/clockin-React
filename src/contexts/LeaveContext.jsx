@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { dashboardAxios } from "../config/axios";
+import { clockAxios, dashboardAxios } from "../config/axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -9,6 +9,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
+  const [userLeave, setUserLeave] = useState([]);
   const getAllLeaveProfile = async () =>
     await dashboardAxios.get("/leave/getAllLeaveProfile");
 
@@ -52,6 +53,22 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getUserLeaveByUserId = async (data) => {
+    try {
+      const res = await clockAxios.get("/leave/getUserLeave", data);
+      setUserLeave(res.data.userLeave);
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <LeaveContext.Provider
       value={{
@@ -63,6 +80,8 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfileById,
         leaveProfiles,
         setLeaveProfiles,
+        getUserLeaveByUserId,
+        userLeave,
       }}
     >
       {children}
