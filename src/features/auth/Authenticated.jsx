@@ -10,9 +10,10 @@ export default function Authenticated({ children, pageType }) {
       return <Navigate to="/login" />;
     }
   }
+  console.log("auth middleware");
   if (pageType === "dashboard") {
     if (!manageUser) {
-      return <Navigate to="/manage/login"/>
+      return <Navigate to="/manage/login" />;
     }
   }
   return children;
