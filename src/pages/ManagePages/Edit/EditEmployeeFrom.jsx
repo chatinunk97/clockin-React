@@ -112,7 +112,7 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
           return (
             <>
               <div
-                className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2"
+                className=" w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2 p-1  mb-2"
                 key={el.id}
               >
                 <h1>{el.label}</h1>
@@ -123,8 +123,9 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                   onChange={handleChangeInput}
                   hasError={error[el.name]}
                 />
+                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
               </div>
-              {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+
             </>
           );
         })}
@@ -152,8 +153,9 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                   value={input[el.name]}
                   hasError={error[el.name]}
                 />
+                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
               </div>
-              {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+
             </>
           );
         })}
