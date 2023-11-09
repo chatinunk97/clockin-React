@@ -19,11 +19,12 @@ export default function LeaveContextProvider({ children }) {
       console.log(res);
       const leaveProfileData = res.data.leaveProfile;
       const newLeaveProfile = {
+        id: leaveProfileData.id,
         leaveName: leaveProfileData.leaveName,
         defaultDateAmount: leaveProfileData.defaultDateAmount,
       };
       setLeaveProfiles((prev) => {
-        return [newLeaveProfile, ...prev];
+        return [...prev, newLeaveProfile];
       });
 
       if (res.status === 201) {
@@ -90,6 +91,31 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const deleteLeaveProfile = async (id) => {
+    try {
+      const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
+      if (res.status === 200) {
+        setLeaveProfiles((prev) => prev.filter((el) => el.id !== id));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete Leave Profile success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(err);
+    }
+  };
+
   return (
     <LeaveContext.Provider
       value={{
@@ -102,6 +128,7 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfileById,
         leaveProfiles,
         setLeaveProfiles,
+        deleteLeaveProfile,
       }}
     >
       {children}

@@ -12,6 +12,7 @@ export default function TableLeaveSetting({
   leaveProfileById,
   setLeaveProfileById,
   loading,
+  deleteLeaveProfile,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [columnDefs] = useState([
@@ -24,13 +25,24 @@ export default function TableLeaveSetting({
         <div className="flex gap-2 justify-center items-center h-full">
           <div className="p-2">
             <button
-              onClick={(e) => {
+              onClick={() => {
                 setLeaveProfileById(params.data);
                 setIsOpen(true);
               }}
               className="font-bold text-white w-14 h-6 bg-green-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-green-400"
             >
               Edit
+            </button>
+          </div>
+          <div className="p-2">
+            <button
+              onClick={() => {
+                console.log(params.data.id);
+                deleteLeaveProfile(params.data.id);
+              }}
+              className="font-bold text-white w-14 h-6 bg-red-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-red-400"
+            >
+              Delete
             </button>
           </div>
         </div>
