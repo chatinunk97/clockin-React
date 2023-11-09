@@ -13,16 +13,17 @@ export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
     const [UserbyId, setUserById] = useState({});
     const [columnDefs] = useState([
-        { field: "firstName", flex: 1 },
-        { field: "lastName", flex: 1 },
-        { field: "position", flex: 1 },
-        { field: "userBossId", flex: 1 },
-        { field: "employeeId", flex: 1 },
-        { field: "mobile", flex: 1 },
-        { field: "email", flex: 1 },
-        { field: "isActive", flex: 1 },
+        { field: "firstName", width: 190 },
+        { field: "lastName", width: 190 },
+        { field: "position", width: 190 },
+        { field: "userBossId", width: 190 },
+        { field: "employeeId", width: 190 },
+        { field: "mobile", width: 190 },
+        { field: "email", width: 190 },
+        { field: "isActive", width: 120 },
         {
             field: "actionButtons",
+            flex: 1,
             headerName: "",
             cellRenderer: (params) => (
                 <div className="flex gap-2 justify-center items-center h-full">
@@ -41,8 +42,8 @@ export default function TableEmployee({ allUser, loading }) {
                                 onClick={() => {
                                     setUserById(params.data);
                                 }}
-                                bg="bg-blue-600"
-                                hover="hover:bg-blue-400"
+                                bg="bg-azure-600"
+                                hover="hover:bg-azure-400"
                                 buttonName="View"
                             />
                         </Link>
@@ -56,15 +57,22 @@ export default function TableEmployee({ allUser, loading }) {
         defaultColDef: {
             resizable: true,
             sortable: true,
+            filter: true,
+            headerClass: "bg-azure-900 text-white font-bold ",
         },
+        rowClassRules: {
+            "bg-gray-200": () => true,
+        },
+        suppressHoverHighlight: true,
     };
+
 
     const sortingOrder = useMemo(() => {
         return ["desc", "asc", null];
     }, []);
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
+        <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
             {loading && <LinearIndeterminate />}
             <AgGridReact
                 rowData={allUser}
