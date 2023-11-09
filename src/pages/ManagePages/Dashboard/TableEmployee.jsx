@@ -8,7 +8,7 @@ import { useMemo } from "react";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import { Link } from "react-router-dom";
 import SmallButton from "../../../components/SmallButton";
-
+import "../../../../src/styles.css"
 export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
     const [UserbyId, setUserById] = useState({});
@@ -20,7 +20,7 @@ export default function TableEmployee({ allUser, loading }) {
         { field: "employeeId", width: 190 },
         { field: "mobile", width: 190 },
         { field: "email", width: 190 },
-        { field: "isActive", width: 120 },
+        { field: "isActive", width: 140 },
         {
             field: "actionButtons",
             flex: 1,
@@ -58,12 +58,7 @@ export default function TableEmployee({ allUser, loading }) {
             resizable: true,
             sortable: true,
             filter: true,
-            headerClass: "bg-azure-900 text-white font-bold ",
         },
-        rowClassRules: {
-            "bg-gray-200": () => true,
-        },
-        suppressHoverHighlight: true,
     };
 
 
