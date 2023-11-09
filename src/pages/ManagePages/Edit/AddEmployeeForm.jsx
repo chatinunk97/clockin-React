@@ -2,7 +2,7 @@ import Joi from "joi";
 import { useState } from "react";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
-import useManage from "../../../hooks/use-manage";
+import useUser from "../../../hooks/use-user";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import IconLabelButtons from "../../../components/SendButton";
 import InputFileUpload from "../../../components/Uploadbutton";
@@ -17,8 +17,6 @@ import {
   optionList,
 } from "./InputList";
 
-
-
 const AddUserSchema = Joi.object({
   profileImage: Joi.allow(null, "").required(),
   employeeId: Joi.string().trim().required(),
@@ -32,8 +30,7 @@ const AddUserSchema = Joi.object({
   userBossId: Joi.number().required(),
   userType: Joi.string(),
   isActive: Joi.boolean(),
-  checkLocation: Joi.boolean()
-
+  checkLocation: Joi.boolean(),
 });
 
 const validateregister = (input) => {
@@ -64,17 +61,16 @@ export default function AddmployeeForm({ allUser, onClose }) {
     checkLocation: "true",
   });
 
-  const { addemployee } = useManage();
+  const { addemployee } = useUser();
 
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChangeInput = (e) => {
-
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleChangeDropdown = (data, name) => {
-    console.log(data)
+    console.log(data);
     setInput({ ...input, [name]: data.value });
   };
   const handleSubmitAddUser = async (e) => {
@@ -89,16 +85,14 @@ export default function AddmployeeForm({ allUser, onClose }) {
       }
       setError({});
       setLoading(true);
-      await addemployee(formData)
-      onClose()
+      await addemployee(formData);
+      onClose();
     } catch (err) {
       console.log(error);
     } finally {
       setLoading(false);
-
     }
-  }
-
+  };
 
   const positionOptions = optionList(userposition);
   const UsertypeOptions = optionList(usertype);
@@ -113,7 +107,10 @@ export default function AddmployeeForm({ allUser, onClose }) {
         {inputList.map((el) => {
           return (
             <>
-              <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2" key={el.id}>
+              <div
+                className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2"
+                key={el.id}
+              >
                 <h1>{el.label}</h1>
                 <RegisterInput
                   placeholder={el.placeholder}
@@ -122,13 +119,13 @@ export default function AddmployeeForm({ allUser, onClose }) {
                   onChange={handleChangeInput}
                   hasError={error[el.name]}
                 />
-                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                {error[el.name] && (
+                  <InputErrorMessage message={error[el.name]} />
+                )}
               </div>
-
-            </>)
+            </>
+          );
         })}
-
-
 
         {dropdownlist.map((el) => {
           let options = [];
@@ -139,7 +136,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
           } else if (el.name === "isActive" || el.name === "checkLocation") {
             options = isTrueOptions;
           } else if (el.name === "userBossId") {
-            options = supervisorList(allUser)
+            options = supervisorList(allUser);
           }
 
           return (
@@ -152,14 +149,13 @@ export default function AddmployeeForm({ allUser, onClose }) {
                   name={el.name}
                   hasError={error[el.name]}
                 />
-                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                {error[el.name] && (
+                  <InputErrorMessage message={error[el.name]} />
+                )}
               </div>
-
             </>
-          )
-        })
-        }
-
+          );
+        })}
 
         <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
           <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
