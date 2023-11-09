@@ -13,7 +13,6 @@ export const ManageContext = createContext();
 export default function ManageContextProvider({ children }) {
   const [manageUser, setManageUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
-  // const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
