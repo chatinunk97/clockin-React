@@ -23,30 +23,21 @@ export default function ManageEmployees() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-
-        <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] max-h-[896px] overflow-y-auto">
+        <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
             <div className="flex justify-center items-center gap-4 md:w-full">
                 <div className="flex justify-center items-center p-6">
                     <div className="flex justify-center items-center gap-2 w-60">
                         <CustomizedInputBase />
                     </div>
-                    <div onClick={() => {
-                        setIsOpen(true)
-                    }} className="rounded-3xl w-32 p-1 ml-9">
-                        <CustomizedButtons />
+                    <div
+                        onClick={() => {
+                            setIsOpen(true);
+                        }}
+                        className="rounded-3xl w-32 p-1 ml-9"
+                    >
+                        <CustomizedButtons buttonName="Add User" />
                     </div>
                 </div>
-
-            </div>
-            <div>
-                <TableEmployee allUser={allUser} loading={loading} />
-                <Modal
-                    title="Add User "
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                >
-                    <AddmployeeForm allUser={allUser} onClose={() => setIsOpen(false)} />
-                </Modal>
             </div>
         </div>
     );
