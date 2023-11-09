@@ -67,7 +67,6 @@ export default function UserContextProvider({ children }) {
       });
       console.log(console.log(newUser));
       setAllUser(newUser);
-      // console.log(allUser)
 
       if (res.status === 200) {
         Swal.fire({
