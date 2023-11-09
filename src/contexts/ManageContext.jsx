@@ -16,8 +16,8 @@ export default function ManageContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [leaveProfiles, setLeaveProfiles] = useState([]);
-  const [leaveProfileById, setLeaveProfileById] = useState({});
+  // const [leaveProfiles, setLeaveProfiles] = useState([]);
+  // const [leaveProfileById, setLeaveProfileById] = useState({});
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -93,8 +93,8 @@ export default function ManageContextProvider({ children }) {
 
   const updateuser = async (credential) => {
     try {
-      const res = await dashboardAxios.patch("/user/updateUser", credential)
-      const newUser = [...allUser]
+      const res = await dashboardAxios.patch("/user/updateUser", credential);
+      const newUser = [...allUser];
       const foundIdx = newUser.findIndex(
         (item) => item.id === res.data.user.id
       );
@@ -130,24 +130,24 @@ export default function ManageContextProvider({ children }) {
   // const getAllLeaveProfile = async () =>
   //   await dashboardAxios.get("/leave/getAllLeaveProfile");
 
-  const updateLeaveProfile = async (updatedLeaveProfile) => {
-    const res = await dashboardAxios.patch(
-      "leave/updateLeaveProfile",
-      updatedLeaveProfile
-    );
-    setLeaveProfileById({
-      ...leaveProfileById,
-      ...res.data.updateLeaveProfile,
-    });
+  // const updateLeaveProfile = async (updatedLeaveProfile) => {
+  //   const res = await dashboardAxios.patch(
+  //     "leave/updateLeaveProfile",
+  //     updatedLeaveProfile
+  //   );
+  //   setLeaveProfileById({
+  //     ...leaveProfileById,
+  //     ...res.data.updateLeaveProfile,
+  //   });
 
-    getAllLeaveProfile()
-      .then((res) => {
-        setLeaveProfiles(res.data.allLeaveProfile);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //   getAllLeaveProfile()
+  //     .then((res) => {
+  //       setLeaveProfiles(res.data.allLeaveProfile);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const getalluser = async () => {
     setLoading(true);
@@ -190,13 +190,13 @@ export default function ManageContextProvider({ children }) {
         getalluser,
         updateuser,
         // getAllLeaveProfile,
-        updateLeaveProfile,
+        // updateLeaveProfile,
         loading,
         allUser,
-        leaveProfileById,
-        setLeaveProfileById,
-        leaveProfiles,
-        setLeaveProfiles,
+        // leaveProfileById,
+        // setLeaveProfileById,
+        // leaveProfiles,
+        // setLeaveProfiles,
       }}
     >
       {children}

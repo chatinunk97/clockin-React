@@ -1,18 +1,25 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import TableLeaveSetting from "./TableLeaveSetting";
-import useManage from "../../../hooks/use-manage";
 import useLeave from "../../../hooks/use-leave";
 
 export default function ManageLeaveSetting() {
-  const { getAllLeaveProfile } = useLeave();
   const {
-    // getAllLeaveProfile,
+    getAllLeaveProfile,
     leaveProfileById,
     setLeaveProfileById,
     leaveProfiles,
     setLeaveProfiles,
-  } = useManage();
-  const [loading, setLoading] = useState(false);
+    loading,
+    setLoading,
+  } = useLeave();
+  // const {
+  //   // getAllLeaveProfile,
+  //   leaveProfileById,
+  //   setLeaveProfileById,
+  //   leaveProfiles,
+  //   setLeaveProfiles,
+  // } = useManage();
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
