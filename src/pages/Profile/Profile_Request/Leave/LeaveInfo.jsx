@@ -5,7 +5,6 @@ import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import LeaveDropdown from "./LeaveDropdown";
 export default function LeaveInfo() {
-
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
@@ -20,12 +19,11 @@ export default function LeaveInfo() {
           startDate={startDate}
           endDate={endDate}
           placeholderText="Select Date"
-          className='w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1'
+          className="w-56 border border-stone-200 shadow-sm rounded-md cursor-pointer p-1"
           onChange={(update) => {
             setDateRange(update);
           }}
           isClearable={true}
-
         />
       </div>
       <div>
