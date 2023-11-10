@@ -1,22 +1,25 @@
-export default function LeaveDropdown({ type }) {
+import useLeave from "../../../../hooks/use-leave";
+
+export default function LeaveDropdown({ onChange, name }) {
+  const { userLeave } = useLeave();
+
   return (
-    <div>
-      {/* <label htmlFor="leave"></label> */}
-      <select name="leave" id="leave">
-        {type === "day" ? (
-          <>
-            <option value="fullDay">Full Day</option>
-            <option value="halfMorning">Half Day (Morning)</option>
-            <option value="halfAfternoon">Half Day (Afternoon)</option>
-          </>
-        ) : (
-          <>
-            <option value="annual">Annual Leave</option>
-            <option value="sick">Sick Leave</option>
-            <option value="business">Business Leave</option>
-          </>
-        )}
-      </select>
-    </div>
+    <select onChange={onChange} name={name} id="leave">
+      {name === "leaveType" ? (
+        <>
+          <option value="FULLDAY">Full Day</option>
+          <option value="FIRSTHALF">Half Day (Morning)</option>
+          <option value="SECONDHALF">Half Day (Afternoon)</option>
+        </>
+      ) : (
+        <>
+          {userLeave.map((userLeave) => (
+            <option key={userLeave.id} value={userLeave.id}>
+              {userLeave.leaveProfile.leaveName}
+            </option>
+          ))}
+        </>
+      )}
+    </select>
   );
 }

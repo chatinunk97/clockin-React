@@ -13,7 +13,6 @@ export const ManageContext = createContext();
 export default function ManageContextProvider({ children }) {
   const [manageUser, setManageUser] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (getAccessTokenDB()) {
@@ -51,7 +50,6 @@ export default function ManageContextProvider({ children }) {
         initialLoading,
         manageUser,
         setInitialLoading,
-        loading,
       }}
     >
       {children}
