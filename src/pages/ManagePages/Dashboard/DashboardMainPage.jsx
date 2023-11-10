@@ -8,6 +8,7 @@ export default function DashboardMainPage() {
   const [chartData, setChartData] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
   const { allUser, getalluser } = useUser();
+  // const {}
 
   useEffect(() => {
     // Fetch data from the API using Axios or your preferred method
@@ -64,7 +65,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={allUser.length} />
                   </div>
-                  <div className="stat-desc">Employees</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
 
@@ -74,7 +75,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value text-secondary">
                     <CountUp end={4200} />
                   </div>
-                  <div className="stat-desc text-secondary">Viewers</div>
+                  <div className="stat-desc text-secondary">Persons</div>
                 </div>
               </div>
 
@@ -84,7 +85,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={77} />
                   </div>
-                  <div className="stat-desc">Applicants</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
 
@@ -94,7 +95,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={17} />
                   </div>
-                  <div className="stat-desc">Employee</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
             </div>
