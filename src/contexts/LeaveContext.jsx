@@ -92,14 +92,24 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  // const getUserLeaveByUserId = async (data) => {
+  //   try {
+  //     const res = await clockAxios.get("/leave/getUserLeave", data);
+  //     setUserLeave(res.data.userLeave);
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
   const getUserLeaveByUserId = async (data) => {
     try {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
+      return res.data.userLeave;
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const deleteLeaveProfile = async (id) => {
     try {
       const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
@@ -126,16 +136,16 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
-  const getRequestLeaveById = async (requestLeaveId) => {
-    await dashboardAxios.get(`/leave/getRequestLeave/${requestLeaveId}`);
-  };
+  // const getRequestLeaveById = async (requestLeaveId) => {
+  //   await dashboardAxios.get(`/leave/getRequestLeave/${requestLeaveId}`);
+  // };
 
   return (
     <LeaveContext.Provider
       value={{
         createLeaveProfile,
         getAllLeaveProfile,
-        getRequestLeaveById,
+        // getRequestLeaveById,
         updateLeaveProfile,
         loading,
         setLoading,
