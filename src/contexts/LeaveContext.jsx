@@ -119,15 +119,12 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
-  // const getRequestLeaveById = async (requestLeaveId) => {
-  //   await dashboardAxios.get(`/leave/getRequestLeave/${requestLeaveId}`);
-  // };
-
   const getUserLeaveByUserId = async (data) => {
     try {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
       console.log(res.data.userLeave);
+      return userLeave;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -148,7 +145,6 @@ export default function LeaveContextProvider({ children }) {
       value={{
         createLeaveProfile,
         getAllLeaveProfile,
-        // getRequestLeaveById,
         updateLeaveProfile,
         loading,
         setLoading,
