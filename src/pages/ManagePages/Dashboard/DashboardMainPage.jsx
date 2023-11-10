@@ -1,5 +1,4 @@
 import { PieChart } from "@mui/x-charts/PieChart";
-
 import { dashboardAxios } from "../../../config/axios";
 import { useState, useEffect } from "react";
 import useUser from "../../../hooks/use-user";
@@ -36,7 +35,6 @@ export default function DashboardMainPage() {
         setInitialLoading(false);
       });
   }, []);
-  console.log(allUser);
 
   return (
     <div className=" w-full">
@@ -66,7 +64,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={allUser.length} />
                   </div>
-                  <div className="stat-desc">Employees</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
 
@@ -76,7 +74,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value text-secondary">
                     <CountUp end={4200} />
                   </div>
-                  <div className="stat-desc text-secondary">Viewers</div>
+                  <div className="stat-desc text-secondary">Persons</div>
                 </div>
               </div>
 
@@ -86,7 +84,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={77} />
                   </div>
-                  <div className="stat-desc">Applicants</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
 
@@ -96,7 +94,7 @@ export default function DashboardMainPage() {
                   <div className="stat-value">
                     <CountUp end={17} />
                   </div>
-                  <div className="stat-desc">Employee</div>
+                  <div className="stat-desc">Persons</div>
                 </div>
               </div>
             </div>
