@@ -140,6 +140,17 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const updateRequestLeave = async (data) => {
+    try {
+      console.log(data);
+      const res = await dashboardAxios.patch("/leave/updateRequestleave", data);
+      console.log(res);
+      // setRequestLeave({...requestLeave, ...res.data.updateRequestLeave})
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <LeaveContext.Provider
       value={{
@@ -156,6 +167,7 @@ export default function LeaveContextProvider({ children }) {
         userLeave,
         deleteLeaveProfile,
         createRequestLeave,
+        updateRequestLeave,
         requestLeave,
       }}
     >
