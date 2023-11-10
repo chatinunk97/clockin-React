@@ -26,8 +26,8 @@ export default function OTform() {
     console.log(input);
   };
   return (
-    <form className="bg-red-500 flex flex-col items-center w-full gap-4">
-      <div className="bg-blue-500 w-full flex flex-col items-center justify-center">
+    <form className="bg-red-500 flex flex-col items-center w-full gap-4 h-[90%]">
+      <div className="bg-blue-500 w-full flex flex-col items-center justify-around h-[80%] ">
         <DatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date)}
