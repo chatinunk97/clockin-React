@@ -10,6 +10,7 @@ export default function OTContextProvider({ children }) {
   useEffect(() => {
     clockAxios.get("/clock").then((res) => {
       setClockList(clockListChange(res.data));
+      console.log(res.data)
     });
   }, []);
 
