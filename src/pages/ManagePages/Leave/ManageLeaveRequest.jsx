@@ -11,12 +11,12 @@ export default function ManageLeaveRequest() {
     dashboardAxios
       .get("/leave/getAllRequestLeaves")
       .then((res) => {
+        console.log(res.data.requestLeaves[1].startDate)
         const leaveData = res.data.requestLeaves.map((leave) => ({
           firstName: leave.userLeave.user.firstName,
           lastName: leave.userLeave.user.lastName,
-          startDate: leave.startDate,
-          endDate: leave.endDate,
-          // halfDate: leave.halfDate,
+          startDate: leave.startDate.split("T")[0],
+          endDate: leave.endDate.split("T")[0],
           statusRequest: leave.statusRequest,
           messageLeave: leave.messageLeave,
         }));
