@@ -9,6 +9,7 @@ import { dashboardAxios } from "../../../config/axios";
 import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 
 export default function ViewEmployee() {
     const navigate = useNavigate();
@@ -21,25 +22,32 @@ export default function ViewEmployee() {
     useEffect(() => {
         dashboardAxios.get(`user/getUser/${userId}`)
             .then(res => {
-
                 setEmployee(res.data.user);
 
                 const ClockData = res.data.user.clock.map((clockitem) => ({
-                    Date: clockitem.clockInTime,
-                    Clockin: clockitem.clockInTime,
-                    Clockout: clockitem.clockOutTime,
+                    Date: formatDate(clockitem.clockInTime),
+                    Clockin: formatTime(clockitem.clockInTime),
+                    Clockout: formatTime(clockitem.clockOutTime),
                     Status: clockitem.statusClockIn,
-
                 }));
-                setClock(ClockData)
+                setClock(ClockData);
             })
             .catch(err => {
                 console.log(err);
             });
     }, [userId]);
 
-    console.log(employee.isActive)
+    // Function to format date (DD/MM/YYYY)
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return format(date, 'dd/MM/yyyy');
+    };
 
+    // Function to format time (HH:MM:SS)
+    const formatTime = (dateString) => {
+        const date = new Date(dateString);
+        return format(date, 'HH:mm:ss');
+    };
 
     const handleDelete = async () => {
         try {
@@ -80,11 +88,12 @@ export default function ViewEmployee() {
 
 
     const [columnDefs] = useState([
-        { field: "Date", flex: 1 },
-        { field: "Clockin", flex: 1 },
-        { field: "Clockout", flex: 1 },
-        { field: "Status", flex: 1 },
-
+        { field: "Date", width: 180 },
+        { field: "Clockin", width: 180 },
+        { field: "Clockout", width: 180 },
+        { field: "Status", width: 160 },
+        { field: "Leave", width: 160 },
+        { field: "OT", flex: 1 }
     ])
 
 
@@ -105,8 +114,8 @@ export default function ViewEmployee() {
                     <div className="text-4xl font-semibold md:pr-20">
                         <h1>{employee.firstName} {employee.lastName} </h1>
                     </div>
-                    <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200">
-                        <img src={employee.profileImage} alt="UserPhoto" className="w-full h-full object-contain rounded-full shadow-2xl" />
+                    <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200 ">
+                        <img src={employee.profileImage} alt="UserPhoto" className="w-full h-full rounded-full shadow-2xl" />
                     </div>
                 </div>
                 <div className="ag-theme-alpine flex flex-col gap-2" style={{ height: 600, width: "60%" }}>
