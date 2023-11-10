@@ -28,7 +28,11 @@ import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
+<<<<<<< HEAD
+import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
+=======
 import OTContextProvider from "../contexts/OTContext";
+>>>>>>> develop
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -145,6 +149,14 @@ export default function Route() {
           element: (
             <LeaveContextProvider>
               <ManageLeaveRequest />
+            </LeaveContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-request/:requestLeaveId",
+          element: (
+            <LeaveContextProvider>
+              <ViewLeaveRequest />
             </LeaveContextProvider>
           ),
         },

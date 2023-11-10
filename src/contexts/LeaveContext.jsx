@@ -124,6 +124,7 @@ export default function LeaveContextProvider({ children }) {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
       console.log(res.data.userLeave);
+      return userLeave;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -131,7 +132,7 @@ export default function LeaveContextProvider({ children }) {
 
   const createRequestLeave = async (data) => {
     try {
-      console.log(data)
+      console.log(data);
       const res = await clockAxios.post("/leave/createRequestLeave", data);
       setRequestLeave(res.data.requestLeave);
     } catch (error) {

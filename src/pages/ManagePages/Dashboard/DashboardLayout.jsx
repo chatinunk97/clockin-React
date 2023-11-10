@@ -28,9 +28,11 @@ export default function DashboardLayout() {
   const { logout } = useManage();
   const { pathname } = useLocation();
 
+  const { manageUser } = useManage()
+
   return (
-    <div className="bg-gradient-to-b from-azure-900 via-azure-800 to-azure-700 h-16 w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0  overflow-y-auto">
-      <div className="block md:hidden">
+    <div className="bg-gradient-to-b from-azure-900 via-azure-800 to-azure-700 h-16 w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0  overflow-y-auto items-center">
+      <div className="block md:hidden ">
         <MenuHamburger />
       </div>
       <div className=" hidden md:flex md:justify-center md:items-center">
@@ -44,7 +46,12 @@ export default function DashboardLayout() {
           <h1 className="text-2xl text-white font-bold">Clock IN</h1>
         </div>
       </div>
-      <div>
+      <div >
+        <div className="flex justify-center items-center p-6 w-60 ">
+          <div>
+            <h1 className="text-xl text-white font-semibold">Welcome, {manageUser.firstName} {manageUser.lastName}</h1>
+          </div>
+        </div>
         <hr />
         <nav>
           <div className="hidden md:flex md:flex-col gap-2 p-2">
