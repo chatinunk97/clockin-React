@@ -28,6 +28,7 @@ import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
+import OTContextProvider from "../contexts/OTContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -82,7 +83,11 @@ export default function Route() {
         },
         {
           path: "/ot",
-          element: <ProfileOTMainPage />,
+          element: (
+            <OTContextProvider>
+              <ProfileOTMainPage />
+            </OTContextProvider>
+          ),
           children: [
             { path: "/ot/otform", element: <OTForm /> },
             {
