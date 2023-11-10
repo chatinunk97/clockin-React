@@ -45,7 +45,10 @@ export default function ViewLeaveRequest() {
       ) : (
         <>
           <div className="text-4xl font-semibold w-full m-auto ml-40">
-            <h1>FirstName LastName</h1>
+            <h1>
+              {request.userLeave.user.firstName}{" "}
+              {request.userLeave.user.lastName}
+            </h1>
             <br />
             <div className="text-lg flex gap-60">
               <div>
