@@ -23,7 +23,7 @@ export default function ManageEmployees() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] max-h-[896px]">
+    <div className=" flex flex-col justify-start md:mt-20 md:w-full p-2 min-w-[414px] max-h-[896px]">
       <div className="flex justify-center items-center gap-4 md:w-full">
         <div className="flex justify-center items-center p-6">
           <div className="flex justify-center items-center gap-2 w-120">
