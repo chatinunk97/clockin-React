@@ -7,6 +7,7 @@ import Loading from "../../../components/LoadingBar";
 import GoogleMap from "../../../config/GoogleMap/Map";
 import Swal from "sweetalert2";
 import locationPermission from "../../../utils/locationPermission";
+import { toast } from "react-toastify";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -115,10 +116,10 @@ export default function RegisterFrom() {
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        const errorMessage = err.response.data.message;
-        if (errorMessage.includes("Email")) {
+        const errorMessage = toast.error(err.response.data.message);
+        if (errorMessage.includes("email")) {
           setError({ ...error, email: "This Email is already in use" });
-        } else if (errorMessage.includes("phone number")) {
+        } else if (errorMessage.includes("mobile")) {
           setError({ ...error, mobile: "Phone number is already in use" });
         } else {
           console.log("Other specific error:", errorMessage);
