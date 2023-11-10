@@ -4,6 +4,9 @@
   --ag-font-family: monospace;
   --ag-header-cell-hover-background-color: #304878;
   --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+  --ag-foreground-color: black;
+  --ag-data-color: black;
+  --ag-secondary-foreground-color: #fff;
 }
 
 .ag-theme-alpine .ag-header-cell {
