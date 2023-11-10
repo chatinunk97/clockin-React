@@ -86,7 +86,7 @@ export default function TableEmployee({ allUser, loading }) {
                     id="filter-text-box"
                     placeholder="Quick search..."
                     onInput={onFilterTextBoxChanged}
-                    className="border border-stone-200 p-2 rounded-lg mb-4 w-60"
+                    className="border border-stone-200 p-2 rounded-lg mb-4 w-60 "
                 />
 
                 <AgGridReact
@@ -95,7 +95,6 @@ export default function TableEmployee({ allUser, loading }) {
                     columnDefs={columnDefs}
                     sortingOrder={sortingOrder}
                     onGridReady={onGridReady}
-                    suppressMenuHide={true}
                 />
                 <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
                     <EditemployeeForm
