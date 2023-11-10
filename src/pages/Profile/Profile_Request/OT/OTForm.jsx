@@ -1,6 +1,7 @@
 import { AiFillCalendar } from "react-icons/ai";
 import { LuClock7 } from "react-icons/lu";
 import useOT from "../../../../hooks/use-OT";
+import DropdownSearch  from "../../../../components/DropdownSearch"
 import { BsFillClipboard2Fill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
@@ -8,8 +9,12 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function OTform() {
   const [startDate, setStartDate] = useState(new Date());
-  const [filterClock , setFilterClock] = useState("")
-  console.log(useOT().clockList)
+  const { clockList } = useOT()
+
+  const handleChangeDropdown = (e)=>{
+    console.log(e.value)
+  }
+
   return (
     <div className="flex flex-col justify-center items-start p-4 mt-12 gap-4 md:items-center md:p-20 md:mt-0">
       <h1 className=" text-3xl font-bold">Informationss</h1>
@@ -28,7 +33,7 @@ export default function OTform() {
         </div>
         <div className="flex">
           <div>Clock Icon</div>
-          <div>Clock option</div>
+          <DropdownSearch data={clockList} onChange={handleChangeDropdown}/>
         </div>
         <div className="flex items-center gap-4 pt-6">
           <div className="text-3xl text-slate-700">

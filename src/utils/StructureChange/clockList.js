@@ -4,7 +4,7 @@ const clockList = (originalArray) => {
       label:
         "IN:" +
         new Date(obj.clockInTime).toTimeString().split(" ")[0] +
-        ", OUT: " +
+        " OUT: " +
         new Date(obj.clockOutTime).toTimeString().split(" ")[0],
       value: obj.id,
     };
