@@ -143,8 +143,23 @@ export default function LeaveContextProvider({ children }) {
       console.log(data);
       const res = await dashboardAxios.patch("/leave/updateRequestleave", data);
       console.log(res);
-      // setRequestLeave({...requestLeave, ...res.data.updateRequestLeave})
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Approve leave request success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.error("Error:", error);
     }
   };
