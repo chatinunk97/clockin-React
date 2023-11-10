@@ -6,12 +6,14 @@ import { useMemo } from "react";
 import Modal from "../../../components/Modal";
 import EditLeaveSettingForm from "./EditLeaveSettingForm";
 import LinearIndeterminate from "../../../components/LoadingBar";
+import SmallButton from "../../../components/SmallButton";
 
 export default function TableLeaveSetting({
   leaveProfiles,
   leaveProfileById,
   setLeaveProfileById,
   loading,
+  deleteLeaveProfile,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [columnDefs] = useState([
@@ -23,15 +25,22 @@ export default function TableLeaveSetting({
       cellRenderer: (params) => (
         <div className="flex gap-2 justify-center items-center h-full">
           <div className="p-2">
-            <button
-              onClick={(e) => {
+            <SmallButton
+              onClick={() => {
                 setLeaveProfileById(params.data);
                 setIsOpen(true);
               }}
-              className="font-bold text-white w-14 h-6 bg-green-600 rounded-xl flex justify-center items-center p-2 text-center transition-transform hover:scale-105 hover:bg-green-400"
-            >
-              Edit
-            </button>
+            />
+          </div>
+          <div className="p-2">
+            <SmallButton
+              onClick={() => {
+                deleteLeaveProfile(params.data.id);
+              }}
+              bg="bg-red-600"
+              hover="hover:bg-red-400"
+              buttonName="Delete"
+            />
           </div>
         </div>
       ),

@@ -26,6 +26,10 @@ import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
 import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
+import LeaveContextProvider from "../contexts/LeaveContext";
+import UserContextProvider from "../contexts/UserContext";
+import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
+import OTContextProvider from "../contexts/OTContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -68,7 +72,11 @@ export default function Route() {
         },
         {
           path: "/leave",
-          element: <ProfileLeaveMainPage />,
+          element: (
+            <LeaveContextProvider>
+              <ProfileLeaveMainPage />
+            </LeaveContextProvider>
+          ),
           children: [
             { path: "/leave/leaveform", element: <LeaveFormPage /> },
             { path: "/leave/myleave", element: <MyLeavePage /> },
@@ -76,7 +84,11 @@ export default function Route() {
         },
         {
           path: "/ot",
-          element: <ProfileOTMainPage />,
+          element: (
+            <OTContextProvider>
+              <ProfileOTMainPage />
+            </OTContextProvider>
+          ),
           children: [
             { path: "/ot/otform", element: <OTForm /> },
             {
@@ -105,10 +117,46 @@ export default function Route() {
         </Authenticated>
       ),
       children: [
-        { path: "/manage/dashboard", element: <DashboardMainPage /> },
-        { path: "/manage/employees", element: <ManageEmployees /> },
-        { path: "/manage/leave-setting", element: <ManageLeaveSetting /> },
-        { path: "/manage/leave-request", element: <ManageLeaveRequest /> },
+        {
+          path: "/manage/dashboard",
+          element: (
+            <UserContextProvider>
+              <DashboardMainPage />
+            </UserContextProvider>
+          ),
+        },
+        {
+          path: "/manage/employees",
+          element: (
+            <UserContextProvider>
+              <ManageEmployees />
+            </UserContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-setting",
+          element: (
+            <LeaveContextProvider>
+              <ManageLeaveSetting />
+            </LeaveContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-request",
+          element: (
+            <LeaveContextProvider>
+              <ManageLeaveRequest />
+            </LeaveContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-request/:requestLeaveId",
+          element: (
+            <LeaveContextProvider>
+              <ViewLeaveRequest />
+            </LeaveContextProvider>
+          ),
+        },
         { path: "/manage/ot-Request", element: <ManageOTRequest /> },
         { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],

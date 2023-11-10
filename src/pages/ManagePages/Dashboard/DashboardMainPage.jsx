@@ -4,21 +4,25 @@ import { TbFileCheck } from "react-icons/tb";
 import { dashboardAxios } from "../../../config/axios";
 import { useState, useEffect } from "react";
 
+import React, { useEffect, useState } from "react";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { dashboardAxios } from "../../../config/axios";
+import useUser from "../../../hooks/use-user";
+import CountUp from "react-countup";
+
 export default function DashboardMainPage() {
   const [chartData, setChartData] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
-  // const DashboardStatistics = [
-  //   { id: 1, Icon: BsPersonFill, text: "On Leave" },
-  //   { id: 2, Icon: TbFileCheck, text: "On Time" },
-  //   { id: 3, Icon: BsAlarm, text: "Late" },
-  // ];
+  const { allUser, getalluser } = useUser();
 
   useEffect(() => {
     // Fetch data from the API using Axios or your preferred method
     dashboardAxios
       .get("user/getPosition")
       .then((response) => {
-        const data = response.data; // Ensure the response structure is as expected
+        const data = response.data;
+        // const { totalUserCount } = data;
+
         const restructuredData = Object.keys(data.userTypeTotals).map(
           (label, id) => ({
             id,
@@ -26,124 +30,99 @@ export default function DashboardMainPage() {
             label,
           })
         );
-        console.log(restructuredData, "----Alohaaaa");
-        setChartData(restructuredData); // Set the retrieved data into the state
+        setChartData(restructuredData);
+        getalluser();
       })
       .catch((error) => {
-        console.error("Error fetching data:", error); // Log any errors
+        console.error("Error fetching data:", error);
       })
       .finally(() => {
         setInitialLoading(false);
       });
   }, []);
+  console.log(allUser);
+
   return (
     <div className=" w-full">
-      {initialLoading ? (
-        <h1>Loading</h1>
-      ) : (
-        <>
-          {/* <PieChart
-            series={[
-              {
-                // data: chartData, // Use the retrieved data
-                data: chartData,
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: {
-                  innerRadius: 30,
-                  additionalRadius: -30,
-                  color: "gray",
-                },
-              },
-            ]}
-            height={200}
-            width={400}
-          /> */}
-          {/* <div>
-            <div>
-              <div className="flex justify-center items-center text-4xl font-semibold ">
-                Welcome to your dashboard, ACB Company
-              </div>
-              <div>Filter by Date</div>
+      <div>
+        {initialLoading ? (
+          <h1>Loading</h1>
+        ) : (
+          <div className="bg-orange-300">
+            <div className="flex justify-evenly pt-5 text-4xl font-semibold text-center mb-4">
+              Welcome to your dashboard, ACB Company
+              <select className="select w-full max-w-xs">
+                <option disabled selected>
+                  Filter by Date
+                </option>
+                <option>Homer</option>
+                <option>Marge</option>
+                <option>Bart</option>
+                <option>Lisa</option>
+                <option>Maggie</option>
+              </select>
             </div>
-            <div>
-              <div>Total Employees</div>
-              <div>856</div>
-              <div>Employees</div>
-            </div>
-            <div>
-              <div>Late</div>
-              <div>3,342</div>
-              <div>Viewers</div>
-            </div>
-            <div>
-              <div>Leave</div>
-              <div>77</div>
-              <div>Applocants</div>
-            </div>
-            <div>
-              <div>OT</div>
-              <div>17</div>
-              <div>Employees</div>
-            </div>
-          </div> */}
 
-          <br />
-
-          <div className="flex w-full  justify-evenly items-start ">
-            <div className="flex flex-col border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
-              <div className="font-semibold text-xl p-2 ">Statistics</div>
-              <div className="flex flex-row gap-10">
-                <div className="font-semibold">
-                  <div className="flex flex-row items-center gap-4 p-4">
-                    <div className="rounded-full bg-blue-500 text-2xl  text-white hover hover:text-blue-500 p-2 hover:bg-white border border-blue-500">
-                      <BsPersonFill />
-                    </div>
-                    <div>
-                      <div className="text-gray-500">On Leave</div>
-                      <div>90%</div>
-                    </div>
+            <div className="m-5 gap-6 grid grid-cols-2 sm:grid-cols-4">
+              <div className="stats shadow p-4 border border-gray-300">
+                <div className="stat place-items-center">
+                  <div className="stat-title">Total Employees</div>
+                  <div className="stat-value">
+                    <CountUp end={allUser.length} />
                   </div>
-                  <div className="flex flex-row  items-center gap-4 p-4">
-                    <div className="rounded-full bg-green-600 text-2xl  text-white hover hover:text-green-600 p-2 hover:bg-white border border-green-600">
-                      <TbFileCheck />
-                    </div>
-                    <div>
-                      <div className="text-gray-500 font-semibold">On Time</div>
-                      <div>90%</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-row items-center gap-4 p-4">
-                    <div className="rounded-full bg-orange-500 text-2xl  text-white hover hover:text-orange-500 p-2 hover:bg-white border border-orange-500">
-                      <BsAlarm />
-                    </div>
-                    <div>
-                      <div className="text-gray-500 font-semibold">Late</div>
-                      <div>90%</div>
-                    </div>
-                  </div>
+                  <div className="stat-desc">Employees</div>
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    className="radial-progress text-primary"
-                    style={{ "--value": 75, "--size": "10rem" }}
-                    role="progressbar"
-                  >
-                    75%
+              </div>
+
+              <div className="stats shadow p-4 border border-gray-300">
+                <div className="stat place-items-center">
+                  <div className="stat-title">Lates</div>
+                  <div className="stat-value text-secondary">
+                    <CountUp end={4200} />
                   </div>
-                  <div className="text-center font-semibold text-lg selection:text-center p-4">
-                    XXXXXXX
+                  <div className="stat-desc text-secondary">Viewers</div>
+                </div>
+              </div>
+
+              <div className="stats shadow p-4 border border-gray-300">
+                <div className="stat place-items-center">
+                  <div className="stat-title">Leave</div>
+                  <div className="stat-value">
+                    <CountUp end={77} />
                   </div>
+                  <div className="stat-desc">Applicants</div>
+                </div>
+              </div>
+
+              <div className="stats shadow p-4 border border-gray-300">
+                <div className="stat place-items-center">
+                  <div className="stat-title">OT</div>
+                  <div className="stat-value">
+                    <CountUp end={17} />
+                  </div>
+                  <div className="stat-desc">Employee</div>
                 </div>
               </div>
             </div>
 
-            <div className="border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
-              <div className="font-semibold text-xl p-2 ">User Type</div>
+            {/* Other dashboard statistics */}
+
+            <br />
+            {/* <div>
+              <div>Statistics</div>
+              <div>
+                <div>On Leave</div>
+                <div>On Time</div>
+                <div>Late</div>
+              </div>
+              <div>graph 75%</div>
+            </div> */}
+            <div>
+              <div>User Type</div>
               <div>
                 <PieChart
                   series={[
                     {
-                      // data: chartData, // Use the retrieved data
                       data: chartData,
                       highlightScope: { faded: "global", highlighted: "item" },
                       faded: {
@@ -153,14 +132,14 @@ export default function DashboardMainPage() {
                       },
                     },
                   ]}
+                  width={400}
                   height={200}
-                  width={405}
                 />
               </div>
             </div>
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

@@ -32,7 +32,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
     <GoogleMap
       options={{
         mapTypeControl: false,
-        zoomControl: true,
+        zoomControl: enableSelect ? true : false,
         streetViewControl: false,
       }}
       zoom={17.8}
@@ -70,7 +70,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
       ) : (
         ""
       )}
-      <Marker position={location}></Marker>
+      <Marker zIndex={100} position={location}></Marker>
     </GoogleMap>
   );
 }

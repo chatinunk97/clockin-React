@@ -5,6 +5,7 @@ import SubmitButton from "../../../components/SubmitButton";
 import useManage from "../../../hooks/use-manage";
 
 export default function ManageLoginForm() {
+  console.log('first')
   const [input, setInput] = useState({
     email: "",
     password: "",

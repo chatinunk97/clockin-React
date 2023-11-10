@@ -12,11 +12,11 @@ export default function ManageLeaveRequest() {
       .get("/leave/getAllRequestLeaves")
       .then((res) => {
         const leaveData = res.data.requestLeaves.map((leave) => ({
+          id: leave.id,
           firstName: leave.userLeave.user.firstName,
           lastName: leave.userLeave.user.lastName,
-          startDate: leave.startDate,
-          endDate: leave.endDate,
-          // halfDate: leave.halfDate,
+          startDate: leave.startDate.split("T")[0],
+          endDate: leave.endDate.split("T")[0],
           statusRequest: leave.statusRequest,
           messageLeave: leave.messageLeave,
         }));
