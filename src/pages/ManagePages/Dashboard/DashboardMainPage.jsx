@@ -1,14 +1,10 @@
 import { PieChart } from "@mui/x-charts/PieChart";
-import { BsPersonFill, BsAlarm } from "react-icons/bs";
-import { TbFileCheck } from "react-icons/tb";
+
 import { dashboardAxios } from "../../../config/axios";
 import { useState, useEffect } from "react";
-
-import React, { useEffect, useState } from "react";
-import { PieChart } from "@mui/x-charts/PieChart";
-import { dashboardAxios } from "../../../config/axios";
 import useUser from "../../../hooks/use-user";
 import CountUp from "react-countup";
+import DashboardItem from "./DashboardItem";
 
 export default function DashboardMainPage() {
   const [chartData, setChartData] = useState([]);
@@ -48,7 +44,7 @@ export default function DashboardMainPage() {
         {initialLoading ? (
           <h1>Loading</h1>
         ) : (
-          <div className="bg-orange-300">
+          <div className="bg-orange-300 w-full h-screen">
             <div className="flex justify-evenly pt-5 text-4xl font-semibold text-center mb-4">
               Welcome to your dashboard, ACB Company
               <select className="select w-full max-w-xs">
@@ -105,36 +101,50 @@ export default function DashboardMainPage() {
               </div>
             </div>
 
-            {/* Other dashboard statistics */}
-
             <br />
-            {/* <div>
-              <div>Statistics</div>
-              <div>
-                <div>On Leave</div>
-                <div>On Time</div>
-                <div>Late</div>
+            <div className="flex w-full  justify-evenly items-start ">
+              <div className="flex flex-col border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
+                <div className="font-semibold text-xl p-2 ">Statistics</div>
+                <div className="flex flex-row gap-10">
+                  <DashboardItem />
+                  <div className="flex flex-col items-center justify-center">
+                    <div
+                      className="radial-progress text-primary"
+                      style={{ "--value": 75, "--size": "10rem" }}
+                      role="progressbar"
+                    >
+                      75%
+                    </div>
+                    <div className="text-center font-semibold text-lg selection:text-center p-4">
+                      XXXXXXX
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>graph 75%</div>
-            </div> */}
-            <div>
-              <div>User Type</div>
-              <div>
-                <PieChart
-                  series={[
-                    {
-                      data: chartData,
-                      highlightScope: { faded: "global", highlighted: "item" },
-                      faded: {
-                        innerRadius: 30,
-                        additionalRadius: -30,
-                        color: "gray",
+
+              <div className="border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
+                <div className="font-semibold text-xl p-2 ">User Type</div>
+                <div>
+                  <PieChart
+                    series={[
+                      {
+                        // data: chartData, // Use the retrieved data
+                        data: chartData,
+                        highlightScope: {
+                          faded: "global",
+                          highlighted: "item",
+                        },
+                        faded: {
+                          innerRadius: 30,
+                          additionalRadius: -30,
+                          color: "gray",
+                        },
                       },
-                    },
-                  ]}
-                  width={400}
-                  height={200}
-                />
+                    ]}
+                    height={200}
+                    width={405}
+                  />
+                </div>
               </div>
             </div>
           </div>
