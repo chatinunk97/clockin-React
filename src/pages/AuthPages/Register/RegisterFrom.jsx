@@ -79,7 +79,7 @@ export default function RegisterFrom() {
           setLoading(false);
         });
     });
-  }, []);
+  });
 
   const handleSubmitRegister = async (e) => {
     try {
@@ -114,7 +114,18 @@ export default function RegisterFrom() {
         alert("Registed");
       }
     } catch (err) {
-      console.log(err);
+      if (err.response && err.response.status === 400) {
+        const errorMessage = err.response.data.message;
+        if (errorMessage.includes("Email")) {
+          setError({ ...error, email: "This Email is already in use" });
+        } else if (errorMessage.includes("phone number")) {
+          setError({ ...error, mobile: "Phone number is already in use" });
+        } else {
+          console.log("Other specific error:", errorMessage);
+        }
+      } else {
+        console.log("Unexpected error:", err);
+      }
     } finally {
       setLoading(false);
     }

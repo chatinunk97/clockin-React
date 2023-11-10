@@ -29,6 +29,7 @@ import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
 import OTContextProvider from "../contexts/OTContext";
+import DashboardContextProvider from "../contexts/dashboardContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -120,7 +121,9 @@ export default function Route() {
           path: "/manage/dashboard",
           element: (
             <UserContextProvider>
-              <DashboardMainPage />
+              <DashboardContextProvider>
+                <DashboardMainPage />
+              </DashboardContextProvider>
             </UserContextProvider>
           ),
         },

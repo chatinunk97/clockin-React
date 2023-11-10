@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { dashboardAxios } from "../../../config/axios";
 import useUser from "../../../hooks/use-user";
@@ -8,7 +8,6 @@ export default function DashboardMainPage() {
   const [chartData, setChartData] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
   const { allUser, getalluser } = useUser();
-  // const {}
 
   useEffect(() => {
     // Fetch data from the API using Axios or your preferred method
@@ -35,7 +34,6 @@ export default function DashboardMainPage() {
         setInitialLoading(false);
       });
   }, []);
-  console.log(allUser);
 
   return (
     <div className=" w-full">
