@@ -79,7 +79,7 @@ export default function RegisterFrom() {
           setLoading(false);
         });
     });
-  });
+  }, []);
 
   const handleSubmitRegister = async (e) => {
     try {
