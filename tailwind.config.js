@@ -24,5 +24,5 @@ export default {
     },
   },
   // Apply to all tailwind
-  // plugins: [require("daisyui")],
+  plugins: [require("daisyui")],
 };
