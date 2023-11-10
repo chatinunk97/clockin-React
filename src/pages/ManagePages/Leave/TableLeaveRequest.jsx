@@ -4,11 +4,13 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useState, useMemo } from "react";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import SmallButton from "../../../components/SmallButton";
+import { Link } from "react-router-dom";
 
 export default function TableLeaveRequest({ requestLeaves, loading }) {
   const [columnDefs] = useState([
     { field: "firstName", flex: 1 },
     { field: "lastName", flex: 1 },
+    { field: "leaveName", flex: 1 },
     { field: "startDate", flex: 1 },
     { field: "endDate", flex: 1 },
     { field: "statusRequest", flex: 1 },
@@ -19,14 +21,16 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
       cellRenderer: (params) => (
         <div className="flex gap-2 justify-center items-center h-full">
           <div className="p-2">
-            <SmallButton
-              onClick={() => {
-                console.log(params.data);
-              }}
-              bg="bg-blue-600"
-              hover="hover:bg-blue-400"
-              buttonName="View"
-            />
+            <Link to={`/manage/leave-request/${params.data.id}`}>
+              <SmallButton
+                onClick={() => {
+                  console.log(params.data);
+                }}
+                bg="bg-blue-600"
+                hover="hover:bg-blue-400"
+                buttonName="View"
+              />
+            </Link>
           </div>
         </div>
       ),

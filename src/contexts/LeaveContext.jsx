@@ -123,6 +123,11 @@ export default function LeaveContextProvider({ children }) {
     try {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
+<<<<<<< HEAD
+=======
+      console.log(res.data.userLeave);
+      return userLeave;
+>>>>>>> develop
     } catch (error) {
       console.error("Error:", error);
     }

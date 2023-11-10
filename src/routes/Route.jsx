@@ -28,6 +28,7 @@ import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
+import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
 
 export default function Route() {
@@ -145,6 +146,14 @@ export default function Route() {
           element: (
             <LeaveContextProvider>
               <ManageLeaveRequest />
+            </LeaveContextProvider>
+          ),
+        },
+        {
+          path: "/manage/leave-request/:requestLeaveId",
+          element: (
+            <LeaveContextProvider>
+              <ViewLeaveRequest />
             </LeaveContextProvider>
           ),
         },
