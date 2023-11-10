@@ -4,7 +4,12 @@ export default function LeaveDropdown({ onChange, name }) {
   const { userLeave } = useLeave();
 
   return (
-    <select onChange={onChange} name={name} id="leave">
+    <select
+      className="w-96 h-[36px] rounded-[4px] px-2 border-zinc-300"
+      onChange={onChange}
+      name={name}
+      id="leave"
+    >
       {name === "leaveType" ? (
         <>
           <option value="FULLDAY">Full Day</option>
