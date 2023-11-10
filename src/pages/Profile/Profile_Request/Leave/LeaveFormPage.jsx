@@ -1,12 +1,10 @@
 import LeaveInfo from "./LeaveInfo";
 import LeaveList from "./LeaveList";
-import LeaveDropdown from "./LeaveDropdown";
-import SubmitButton from "../../../../components/SubmitButton";
 import useLeave from "../../../../hooks/use-leave";
 import { useEffect } from "react";
 
 export default function LeaveFormPage() {
-  const { userLeave, getUserLeaveByUserId } = useLeave();
+  const { userLeave, getUserLeaveByUserId , createRequestLeave } = useLeave();
 
   useEffect(() => {
     getUserLeaveByUserId();
@@ -18,22 +16,15 @@ export default function LeaveFormPage() {
         {userLeave.map((userLeave) => (
           <LeaveList
             key={userLeave.id}
-            leaveName={userLeave.leaveProfile.leaveName}
+            leaveName={userLeave.leaveProfile?.leaveName}
             leaveAmount={`${userLeave.dateAmount} days`}
           />
         ))}
       </div>
       <div className="  flex flex-col justify-center items-center w-full h-full">
-        {/* <div className="flex flex-col gap-4">
-          <LeaveDropdown />
-          <div>
-          </div>
-        </div> */}
-        <LeaveInfo />
+        <LeaveInfo createRequestLeave={createRequestLeave} />
       </div>
-      {/* <div className="p-2 h-[15%]  flex justify-center items-center">
-        <SubmitButton p="px-20 py-3">Submit</SubmitButton>
-      </div> */}
+ 
     </div>
   );
 }
