@@ -20,6 +20,7 @@ export default function DropdownSearch({
         onChange(selected, name);
       }}
       placeholder={placeholder}
+      className="w-full"
     />
   );
 }
