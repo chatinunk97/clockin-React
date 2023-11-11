@@ -2,6 +2,7 @@ import { useState } from "react";
 import SmallButton from "../../../components/SmallButton";
 import { dashboardAxios } from "../../../config/axios";
 import useLeave from "../../../hooks/use-leave";
+import { useEffect } from "react";
 
 export default function ViewLeaveRequestInfo({
   request,
@@ -10,6 +11,15 @@ export default function ViewLeaveRequestInfo({
 }) {
   const { updateRequestLeave } = useLeave();
   const [isButtonVisible, setIsButtonVisible] = useState(true);
+
+  useEffect(() => {
+    if (
+      request.statusRequest === "ACCEPT" ||
+      request.statusRequest === "REJECT"
+    ) {
+      setIsButtonVisible(false);
+    }
+  }, [request.statusRequest]);
 
   const handleButtonClick = async (e, status) => {
     try {
@@ -22,11 +32,15 @@ export default function ViewLeaveRequestInfo({
         `/leave/getRequestLeave/${requestLeaveId}`
       );
       setRequest(updatedRequestData.data.requestLeave);
-      setIsButtonVisible(false);
+
+      if (status === "ACCEPT" || status === "REJECT") {
+        setIsButtonVisible(false);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="text-lg flex gap-60">
       <div>

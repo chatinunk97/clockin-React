@@ -11,6 +11,7 @@ export default function LeaveContextProvider({ children }) {
   const [leaveProfileById, setLeaveProfileById] = useState({});
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
+  const [allRequestLeaves, setAllRequestLeaves] = useState([]);
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
     try {
@@ -138,6 +139,32 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getAllRequestLeaves = async () => {
+    setLoading(true);
+    await dashboardAxios
+      .get("/leave/getAllRequestLeaves")
+      .then((res) => {
+        const leaveData = res.data.requestLeaves.map((leave) => ({
+          id: leave.id,
+          firstName: leave.userLeave.user.firstName,
+          lastName: leave.userLeave.user.lastName,
+          leaveName: leave.userLeave.leaveProfile.leaveName,
+          startDate: leave.startDate.split("T")[0],
+          endDate: leave.endDate.split("T")[0],
+          statusRequest: leave.statusRequest,
+          messageLeave: leave.messageLeave,
+        }));
+        setAllRequestLeaves(leaveData);
+        console.log(allRequestLeaves);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const updateRequestLeave = async (data) => {
     try {
       console.log(data);
@@ -170,6 +197,7 @@ export default function LeaveContextProvider({ children }) {
         createLeaveProfile,
         getAllLeaveProfile,
         updateLeaveProfile,
+        deleteLeaveProfile,
         loading,
         setLoading,
         leaveProfileById,
@@ -178,10 +206,11 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfiles,
         getUserLeaveByUserId,
         userLeave,
-        deleteLeaveProfile,
         createRequestLeave,
+        getAllRequestLeaves,
         updateRequestLeave,
         requestLeave,
+        allRequestLeaves,
       }}
     >
       {children}
