@@ -5,8 +5,10 @@ import { useState, useMemo, useRef, useCallback } from "react";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import SmallButton from "../../../components/SmallButton";
 import { Link } from "react-router-dom";
+import useLeave from "../../../hooks/use-leave";
 
-export default function TableLeaveRequest({ requestLeaves, loading }) {
+export default function TableLeaveRequest() {
+  const { allRequestLeaves, loading } = useLeave();
   const [columnDefs] = useState([
     { field: "firstName", flex: 1 },
     { field: "lastName", flex: 1 },
@@ -53,7 +55,7 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
   const onGridReady = useCallback((params) => {
     if (params.api) {
       gridApi.current = params.api;
-      params.api.setRowData(requestLeaves);
+      params.api.setRowData(allRequestLeaves);
     }
   }, []);
 
@@ -74,7 +76,7 @@ export default function TableLeaveRequest({ requestLeaves, loading }) {
           className="border border-stone-200 p-2 rounded-lg mb-4 w-60 "
         />
         <AgGridReact
-          rowData={requestLeaves}
+          rowData={allRequestLeaves}
           gridOptions={gridOptions}
           columnDefs={columnDefs}
           sortingOrder={sortingOrder}
