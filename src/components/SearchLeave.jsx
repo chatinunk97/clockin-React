@@ -8,7 +8,6 @@ export default function SearchInput() {
   const navigate = useNavigate();
 
   const options = allRequestLeaves.map((option) => {
-    console.log(option);
     const firstLetter = option.firstName[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,

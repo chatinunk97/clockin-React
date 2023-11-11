@@ -13,7 +13,6 @@ export default function ViewLeaveRequest() {
     dashboardAxios
       .get(`/leave/getRequestLeave/${requestLeaveId}`)
       .then((res) => {
-        console.log(res.data.requestLeave);
         setRequest(res.data.requestLeave);
       })
       .catch((err) => {

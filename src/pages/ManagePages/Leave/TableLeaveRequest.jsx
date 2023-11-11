@@ -25,9 +25,6 @@ export default function TableLeaveRequest() {
           <div className="p-2">
             <Link to={`/manage/leave-request/${params.data.id}`}>
               <SmallButton
-                onClick={() => {
-                  console.log(params.data);
-                }}
                 bg="bg-blue-600"
                 hover="hover:bg-blue-400"
                 buttonName="View"

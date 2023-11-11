@@ -144,7 +144,6 @@ export default function LeaveContextProvider({ children }) {
     await dashboardAxios
       .get("/leave/getAllRequestLeaves")
       .then((res) => {
-        console.log(res.data);
         const leaveData = res.data.requestLeaves.map((leave) => ({
           id: leave.id,
           firstName: leave.userLeave.user.firstName,
