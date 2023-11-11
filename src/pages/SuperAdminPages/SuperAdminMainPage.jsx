@@ -3,7 +3,6 @@ import useAuth from "../../hooks/use-auth";
 import useManage from "../../hooks/use-manage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import SuperAdminSideBar from "./SuperAdminSideBar";
 import CompanyList from "./CompanyList";
 import { clockAxios } from "../../config/axios";
 import { useState } from "react";

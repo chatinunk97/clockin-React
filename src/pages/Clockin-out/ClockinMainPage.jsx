@@ -18,7 +18,7 @@ export default function ClockinMainPage() {
     clockIn,
     clockOut,
     clockHistory,
-    address
+    address,
   } = useClock();
 
   const handleClock = async () => {
@@ -33,10 +33,10 @@ export default function ClockinMainPage() {
         <LoadingBar />
       ) : (
         <>
-          <div className="h-[20%]">
+          <div className="h-[21%]">
             <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
           </div>
-          <div className="h-[30%]">
+          <div className="h-[29%]">
             <GoogleMap location={location} companyLocation={companyLocation} />
           </div>
           <div className="h-[10%]">
@@ -64,22 +64,3 @@ export default function ClockinMainPage() {
   );
 }
 
-// <div>
-//   <ClockInHeader time={time} setTime={setTime} authUser={authUser} />
-//   <div className="w-full h-[200vh]">
-//     <GoogleMap location={location} companyLocation={companyLocation} />
-//   </div>
-//   <ClockInlocation />
-//   <hr className=" w-[360px] md:w-[800px] " />
-//   <InfoClockinItem />
-
-//   <SubmitButton
-//     bg={isClockIn ? "bg-green-600" : "bg-orange-600"}
-//     onClick={handleClock}
-//     className={`${
-//       isClockIn ? "hover:bg-green-400" : "hover:bg-orange-400"
-//     } w-[200px] p-4 font-semibold text-white rounded-3xl `}
-//   >
-//     {isClockIn ? "Clock In" : "Clock Out"}
-//   </SubmitButton>
-// </div>

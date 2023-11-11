@@ -2,6 +2,7 @@ import InfoClockinItem from "./InfoClockinItem";
 import dateTimeToString from "../../utils/StructureChange/dateTimetoString";
 
 export default function InfoClockin({ clockHistory }) {
+  console.log(clockHistory)
   return (
     <div className="flex flex-col  h-full">
       {clockHistory.map((el) => {

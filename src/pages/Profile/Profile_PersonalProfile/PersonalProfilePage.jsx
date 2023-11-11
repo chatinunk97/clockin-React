@@ -38,14 +38,14 @@ export default function PersonalProfilePage() {
         <>
           {profileUser ? (
             <>
-              <div className="flex fixed justify-center items-center bg-primaryGreen w-full py-11">
+              <div className="flex fixed justify-center items-center bg-primaryGreen w-full py-11 max-w-[1024px]">
                 <Avatar
                   src={
                     isAuthUser
                       ? authUser.profileImage
                       : profileUser?.profileImage
                   }
-                  className="w-[158px] h-[158px] border rounded-full absolute"
+                  className="w-[158px] h-[158px] border rounded-full absolute -top-2"
                 />
               </div>
               <PersonalDetails profileUser={profileUser} />
