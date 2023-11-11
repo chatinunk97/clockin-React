@@ -27,15 +27,14 @@ export default function ViewLeaveRequestInfo({
       const input = { ...request };
       delete input.userLeave;
       input.statusRequest = status;
-      await updateRequestLeave(input);
+      const result = await updateRequestLeave(input);
+      if (!result) {
+        return;
+      }
       const updatedRequestData = await dashboardAxios.get(
         `/leave/getRequestLeave/${requestLeaveId}`
       );
       setRequest(updatedRequestData.data.requestLeave);
-
-      if (status === "ACCEPT" || status === "REJECT") {
-        setIsButtonVisible(false);
-      }
     } catch (error) {
       console.log(error);
     }
@@ -44,11 +43,24 @@ export default function ViewLeaveRequestInfo({
   return (
     <div className="text-lg flex gap-60">
       <div>
-        <div>Leave Name: {request.userLeave.leaveProfile.leaveName}</div>
-        <div>Start Date: {request.startDate}</div>
-        <div>End Date: {request.endDate}</div>
-        <div>Leave Type: {request.leaveType}</div>
-        <div>Leave Message: {request.messageLeave}</div>
+        <div className="flex flex-row gap-2">
+          <p className="font-semibold">Leave Name:</p>
+          {request.userLeave.leaveProfile.leaveName}
+        </div>
+        <div className="flex flex-row gap-2">
+          <p className="font-semibold">Start Date:</p>{" "}
+          {request.startDate.split("T")[0]}
+        </div>
+        <div className="flex flex-row gap-2">
+          <p className="font-semibold">End Date:</p>{" "}
+          {request.endDate.split("T")[0]}
+        </div>
+        <div className="flex flex-row gap-2">
+          <p className="font-semibold">Leave Type:</p> {request.leaveType}
+        </div>
+        <div className="flex flex-row gap-2">
+          <p className="font-semibold">Leave Message:</p> {request.messageLeave}
+        </div>
       </div>
       <div>
         <div>
@@ -61,12 +73,14 @@ export default function ViewLeaveRequestInfo({
           {isButtonVisible && (
             <>
               <SmallButton
+                p="px-20 py-4"
                 onClick={(e) => {
                   handleButtonClick(e, "ACCEPT");
                 }}
                 buttonName="Approve"
               />
               <SmallButton
+                p="px-20 py-4"
                 onClick={(e) => {
                   handleButtonClick(e, "REJECT");
                 }}

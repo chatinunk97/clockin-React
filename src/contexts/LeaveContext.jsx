@@ -167,9 +167,7 @@ export default function LeaveContextProvider({ children }) {
 
   const updateRequestLeave = async (data) => {
     try {
-      console.log(data);
       const res = await dashboardAxios.patch("/leave/updateRequestleave", data);
-      console.log(res);
       if (res.status === 200) {
         Swal.fire({
           position: "center",
@@ -179,6 +177,7 @@ export default function LeaveContextProvider({ children }) {
           timer: 1500,
         });
       }
+      return true;
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -187,7 +186,7 @@ export default function LeaveContextProvider({ children }) {
         showConfirmButton: false,
         timer: 1500,
       });
-      console.error("Error:", error);
+      return false;
     }
   };
 
