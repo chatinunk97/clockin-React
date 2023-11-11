@@ -31,9 +31,15 @@ import UserContextProvider from "../contexts/UserContext";
 import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
 import DashboardContextProvider from "../contexts/dashboardContext";
+import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
 
 export default function Route() {
   const router = createBrowserRouter([
+    {
+      path: "/superadmin",
+      element: <SuperAdminMainPage />,
+    },
+    ,
     {
       path: "/login",
       element: (
