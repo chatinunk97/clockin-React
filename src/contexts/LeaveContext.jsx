@@ -138,6 +138,10 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  // const getAllRequestLeaves = async () => {
+  //   await dashboardAxios.get("/leave/getAllRequestLeaves");
+  // };
+
   const updateRequestLeave = async (data) => {
     try {
       console.log(data);
@@ -170,6 +174,7 @@ export default function LeaveContextProvider({ children }) {
         createLeaveProfile,
         getAllLeaveProfile,
         updateLeaveProfile,
+        deleteLeaveProfile,
         loading,
         setLoading,
         leaveProfileById,
@@ -178,8 +183,8 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfiles,
         getUserLeaveByUserId,
         userLeave,
-        deleteLeaveProfile,
         createRequestLeave,
+        // getAllRequestLeaves,
         updateRequestLeave,
         requestLeave,
       }}

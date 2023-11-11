@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import TableLeaveRequest from "./TableLeaveRequest";
 import { dashboardAxios } from "../../../config/axios";
+// import useLeave from "../../../hooks/use-leave";
 
 export default function ManageLeaveRequest() {
-  const [loading, setLoading] = useState(false);
+  // const { getAllRequestLeaves } = useLeave();
+  const [loading, setLoading] = useState(true);
   const [requestLeaves, setRequestLeaves] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
     dashboardAxios
       .get("/leave/getAllRequestLeaves")
+      // getAllRequestLeaves()
       .then((res) => {
+        console.log(res.data);
         const leaveData = res.data.requestLeaves.map((leave) => ({
           id: leave.id,
           firstName: leave.userLeave.user.firstName,
           lastName: leave.userLeave.user.lastName,
+          leaveName: leave.userLeave.leaveProfile.leaveName,
           startDate: leave.startDate.split("T")[0],
           endDate: leave.endDate.split("T")[0],
           statusRequest: leave.statusRequest,
