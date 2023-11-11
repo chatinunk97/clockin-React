@@ -95,6 +95,7 @@ export default function TableEmployee({ allUser, loading }) {
                     columnDefs={columnDefs}
                     sortingOrder={sortingOrder}
                     onGridReady={onGridReady}
+                    suppressMenuHide={true}
                 />
                 <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
                     <EditemployeeForm
