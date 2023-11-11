@@ -1,5 +1,6 @@
 import React from "react";
 import MUITable from "../../components/MUITable";
+import MUITable2 from "../../components/MUITable2";
 
 export default function CompanyList({ data }) {
   const columnDefs = [
@@ -14,6 +15,8 @@ export default function CompanyList({ data }) {
     <div className="p-5 px-10">
       <p>Compnay List</p>
       <MUITable data={data} columnDefs={columnDefs} />
+      <MUITable2 data={data} columnDefs={columnDefs} />
+
     </div>
   );
 }
