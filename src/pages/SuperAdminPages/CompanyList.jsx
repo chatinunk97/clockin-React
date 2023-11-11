@@ -1,5 +1,5 @@
 import React from "react";
-import AggridTable from "../../components/AggridTable";
+import MUITable from "../../components/MUITable";
 
 export default function CompanyList({ data }) {
   const columnDefs = [
@@ -13,7 +13,7 @@ export default function CompanyList({ data }) {
   return (
     <div className="p-5 px-10">
       <p>Compnay List</p>
-      <AggridTable data={data} columnDefs={columnDefs} />
+      <MUITable data={data} columnDefs={columnDefs} />
     </div>
   );
 }
