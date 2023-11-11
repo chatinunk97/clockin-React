@@ -147,7 +147,7 @@ export default function LeaveContextProvider({ children }) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Approve leave request success!",
+          title: "Update leave request status success!",
           showConfirmButton: false,
           timer: 1500,
         });
