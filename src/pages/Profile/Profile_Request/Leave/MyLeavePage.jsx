@@ -7,7 +7,7 @@ export default function MyLeavePage() {
 
   const [myLeave, setMyLeave] = useState([])
 
-  const { getRequestLeaveId, userLeave } = useLeave()
+  const { getRequestLeaveId, userLeave, myrequestLeave } = useLeave()
 
 
   useEffect(() => {
@@ -15,7 +15,6 @@ export default function MyLeavePage() {
     getRequestLeaveId()
       .then(res => {
         setMyLeave(userLeave)
-        console.log(userLeave)
       })
       .catch(err => {
         console.log(err)
@@ -25,8 +24,8 @@ export default function MyLeavePage() {
   return (
 
     <div className="w- flex justify-center items-start h-screen ">
-      <div className="flex flex-col w-[800px] justify-start items-start h-screen overflow-y-auto p-4 shadow-lg rounded-2xl gap-2 ">
-        <MyRequestList myLeave={myLeave} />
+      <div className="flex flex-col w-[800px] justify-start items-start h-screen overflow-y-auto p-4 rounded-2xl gap-2 ">
+        <MyRequestList myLeave={myLeave} myrequestLeave={myrequestLeave} />
       </div>
     </div>
   )

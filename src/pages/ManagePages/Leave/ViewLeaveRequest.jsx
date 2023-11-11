@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dashboardAxios } from "../../../config/axios";
 import LoadingBar from "../../../components/LoadingBar";
+import ViewLeaveRequestInfo from "./ViewLeaveRequestInfo";
 
 export default function ViewLeaveRequest() {
   const { requestLeaveId } = useParams();
@@ -15,7 +16,6 @@ export default function ViewLeaveRequest() {
         console.log(res.data.requestLeave);
         setRequest(res.data.requestLeave);
       })
-
       .catch((err) => {
         console.log(err);
       })
@@ -30,22 +30,17 @@ export default function ViewLeaveRequest() {
         <LoadingBar />
       ) : (
         <>
-          <div className="text-4xl font-semibold md:pr-20">
-            <h1 className="bg-blue-300">FirstName LastName</h1>
-            <div className="text-lg">
-              <div className="bg-red-300">
-                Leave Name: {request.userLeave.leaveProfile.leaveName}
-              </div>
-              <div>Start Date: {request.startDate}</div>
-              <div>End Date: {request.endDate}</div>
-              <div>Leave Type: {request.leaveType}</div>
-              <div>Leave Message: {request.messageLeave}</div>
-              <div>
-                Leave Quota: {request.userLeave && request.userLeave.dateAmount}{" "}
-                days
-              </div>
-              <div>Request Status: {request.statusRequest}</div>
-            </div>
+          <div className="text-4xl font-semibold w-full m-auto ml-40">
+            <h1>
+              {request.userLeave.user.firstName}{" "}
+              {request.userLeave.user.lastName}
+            </h1>
+            <br />
+            <ViewLeaveRequestInfo
+              request={request}
+              setRequest={setRequest}
+              requestLeaveId={requestLeaveId}
+            />
           </div>
         </>
       )}

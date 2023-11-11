@@ -140,16 +140,42 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
-  const getRequestLeaveId = async (requestLeaveId) => {
+  const getRequestLeaveId = async () => {
     try {
-      const res = await clockAxios.get(`/leave/getRequestLeave/${requestLeaveId}`
+      const res = await clockAxios.get(`/leave/getRequestLeaveByUserId`
       )
-      setMyrequestLeave(res.data.requestLeave)
+      setMyrequestLeave(res.data.MyRequest)
+      console.log(res.data.MyRequest)
     } catch (err) {
       console.log(err)
     }
   }
 
+  const updateRequestLeave = async (data) => {
+    try {
+      console.log(data);
+      const res = await dashboardAxios.patch("/leave/updateRequestleave", data);
+      console.log(res);
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Update leave request status success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error.response.data.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <LeaveContext.Provider
@@ -167,8 +193,10 @@ export default function LeaveContextProvider({ children }) {
         userLeave,
         deleteLeaveProfile,
         createRequestLeave,
+        updateRequestLeave,
         requestLeave,
         getRequestLeaveId,
+        myrequestLeave
       }}
     >
       {children}
