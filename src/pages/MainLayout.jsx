@@ -14,7 +14,6 @@ export default function MainLayout() {
       <Header onClick={logout}>{page}</Header>
       <div className="overflow-auto h-full">
         {page ==="/" ? <Navigate to={'/clockin'}/> : <Outlet />}
-        
       </div>
       <Footer />
     </div>
