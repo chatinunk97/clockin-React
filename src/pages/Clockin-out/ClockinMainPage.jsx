@@ -18,7 +18,7 @@ export default function ClockinMainPage() {
     clockIn,
     clockOut,
     clockHistory,
-    address
+    address,
   } = useClock();
 
   const handleClock = async () => {
