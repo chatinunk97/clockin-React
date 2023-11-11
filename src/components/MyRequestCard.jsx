@@ -1,5 +1,5 @@
 
-export default function OTCard() {
+export default function MyRequestCard() {
     return (
         <div className="w-full h-36 border border-black rounded-2xl flex shadow-lg">
             <div className="flex h-full items-center p-2 justify-start gap-6 w-full">
