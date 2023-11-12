@@ -50,8 +50,8 @@ export default function PersonalProfilePage() {
               </div>
               <PersonalDetails profileUser={profileUser} />
               <div className="text-center mt-10">
-                <Link to="/profile/record">
-                  <SubmitButton>View Calendar</SubmitButton>
+                <Link to={`/profile/record/${userId}`}>
+                  <SubmitButton p="px-10 py-3">View Calendar</SubmitButton>
                 </Link>
               </div>
             </>

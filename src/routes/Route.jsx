@@ -73,7 +73,10 @@ export default function Route() {
           element: <ProfileMainPage />,
           children: [
             { path: "/profile/:userId", element: <PersonalProfilePage /> },
-            { path: "/profile/record", element: <ProfileRecordMainPage /> },
+            {
+              path: "/profile/record/:userId",
+              element: <ProfileRecordMainPage />,
+            },
             { path: "/profile/people", element: <PeoplePage /> },
           ],
         },
