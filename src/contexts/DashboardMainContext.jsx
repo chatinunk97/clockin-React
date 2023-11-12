@@ -6,6 +6,7 @@ export const DashboardMainContext = createContext();
 export default function DashboardContextProvider({ children }) {
   const [lateClockInsCount, setClockInsCount] = useState(0);
   const [statusList, setStatusList] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   const fetchLateClockInsCount = async () => {
     try {
@@ -26,10 +27,28 @@ export default function DashboardContextProvider({ children }) {
     }
   };
 
+  const fetchChartData = async () => {
+    try {
+      const response = await dashboardAxios.get("user/getPosition");
+      const data = response.data;
+      const restructuredData = Object.keys(data.userTypeTotals).map(
+        (label, id) => ({
+          id,
+          value: data.userTypeTotals[label],
+          label,
+        })
+      );
+      setChartData(restructuredData);
+    } catch (error) {
+      console.log("Error fetching chart data:", error);
+    }
+  };
+
   // Fetch the late clock-ins count when the component mounts
   useEffect(() => {
     fetchLateClockInsCount();
     fetchStatusList();
+    fetchChartData();
   }, []);
 
   // Expose the state and the function to update it in the context
@@ -39,6 +58,9 @@ export default function DashboardContextProvider({ children }) {
     statusList,
     setStatusList,
     fetchStatusList,
+    chartData,
+    setChartData,
+    fetchChartData,
   };
 
   return (
