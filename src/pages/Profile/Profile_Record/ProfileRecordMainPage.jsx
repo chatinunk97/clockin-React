@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 
 export default function ProfileRecordMainPage() {
   const { userId } = useParams();
-  console.log(userId);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <div>
       <p>User number : {userId} Record </p>
