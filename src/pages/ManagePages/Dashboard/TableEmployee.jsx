@@ -8,9 +8,12 @@ import LinearIndeterminate from "../../../components/LoadingBar";
 import { Link } from "react-router-dom";
 import SmallButton from "../../../components/SmallButton";
 import "../../../../src/styles.css";
+import CustomizedButtons from "../../../components/ButtonCustomization";
+import AddmployeeForm from "../Edit/AddEmployeeForm";
 
 export default function TableEmployee({ allUser, loading }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenadd, setIsOpenadd] = useState(false);
     const [UserbyId, setUserById] = useState({});
     const [columnDefs] = useState([
         { field: "firstName", width: 180, filter: true },
@@ -80,14 +83,25 @@ export default function TableEmployee({ allUser, loading }) {
         <div className="overflow-y-auto">
             <div className="ag-theme-alpine" style={{ height: "calc(90vh - 200px)", width: "auto" }}>
                 {loading && <LinearIndeterminate />}
+                <div className=" flex justify-center md:justify-start items-center mb-4">
 
-                <input
-                    type="text"
-                    id="filter-text-box"
-                    placeholder="Quick search..."
-                    onInput={onFilterTextBoxChanged}
-                    className="border border-stone-200 p-2 rounded-lg mb-4 w-60 "
-                />
+                    <input
+                        type="text"
+                        id="filter-text-box"
+                        placeholder="Quick search..."
+                        onInput={onFilterTextBoxChanged}
+                        className="border border-stone-200 p-4 rounded-lg md:w-96 w-36"
+                    />
+
+                    <div
+                        onClick={() => {
+                            setIsOpenadd(true);
+                        }}
+                        className="rounded-3xl w-32 p-1 ml-9"
+                    >
+                        <CustomizedButtons buttonName="Add User" />
+                    </div>
+                </div>
 
                 <AgGridReact
                     rowData={allUser}
@@ -103,6 +117,9 @@ export default function TableEmployee({ allUser, loading }) {
                         allUser={allUser}
                         onClose={() => setIsOpen(false)}
                     />
+                </Modal>
+                <Modal title="Add User " open={isOpenadd} onClose={() => setIsOpenadd(false)}>
+                    <AddmployeeForm allUser={allUser} onClose={() => setIsOpenadd(false)} />
                 </Modal>
             </div>
         </div>
