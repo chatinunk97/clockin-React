@@ -12,6 +12,7 @@ export default function LeaveContextProvider({ children }) {
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
   const [myrequestLeave, setMyrequestLeave] = useState([])
+  const [allRequestLeaves, setAllRequestLeaves] = useState([]);
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
     try {
@@ -150,12 +151,35 @@ export default function LeaveContextProvider({ children }) {
       console.log(err)
     }
   }
+  const getAllRequestLeaves = async () => {
+    setLoading(true);
+    await dashboardAxios
+      .get("/leave/getAllRequestLeaves")
+      .then((res) => {
+        const leaveData = res.data.requestLeaves.map((leave) => ({
+          id: leave.id,
+          firstName: leave.userLeave.user.firstName,
+          lastName: leave.userLeave.user.lastName,
+          leaveName: leave.userLeave.leaveProfile.leaveName,
+          startDate: leave.startDate.split("T")[0],
+          endDate: leave.endDate.split("T")[0],
+          statusRequest: leave.statusRequest,
+          messageLeave: leave.messageLeave,
+        }));
+        setAllRequestLeaves(leaveData);
+        console.log(allRequestLeaves);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const updateRequestLeave = async (data) => {
     try {
-      console.log(data);
       const res = await dashboardAxios.patch("/leave/updateRequestleave", data);
-      console.log(res);
       if (res.status === 200) {
         Swal.fire({
           position: "center",
@@ -165,6 +189,7 @@ export default function LeaveContextProvider({ children }) {
           timer: 1500,
         });
       }
+      return true;
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -173,7 +198,7 @@ export default function LeaveContextProvider({ children }) {
         showConfirmButton: false,
         timer: 1500,
       });
-      console.error("Error:", error);
+      return false;
     }
   };
 
@@ -183,6 +208,7 @@ export default function LeaveContextProvider({ children }) {
         createLeaveProfile,
         getAllLeaveProfile,
         updateLeaveProfile,
+        deleteLeaveProfile,
         loading,
         setLoading,
         leaveProfileById,
@@ -191,12 +217,13 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfiles,
         getUserLeaveByUserId,
         userLeave,
-        deleteLeaveProfile,
         createRequestLeave,
+        getAllRequestLeaves,
         updateRequestLeave,
         requestLeave,
         getRequestLeaveId,
-        myrequestLeave
+        myrequestLeave,
+        allRequestLeaves,
       }}
     >
       {children}

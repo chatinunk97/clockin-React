@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slower-spin {
+  animation-duration: 5s; 
+}

@@ -13,7 +13,6 @@ export default function ViewLeaveRequest() {
     dashboardAxios
       .get(`/leave/getRequestLeave/${requestLeaveId}`)
       .then((res) => {
-        console.log(res.data.requestLeave);
         setRequest(res.data.requestLeave);
       })
       .catch((err) => {
@@ -30,11 +29,11 @@ export default function ViewLeaveRequest() {
         <LoadingBar />
       ) : (
         <>
-          <div className="text-4xl font-semibold w-full m-auto ml-40">
-            <h1>
+          <div className="text-4xl  m-auto shadow-xl p-8 rounded-lg ">
+            <p className="font-bold">
               {request.userLeave.user.firstName}{" "}
               {request.userLeave.user.lastName}
-            </h1>
+            </p>
             <br />
             <ViewLeaveRequestInfo
               request={request}

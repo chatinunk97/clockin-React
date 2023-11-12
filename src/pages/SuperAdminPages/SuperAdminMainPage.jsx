@@ -1,22 +1,31 @@
-import { Outlet } from "@mui/icons-material";
-import React from "react";
-import useAuth from "../../hooks/use-auth";
-import useManage from "../../hooks/use-manage";
+import { Outlet } from "react-router-dom";
+import SideNavBar from "../../components/SideNavBar";
+import {
+  getAccessToken,
+  getAccessTokenDB,
+  removeAccessToken,
+  removeAccessTokenDB,
+} from "../../utils/local-storage";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
 export default function SuperAdminMainPage() {
-  const { authUser } = useAuth();
-  const { manageUser } = useManage();
-  useEffect(() => {
-    if (
-      authUser?.position !== "SUPERADMIN" &&
-      manageUser?.position !== "SUPERADMIN"
-    ) {
-      return navigate(`/login`);
-    }
-  }, []);
   const navigate = useNavigate();
-
-  return <div>superAdminMainPage</div>;
+  const onLogout = () => {
+    if (getAccessToken() || getAccessTokenDB()) {
+      if (getAccessToken()) {
+        removeAccessToken();
+        navigate("/login");
+        return;
+      }
+      removeAccessTokenDB();
+      navigate("/login");
+    }
+  };
+  return (
+    <div style={{ display: "flex" }}>
+      <SideNavBar onLogout={onLogout} />
+      <div style={{ flex: 1, marginLeft: "200px" }}>
+        <Outlet />
+      </div>
+    </div>
+  );
 }
