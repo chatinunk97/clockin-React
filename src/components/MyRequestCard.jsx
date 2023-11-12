@@ -10,7 +10,6 @@ export default function MyRequestCard({ myrequestLeave }) {
                 </div>
                 <div>
                     <div className="flex flex-col gap-2">
-                        <h1>Id: {myrequestLeave.id}</h1>
                         <h1 className="text-green-700 font-semibold">StartDate: {myrequestLeave.startDate}</h1>
                         <h1 className="text-green-700 font-semibold">EndDate: {myrequestLeave.endDate}</h1>
                         <h1>{myrequestLeave.leaveType}</h1>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -23,9 +23,10 @@ export default function TableEmployee({ allUser, loading }) {
         { field: "employeeId", width: 180, filter: true },
         { field: "mobile", width: 180, filter: true },
         { field: "email", width: 180, filter: true },
-        { field: "isActive", width: 160, filter: true },
+        { field: "isActive", width: 140, filter: true },
         {
             field: "actionButtons",
+            width: 180,
             headerName: "",
             cellRenderer: (params) => (
                 <div className="flex gap-2 justify-center items-center h-full">
@@ -51,6 +52,8 @@ export default function TableEmployee({ allUser, loading }) {
                     </div>
                 </div>
             ),
+            minWidth: 180,
+            resizable: true,
         },
     ]);
 
@@ -60,6 +63,7 @@ export default function TableEmployee({ allUser, loading }) {
             sortable: true,
             filter: true,
         },
+        autoHeight: true,
     };
 
     const sortingOrder = useMemo(() => ["desc", "asc", null], []);
@@ -71,8 +75,16 @@ export default function TableEmployee({ allUser, loading }) {
             gridApi.current = params.api;
             params.api.setRowData(allUser);
         }
-    }, []);
+    }, [allUser]);
 
+    useEffect(() => {
+        if (gridApi.current) {
+            gridApi.current.sizeColumnsToFit({
+                defaultMinWidth: 100,
+                columnLimits: [{ key: 'userBossId', minWidth: 180 }],
+            });
+        }
+    }, [allUser]);
 
     const onFilterTextBoxChanged = useCallback(() => {
         const filterText = document.getElementById("filter-text-box").value;
@@ -84,7 +96,6 @@ export default function TableEmployee({ allUser, loading }) {
             <div className="ag-theme-alpine" style={{ height: "calc(90vh - 200px)", width: "auto" }}>
                 {loading && <LinearIndeterminate />}
                 <div className=" flex justify-center md:justify-start items-center mb-4">
-
                     <input
                         type="text"
                         id="filter-text-box"
@@ -92,7 +103,6 @@ export default function TableEmployee({ allUser, loading }) {
                         onInput={onFilterTextBoxChanged}
                         className="border border-stone-200 p-4 rounded-lg md:w-96 w-36"
                     />
-
                     <div
                         onClick={() => {
                             setIsOpenadd(true);
@@ -102,7 +112,6 @@ export default function TableEmployee({ allUser, loading }) {
                         <CustomizedButtons buttonName="Add User" />
                     </div>
                 </div>
-
                 <AgGridReact
                     rowData={allUser}
                     gridOptions={gridOptions}
