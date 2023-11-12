@@ -1,22 +1,23 @@
 import React from "react";
 import MUITable from "../../components/MUITable";
-import MUITable2 from "../../components/MUITable2";
+import { useNavigate } from "react-router-dom";
 
 export default function CompanyList({ data }) {
-  const columnDefs = [
-    { field: "id", flex: 1 },
-    { field: "companyName", flex: 1 },
-    { field: "isActive", flex: 1 },
-    { field: "package", flex: 1 },
-    { field: "status", flex: 1 },
+  const navigate = useNavigate()
+  const columns = [
+    { label: "Company Name", align: "left", key: "name" },
+    { label: "Company name", align: "center", key: "companyName" },
+    { label: "Is Active", align: "center", key: "isActive" },
+    { label: "packageId", align: "center", key: "packageId" },
+    { label: "Status", align: "center", key: "status" },
   ];
-  console.log(data);
+  const handleRowClick = (input) => {
+    navigate(`/superadmin/${input.id}`)
+  };
   return (
     <div className="p-5 px-10">
       <p>Compnay List</p>
-      <MUITable data={data} columnDefs={columnDefs} />
-      <MUITable2 data={data} columnDefs={columnDefs} />
-
+      <MUITable data={data} columns={columns} handleRowClick={handleRowClick} />
     </div>
   );
 }
