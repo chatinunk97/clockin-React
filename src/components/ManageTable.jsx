@@ -38,31 +38,33 @@ export default function ManageTable({
   }, []);
 
   return (
-    <div className="overflow-y-auto">
-      <div
-        className="ag-theme-alpine"
-        style={{ height: "calc(90vh - 200px)", width: "auto" }}
-      >
-        {loading && <LinearIndeterminate />}
+    <div className="border border-gray-500 p-5 overflow-auto">
+      <div className="overflow-y-auto">
+        <div
+          className="ag-theme-alpine"
+          style={{ height: "300px", width: "auto" }}
+        >
+          {loading && <LinearIndeterminate />}
 
-        <input
-          type="text"
-          id="filter-text-box"
-          placeholder="Quick search..."
-          onInput={onFilterTextBoxChanged}
-          className="border border-stone-200 p-2 rounded-lg mb-4 w-60 "
-        />
+          <input
+            type="text"
+            id="filter-text-box"
+            placeholder="Quick search..."
+            onInput={onFilterTextBoxChanged}
+            className="border border-stone-200 p-2 rounded-lg mb-4 w-60 "
+          />
 
-        <AgGridReact
-          rowData={allData}
-          gridOptions={gridOptions}
-          columnDefs={columns}
-          sortingOrder={sortingOrder}
-          onGridReady={onGridReady}
-        />
-        <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
-          {editForm}
-        </Modal>
+          <AgGridReact
+            rowData={allData}
+            gridOptions={gridOptions}
+            columnDefs={columns}
+            sortingOrder={sortingOrder}
+            onGridReady={onGridReady}
+          />
+          <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
+            {editForm}
+          </Modal>
+        </div>
       </div>
     </div>
   );
