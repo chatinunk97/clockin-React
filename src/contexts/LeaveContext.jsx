@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { clockAxios, dashboardAxios } from "../config/axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 export const LeaveContext = createContext();
 
@@ -11,6 +12,7 @@ export default function LeaveContextProvider({ children }) {
   const [leaveProfileById, setLeaveProfileById] = useState({});
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
+  const [myrequestLeave, setMyrequestLeave] = useState([]);
   const [allRequestLeaves, setAllRequestLeaves] = useState([]);
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
@@ -56,8 +58,9 @@ export default function LeaveContextProvider({ children }) {
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     try {
+      console.log(updatedLeaveProfile);
       const res = await dashboardAxios.patch(
-        "leave/updateLeaveProfile",
+        `leave/updateLeaveProfile/${updatedLeaveProfile.id}`,
         updatedLeaveProfile
       );
       setLeaveProfileById({
@@ -131,14 +134,25 @@ export default function LeaveContextProvider({ children }) {
 
   const createRequestLeave = async (data) => {
     try {
-      console.log(data);
-      const res = await clockAxios.post("/leave/createRequestLeave", data);
+      const newData = { ...data };
+      newData.startDate = dayjs(data.startDat).format("YYYY-DD-MM");
+      newData.endDate = dayjs(data.endDate).format("YYYY-DD-MM");
+      const res = await clockAxios.post("/leave/createRequestLeave", newData);
       setRequestLeave(res.data.requestLeave);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  const getRequestLeaveId = async () => {
+    try {
+      const res = await clockAxios.get(`/leave/getRequestLeaveByUserId`);
+      setMyrequestLeave(res.data.MyRequest);
+      console.log(res.data.MyRequest);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const getAllRequestLeaves = async () => {
     setLoading(true);
     await dashboardAxios
@@ -209,6 +223,8 @@ export default function LeaveContextProvider({ children }) {
         getAllRequestLeaves,
         updateRequestLeave,
         requestLeave,
+        getRequestLeaveId,
+        myrequestLeave,
         allRequestLeaves,
       }}
     >
