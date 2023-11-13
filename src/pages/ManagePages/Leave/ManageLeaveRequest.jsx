@@ -16,7 +16,8 @@ export default function ManageLeaveRequest() {
   }, []);
 
   return (
-    <div className="w-full p-5 pt-10">
+    <div className=" w-full m-auto">
+      <div className="text-2xl font-bold px-5">Leave Request</div>
       <TableLeaveRequest />
     </div>
   );

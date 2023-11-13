@@ -62,7 +62,7 @@ export default function ManageProfileSetting() {
   const [isOpen2, setIsOpen2] = useState(false);
 
   return (
-    <div className="flex flex-col gap-4 w-full px-5 py-2">
+    <div className="flex flex-col justify-center gap-4 w-full px-5 py-2 ">
       <div>
         <div className="w-full">
           <div className="flex justify-between p-2">

@@ -131,7 +131,7 @@ export default function TableEmployee({ allUser, loading }) {
 
     return (
         <div className="overflow-y-auto">
-            <div className="ag-theme-alpine" style={{ height: "calc(90vh - 200px)", width: "auto" }}>
+            <div className="ag-theme-alpine" style={{ height: "auto", width: "auto" }}>
                 {loading && <LinearIndeterminate />}
                 <div className=" flex flex-col md:flex-row justify-center md:justify-start items-center mb-4 gap-6 md:ml-4">
                     <input

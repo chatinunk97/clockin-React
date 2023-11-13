@@ -119,7 +119,11 @@ export default function ClockContextProvider({ children }) {
         });
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: error.response.data.message
+      });
     }
   };
   const clockOut = async (companyLocation, userLocation, time) => {
