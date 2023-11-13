@@ -30,14 +30,20 @@ import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
 import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
-import DashboardContextProvider from "../contexts/dashboardContext";
+import DashboardMainContext from "../contexts/DashboardMainContext";
 import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
+import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
+import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
 
 export default function Route() {
   const router = createBrowserRouter([
     {
       path: "/superadmin",
       element: <SuperAdminMainPage />,
+      children: [
+        { path: "/superadmin", element: <CompanySumPage /> },
+        { path: "/superadmin/:companyId", element: <CompanyDetails /> },
+      ],
     },
     ,
     {
@@ -73,7 +79,10 @@ export default function Route() {
           element: <ProfileMainPage />,
           children: [
             { path: "/profile/:userId", element: <PersonalProfilePage /> },
-            { path: "/profile/record", element: <ProfileRecordMainPage /> },
+            {
+              path: "/profile/record/:userId",
+              element: <ProfileRecordMainPage />,
+            },
             { path: "/profile/people", element: <PeoplePage /> },
           ],
         },
@@ -128,9 +137,9 @@ export default function Route() {
           path: "/manage/dashboard",
           element: (
             <UserContextProvider>
-              <DashboardContextProvider>
+              <DashboardMainContext>
                 <DashboardMainPage />
-              </DashboardContextProvider>
+              </DashboardMainContext>
             </UserContextProvider>
           ),
         },

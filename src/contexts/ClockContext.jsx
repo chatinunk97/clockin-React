@@ -6,6 +6,7 @@ import getDistance from "../utils/getDistance";
 import locationPermission from "../utils/locationPermission";
 import clockObjectChange from "../utils/clockObjectChange";
 import todayString from "../utils/getTodayString";
+import Swal from "sweetalert2";
 
 export const ClockContext = createContext();
 export default function ClockContextProvider({ children }) {
@@ -40,7 +41,9 @@ export default function ClockContextProvider({ children }) {
     });
     setTime(new Date(time.data.datetime));
     //Newest Clock
-    const newestClock = await clockAxios.get(`/clock/latestClock/?today=${todayString()}`);
+    const newestClock = await clockAxios.get(
+      `/clock/latestClock/?today=${todayString()}`
+    );
 
     //If there's no newest clock from today or the newest clock already has clockout => clock in
     if (!newestClock.data || newestClock.data.clockOutTime) {
@@ -73,8 +76,13 @@ export default function ClockContextProvider({ children }) {
         "clock/clockIn",
         clockObjectChange(userLocation, time, "clockIn")
       );
-      fetchClockHistory()
+      fetchClockHistory();
       setIsClockIn(false);
+      Swal.fire({
+        title: "Clock In Success !",
+        text: `Start work at ${time.toTimeString().split(" ")[0]}`,
+        icon: "success",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -89,13 +97,27 @@ export default function ClockContextProvider({ children }) {
         "clock/clockOut",
         clockObjectChange(userLocation, time, "clockOut")
       );
-      fetchClockHistory()
+      fetchClockHistory();
       setIsClockIn(true);
+      Swal.fire({
+        title: "Clock Out Success !",
+        text: `End work at ${time.toTimeString().split(" ")[0]}`,
+        icon: "success",
+      });
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
+    clockAxios.get("/time/getAllTimeProfile").then((res) => {
+      if(!res.data.allTimeProfiles.length){
+        Swal.fire({
+          title: "Initial Setting not done",
+          text: "Your company time profile has not been set. Please contact your admin",
+          icon: "question"
+        });
+      }
+    });
     fetchLocationTime();
     fetchClockHistory();
   }, []);
@@ -111,7 +133,7 @@ export default function ClockContextProvider({ children }) {
     clockOut,
     location,
     clockHistory,
-    address
+    address,
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>

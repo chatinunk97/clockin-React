@@ -38,20 +38,20 @@ export default function PersonalProfilePage() {
         <>
           {profileUser ? (
             <>
-              <div className="flex fixed justify-center items-center bg-primaryGreen w-full py-11">
+              <div className="flex fixed justify-center items-center bg-primaryGreen w-full py-11 max-w-[1024px]">
                 <Avatar
                   src={
                     isAuthUser
                       ? authUser.profileImage
                       : profileUser?.profileImage
                   }
-                  className="w-[158px] h-[158px] border rounded-full absolute"
+                  className="w-[158px] h-[158px] border rounded-full absolute -top-2"
                 />
               </div>
               <PersonalDetails profileUser={profileUser} />
               <div className="text-center mt-10">
-                <Link to="/profile/record">
-                  <SubmitButton>View Calendar</SubmitButton>
+                <Link to={`/profile/record/${userId}`}>
+                  <SubmitButton p="px-10 py-3">View Calendar</SubmitButton>
                 </Link>
               </div>
             </>
