@@ -1,23 +1,24 @@
 import { useState } from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import EditLeaveSettingForm from "./EditLeaveSettingForm";
-import SmallButton from "../../../components/SmallButton";
 import ManageTable from "../../../components/ManageTable";
+import SmallButton from "../../../components/SmallButton";
+import EditTimeProfileSettingForm from "../TimeProfile/EditTimeProfileSettingForm";
 
-export default function TableLeaveSetting({
-  leaveProfiles,
-  leaveProfileById,
-  setLeaveProfileById,
+export default function TableTimeProfileSetting({
+  allTimeProfiles,
   loading,
-  deleteLeaveProfile,
+  timeProfileById,
+  setTimeProfileById,
+  deleteTimeProfile,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <ManageTable
       columns={[
-        { field: "leaveName", flex: 1 },
-        { field: "defaultDateAmount", flex: 1 },
+        { field: "start", flex: 1 },
+        { field: "end", flex: 1 },
+        { field: "typeTime", flex: 1 },
         {
           field: "actionButtons",
           headerName: "",
@@ -26,7 +27,7 @@ export default function TableLeaveSetting({
               <div className="p-2">
                 <SmallButton
                   onClick={() => {
-                    setLeaveProfileById(params.data);
+                    setTimeProfileById(params.data);
                     setIsOpen(true);
                   }}
                 />
@@ -34,7 +35,7 @@ export default function TableLeaveSetting({
               <div className="p-2">
                 <SmallButton
                   onClick={() => {
-                    deleteLeaveProfile(params.data.id);
+                    deleteTimeProfile(params.data.id);
                   }}
                   bg="bg-red-600"
                   hover="hover:bg-red-400"
@@ -45,11 +46,11 @@ export default function TableLeaveSetting({
           ),
         },
       ]}
-      allData={leaveProfiles}
+      allData={allTimeProfiles}
       loading={loading}
       editForm={
-        <EditLeaveSettingForm
-          leaveProfileById={leaveProfileById}
+        <EditTimeProfileSettingForm
+          timeProfileById={timeProfileById}
           onClose={() => setIsOpen(false)}
         />
       }

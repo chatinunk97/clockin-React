@@ -58,8 +58,9 @@ export default function LeaveContextProvider({ children }) {
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     try {
+      console.log(updatedLeaveProfile);
       const res = await dashboardAxios.patch(
-        "leave/updateLeaveProfile",
+        `leave/updateLeaveProfile/${updatedLeaveProfile.id}`,
         updatedLeaveProfile
       );
       setLeaveProfileById({
@@ -126,7 +127,6 @@ export default function LeaveContextProvider({ children }) {
     try {
       const res = await clockAxios.get("/leave/getUserLeave", data);
       setUserLeave(res.data.userLeave);
-      console.log(res.data.userLeave);
     } catch (error) {
       console.error("Error:", error);
     }
