@@ -9,6 +9,7 @@ import DropdownSearch from "../../../../components/DropdownSearch";
 import useLeave from "../../../../hooks/use-leave";
 import Joi from "joi";
 import InputErrorMessage from "../../../AuthPages/Register/InputErrorMessage";
+import Swal from "sweetalert2";
 
 const createRequestLeaveSchema = Joi.object({
   userLeaveId: Joi.number().integer().positive().required(),
@@ -64,6 +65,11 @@ export default function LeaveInfo({ createRequestLeave }) {
       }
       setError({});
       createRequestLeave(input);
+      Swal.fire({
+        title: "Leave request Sent!",
+        text: "Please wait for your supervisor to approve",
+        icon: "success"
+      });
     } catch (error) {
       console.log(error);
     }

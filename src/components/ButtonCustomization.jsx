@@ -12,10 +12,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedButtons({ buttonName }) {
+export default function CustomizedButtons({ buttonName , onClick }) {
   return (
     <Stack>
-      <ColorButton variant="contained">{buttonName}</ColorButton>
+      <ColorButton onClick={onClick} variant="contained">{buttonName}</ColorButton>
     </Stack>
   );
 }
