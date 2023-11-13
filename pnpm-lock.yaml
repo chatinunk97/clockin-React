@@ -25,7 +25,7 @@ dependencies:
     version: 5.14.17(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.33)(react@18.2.0)
   '@mui/x-charts':
     specifier: ^6.18.0
-    version: 6.18.0(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.16)(@mui/system@5.14.17)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+    version: 6.18.1(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.16)(@mui/system@5.14.17)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
   '@mui/x-data-grid':
     specifier: ^6.18.1
     version: 6.18.1(@mui/material@5.14.16)(@mui/system@5.14.17)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
@@ -1036,8 +1036,8 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@mui/x-charts@6.18.0(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.16)(@mui/system@5.14.17)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-4xdiqPWAkBpV0UOKrbtzmT8Kgv4TrD2cAmq9L2NB/iPJBuEAzTIVZXmLBHGGou7v4xf57fLv5HqBN5iciGHotw==}
+  /@mui/x-charts@6.18.1(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.16)(@mui/system@5.14.17)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-JF0BVkEjZgQMKqGW9Lzcfwlbml5OqlAEOlSDGKConwRdgTZNYXreakGrKVEemaO4bmqLmsFduKowkRV4Ng7Bfw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@emotion/react': ^11.9.0
