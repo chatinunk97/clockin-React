@@ -153,7 +153,7 @@ export default function ViewEmployee() {
 
     return (
         <div className="flex w-full justify-center items-center h-screen bg-slate-100 ">
-            <div className="flex w-[500px] md:w-full justify-center md:gap-20 items-center flex-col md:flex-row gap-10 bg-red-500">
+            <div className="flex w-[500px] md:w-full justify-center md:gap-20 items-center flex-col md:flex-row gap-10">
                 <div className="flex flex-col justify-center items-center gap-10 md:mb-32 ">
                     <div className="text-4xl font-semibold md:pr-20">
                         <h1>{employee.firstName} {employee.lastName} </h1>

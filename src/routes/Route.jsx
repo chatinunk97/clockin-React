@@ -29,7 +29,7 @@ import LeaveContextProvider from "../contexts/LeaveContext";
 import UserContextProvider from "../contexts/UserContext";
 import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
-import DashboardContextProvider from "../contexts/dashboardContext";
+import DashboardMainContext from "../contexts/DashboardMainContext";
 import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
 import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
 import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
@@ -130,7 +130,9 @@ export default function Route() {
       path: "/manage",
       element: (
         <Authenticated pageType={"dashboard"}>
-          <Layoutmanage />
+          <DashboardMainContext>
+            <Layoutmanage />
+          </DashboardMainContext>
         </Authenticated>
       ),
       children: [
@@ -138,9 +140,9 @@ export default function Route() {
           path: "/manage/dashboard",
           element: (
             <UserContextProvider>
-              <DashboardContextProvider>
+              <DashboardMainContext>
                 <DashboardMainPage />
-              </DashboardContextProvider>
+              </DashboardMainContext>
             </UserContextProvider>
           ),
         },

@@ -3,6 +3,7 @@ import { clockAxios, dashboardAxios } from "../config/axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
+
 export const LeaveContext = createContext();
 
 export default function LeaveContextProvider({ children }) {
@@ -11,6 +12,7 @@ export default function LeaveContextProvider({ children }) {
   const [leaveProfileById, setLeaveProfileById] = useState({});
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
+  const [myrequestLeave, setMyrequestLeave] = useState([])
   const [allRequestLeaves, setAllRequestLeaves] = useState([]);
 
   const createLeaveProfile = async (newAddedLeaveProfile) => {
@@ -132,7 +134,6 @@ export default function LeaveContextProvider({ children }) {
 
   const createRequestLeave = async (data) => {
     try {
-      console.log(data);
       const res = await clockAxios.post("/leave/createRequestLeave", data);
       setRequestLeave(res.data.requestLeave);
     } catch (error) {
@@ -140,6 +141,15 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getRequestLeaveId = async () => {
+    try {
+      const res = await clockAxios.get(`/leave/getRequestLeaveByUserId`
+      )
+      setMyrequestLeave(res.data.MyRequest)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const getAllRequestLeaves = async () => {
     setLoading(true);
     await dashboardAxios
@@ -210,6 +220,8 @@ export default function LeaveContextProvider({ children }) {
         getAllRequestLeaves,
         updateRequestLeave,
         requestLeave,
+        getRequestLeaveId,
+        myrequestLeave,
         allRequestLeaves,
       }}
     >

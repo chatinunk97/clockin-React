@@ -2,10 +2,9 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
-import CustomizedButtons from "../../../components/ButtonCustomization";
 import { useEffect } from "react";
 import useUser from "../../../hooks/use-user";
-import SearchInput from "../../../components/Search";
+
 
 export default function ManageEmployees() {
   const { getalluser, allUser, loading } = useUser();
@@ -23,20 +22,10 @@ export default function ManageEmployees() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" flex flex-col justify-start md:mt-20 md:w-full p-2 min-w-[414px] max-h-[896px]">
+    <div className="flex flex-col justify-start md:mt-20 p-2 max-w-[800px] max-h-[896px] md:w-full md:max-w-full">
       <div className="flex justify-center items-center gap-4 md:w-full">
         <div className="flex justify-center items-center p-6">
-          <div className="flex justify-center items-center gap-2 w-120">
-            <SearchInput />
-          </div>
-          <div
-            onClick={() => {
-              setIsOpen(true);
-            }}
-            className="rounded-3xl w-32 p-1 ml-9"
-          >
-            <CustomizedButtons buttonName="Add User" />
-          </div>
+
         </div>
       </div>
       <div>
