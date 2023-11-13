@@ -12,6 +12,7 @@ export default function ManageTable({
   editForm,
   isOpen,
   setIsOpen,
+  height = "300px",
 }) {
   const gridOptions = {
     defaultColDef: {
@@ -21,7 +22,7 @@ export default function ManageTable({
     },
   };
 
-  const sortingOrder = useMemo(() => ["desc", "asc", null], []);
+  const sortingOrder = useMemo(() => ["desc", "asc", null, []], []);
 
   const gridApi = useRef(null);
 
@@ -42,7 +43,7 @@ export default function ManageTable({
       <div className="overflow-y-auto">
         <div
           className="ag-theme-alpine"
-          style={{ height: "300px", width: "auto" }}
+          style={{ height: height, width: "auto" }}
         >
           {loading && <LinearIndeterminate />}
 
