@@ -10,14 +10,14 @@ export default function MyRequestCard({ myrequestLeave }) {
                 </div>
                 <div>
                     <div className="flex flex-col gap-2">
-                        <h1 className="text-green-700 font-semibold">StartDate: {myrequestLeave.startDate}</h1>
-                        <h1 className="text-green-700 font-semibold">EndDate: {myrequestLeave.endDate}</h1>
-                        <h1>{myrequestLeave.leaveType}</h1>
+                        <h1 className="text-green-700 font-semibold">StartDate: {myrequestLeave?.startDate}</h1>
+                        <h1 className="text-green-700 font-semibold">EndDate: {myrequestLeave?.endDate}</h1>
+                        <h1>{myrequestLeave?.leaveType}</h1>
                     </div>
                 </div>
             </div>
             <div className="p-4 flex flex-col justify-end">
-                <h1 className="text-orange-400 font-semibold">{myrequestLeave.statusRequest}</h1>
+                <h1 className="text-orange-400 font-semibold">{myrequestLeave?.statusRequest}</h1>
             </div>
         </div>
     );
