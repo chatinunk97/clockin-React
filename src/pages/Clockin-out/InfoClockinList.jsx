@@ -3,7 +3,7 @@ import dateTimeToString from "../../utils/StructureChange/dateTimetoString";
 
 export default function InfoClockin({ clockHistory }) {
   return (
-    <div className="flex flex-col  h-full">
+    <div className="flex flex-col  h-full px-3">
       {clockHistory.map((el) => {
         return (
           <div

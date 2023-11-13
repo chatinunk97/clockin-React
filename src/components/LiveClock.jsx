@@ -15,7 +15,7 @@ export default function LiveClock({ time, setTime }) {
   }, []);
   return (
     <div>
-      <p className="text-3xl font-bold">{time.toTimeString().split(" ")[0]}</p>
+      <p className="text-4xl font-bold">{time.toTimeString().split(" ")[0]}</p>
     </div>
   );
 }

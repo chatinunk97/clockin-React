@@ -31,7 +31,7 @@ export default function DashboardLayout() {
   const { manageUser } = useManage()
 
   return (
-    <div className="bg-gradient-to-b from-azure-900 via-azure-800 to-azure-700 h-16 w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0  overflow-y-auto items-center">
+    <div className="bg-gradient-to-b from-azure-900 via-azure-800 to-azure-700 h-16 w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0  overflow-y-auto items-center z-10">
       <div className="block md:hidden ">
         <MenuHamburger />
       </div>
