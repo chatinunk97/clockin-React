@@ -9,9 +9,9 @@ import DashboardMainContextProvider from "./contexts/DashboardMainContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
     <ManageContextProvider>
-      <DashboardMainContextProvider>
+      {/* <DashboardMainContextProvider> */}
         <App />
-      </DashboardMainContextProvider>
+      {/* </DashboardMainContextProvider> */}
     </ManageContextProvider>
   </AuthContextProvider>
 );
