@@ -129,7 +129,9 @@ export default function Route() {
       path: "/manage",
       element: (
         <Authenticated pageType={"dashboard"}>
-          <Layoutmanage />
+          <DashboardMainContext>
+            <Layoutmanage />
+          </DashboardMainContext>
         </Authenticated>
       ),
       children: [

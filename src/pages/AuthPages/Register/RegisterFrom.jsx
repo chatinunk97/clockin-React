@@ -8,6 +8,8 @@ import GoogleMap from "../../../config/GoogleMap/Map";
 import Swal from "sweetalert2";
 import locationPermission from "../../../utils/locationPermission";
 import { toast } from "react-toastify";
+import SubmitButton from "../../../components/SubmitButton";
+import Modal from "../../../components/Modal";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -44,6 +46,7 @@ export default function RegisterFrom() {
   const [allpackage, setallPackage] = useState([]);
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState({
     paySlip: "",
     companyName: "",
@@ -241,15 +244,31 @@ export default function RegisterFrom() {
         />
         {error.password && <InputErrorMessage message={error.password} />}
       </div>
-      {loading ? (
-        <Loading />
-      ) : (
-        <GoogleMap
-          location={location}
-          enableSelect={true}
-          setLocation={setLocation}
-        />
-      )}
+      <SubmitButton
+        onClick={(e) => {
+          e.preventDefault();
+          setIsOpen(true);
+        }}
+      >
+        Company Location
+      </SubmitButton>
+      <Modal
+        title="Select your company Location"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="w-full h-[500px]">
+            <GoogleMap
+              location={location}
+              enableSelect={true}
+              setLocation={setLocation}
+            />
+          </div>
+        )}
+      </Modal>
       <div className="mx-auto col-span-full">
         <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
           Sign Up
