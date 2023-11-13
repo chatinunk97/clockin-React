@@ -56,8 +56,8 @@ export default function LeaveInfo({ createRequestLeave }) {
 
   const handleSubmitForm = async (e) => {
     try {
-      console.log(input);
       e.preventDefault();
+
       const validationError = validateCreateRequestLeave(input);
       if (validationError) {
         console.dir(validationError);
@@ -68,7 +68,7 @@ export default function LeaveInfo({ createRequestLeave }) {
       Swal.fire({
         title: "Leave request Sent!",
         text: "Please wait for your supervisor to approve",
-        icon: "success"
+        icon: "success",
       });
     } catch (error) {
       console.log(error);
@@ -78,7 +78,12 @@ export default function LeaveInfo({ createRequestLeave }) {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleDatePicker = (e) => {
-    setInput({ ...input, startDate: e[0], endDate: e[1] });
+    setInput({
+      ...input,
+      startDate: e[0],
+      endDate: e[1],
+    });
+    console.log(input);
   };
   const handleChangeDropdown = (data, name) => {
     setInput({ ...input, [name]: data.value });

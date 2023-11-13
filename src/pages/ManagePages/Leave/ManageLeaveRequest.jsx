@@ -16,10 +16,8 @@ export default function ManageLeaveRequest() {
   }, []);
 
   return (
-    <div className=" flex flex-col justify-start md:mt-20 md:w-full p-2 min-w-[414px] max-h-[896px]">
-      <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
-        <TableLeaveRequest />
-      </div>
+    <div className="w-full p-5 pt-10">
+      <TableLeaveRequest />
     </div>
   );
 }
