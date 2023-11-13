@@ -73,10 +73,10 @@ export default function ClockContextProvider({ children }) {
           return alert("You're out of clock in/out range ; 50 meters");
         }
       }
-
+      console.log(todayString())
       await clockAxios.post(
         "clock/clockIn",
-        clockObjectChange(userLocation, time, "clockIn")
+        clockObjectChange(userLocation, time, "clockIn",todayString())
       );
       fetchClockHistory();
       setIsClockIn(false);
