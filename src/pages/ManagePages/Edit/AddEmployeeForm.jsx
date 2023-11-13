@@ -69,10 +69,11 @@ export default function AddmployeeForm({ allUser, onClose }) {
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
   const handleChangeDropdown = (data, name) => {
-    console.log(data);
     setInput({ ...input, [name]: data.value });
   };
+
   const handleSubmitAddUser = async (e) => {
     try {
       e.preventDefault();
@@ -88,7 +89,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
       await addemployee(formData);
       onClose();
     } catch (err) {
-      console.log(error);
+      console.error(err);  // Fixed to log the correct error variable
     } finally {
       setLoading(false);
     }
@@ -104,28 +105,23 @@ export default function AddmployeeForm({ allUser, onClose }) {
         className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6 md:pt-4 md:pl-20 md:pr-20 md:pb-12 overflow-x-auto"
         onSubmit={handleSubmitAddUser}
       >
-        {inputList.map((el) => {
-          return (
-            <>
-              <div
-                className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2"
-                key={el.id}
-              >
-                <h1>{el.label}</h1>
-                <RegisterInput
-                  placeholder={el.placeholder}
-                  name={el.name}
-                  value={input[el.name]}
-                  onChange={handleChangeInput}
-                  hasError={error[el.name]}
-                />
-                {error[el.name] && (
-                  <InputErrorMessage message={error[el.name]} />
-                )}
-              </div>
-            </>
-          );
-        })}
+        {inputList.map((el) => (
+          <div key={el.id}>
+            <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+              <h1>{el.label}</h1>
+              <RegisterInput
+                placeholder={el.placeholder}
+                name={el.name}
+                value={input[el.name]}
+                onChange={handleChangeInput}
+                hasError={error[el.name]}
+              />
+              {error[el.name] && (
+                <InputErrorMessage message={error[el.name]} />
+              )}
+            </div>
+          </div>
+        ))}
 
         {dropdownlist.map((el) => {
           let options = [];
@@ -140,12 +136,12 @@ export default function AddmployeeForm({ allUser, onClose }) {
           }
 
           return (
-            <>
-              <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+            <div key={el.id}>
+              <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
                 <h1>{el.label}</h1>
                 <DropdownSearch
                   data={options}
-                  onChange={handleChangeDropdown}
+                  onChange={(data) => handleChangeDropdown(data, el.name)}
                   name={el.name}
                   hasError={error[el.name]}
                 />
@@ -153,12 +149,12 @@ export default function AddmployeeForm({ allUser, onClose }) {
                   <InputErrorMessage message={error[el.name]} />
                 )}
               </div>
-            </>
+            </div>
           );
         })}
 
         <div className="flex justify-evenly items-center w-80 md:flex-col md:w-[800px]">
-          <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+          <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
             <h1>ProfileImage</h1>
             <InputFileUpload
               type="file"
