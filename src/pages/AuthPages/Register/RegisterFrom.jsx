@@ -10,6 +10,8 @@ import locationPermission from "../../../utils/locationPermission";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../components/SubmitButton";
 import Modal from "../../../components/Modal";
+import InputFileUpload from "../../../components/Uploadbutton";
+import { RegisInput } from "./RegisInput";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),
   companyName: Joi.string().trim().required(),
@@ -137,27 +139,13 @@ export default function RegisterFrom() {
 
   return (
     <form
-      className="grid grid-cols-2 gap-x-3 gap-y-4 items-center pt-8 pb-6"
+      className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6"
       onSubmit={handleSubmitRegister}
     >
-      <div className=" w-[360px] h-[80px]">
-        <RegisterInput
-          type="file"
-          onChange={(e) => {
-            if (e.target.files[0]) {
-              setFile(e.target.files[0]);
-              setInput({ ...input, paySlip: e.target.files[0] });
-            }
-          }}
-          name="paySlip"
-          hasError={error.paySlip}
-        />
-        {error.paySlip && <InputErrorMessage message={error.paySlip} />}
-      </div>
-      <div>
-        <h1 className="pl-2">Select Package</h1>
+      <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+        <h1>Select Package</h1>
         <select
-          className="w-[360px] mb-12 flex items-start flex-col cursor-pointer"
+          className="flex items-start flex-col cursor-pointer border border-stone-300 p-2"
           onChange={handleChangeInput}
           value={input.packageId}
           name="packageId"
@@ -174,84 +162,52 @@ export default function RegisterFrom() {
           })}
         </select>
       </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Company Name"
-          value={input.companyName}
-          onChange={handleChangeInput}
-          name="companyName"
-          hasError={error.companyName}
+      {RegisInput.map((el) => (
+        <div key={el.id}>
+          <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+            <h1>{el.label}</h1>
+            <RegisterInput
+              placeholder={el.placeholder}
+              name={el.name}
+              value={input[el.name]}
+              onChange={handleChangeInput}
+              hasError={error[el.name]}
+            />
+            {error[el.name] && (
+              <InputErrorMessage message={error[el.name]} />
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div className="p-2 w-36 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+        <h1>PaySlip</h1>
+        <InputFileUpload
+          type="file"
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              setFile(e.target.files[0]);
+              setInput({ ...input, paySlip: e.target.files[0] });
+            }
+          }}
+          name="paySlip"
+          hasError={error.paySlip}
         />
-        {error.companyName && <InputErrorMessage message={error.companyName} />}
+        {error.paySlip && (
+          <InputErrorMessage message={error.paySlip} />
+        )}
       </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Employee Id"
-          value={input.employeeId}
-          onChange={handleChangeInput}
-          name="employeeId"
-          hasError={error.employeeId}
-        />
-        {error.employeeId && <InputErrorMessage message={error.employeeId} />}
+      <div className="flex justify-center mt-7">
+        <SubmitButton
+          onClick={(e) => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+
+        >
+          Company Location
+        </SubmitButton>
       </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder=" First name"
-          value={input.firstName}
-          onChange={handleChangeInput}
-          name="firstName"
-          hasError={error.firstName}
-        />
-        {error.firstName && <InputErrorMessage message={error.firstName} />}
-      </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Last Name"
-          value={input.lastName}
-          onChange={handleChangeInput}
-          name="lastName"
-          hasError={error.lastName}
-        />
-        {error.lastName && <InputErrorMessage message={error.lastName} />}
-      </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Email"
-          value={input.email}
-          onChange={handleChangeInput}
-          name="email"
-          hasError={error.email}
-        />
-        {error.email && <InputErrorMessage message={error.email} />}
-      </div>
-      <div className="p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Phone Number"
-          value={input.mobile}
-          onChange={handleChangeInput}
-          name="mobile"
-          hasError={error.mobile}
-        />
-        {error.mobile && <InputErrorMessage message={error.mobile} />}
-      </div>
-      <div className=" p-1 w-[360px] h-[80px]">
-        <RegisterInput
-          placeholder="Password"
-          value={input.password}
-          onChange={handleChangeInput}
-          name="password"
-          hasError={error.password}
-        />
-        {error.password && <InputErrorMessage message={error.password} />}
-      </div>
-      <SubmitButton
-        onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(true);
-        }}
-      >
-        Company Location
-      </SubmitButton>
       <Modal
         title="Select your company Location"
         open={isOpen}
@@ -269,7 +225,7 @@ export default function RegisterFrom() {
           </div>
         )}
       </Modal>
-      <div className="mx-auto col-span-full">
+      <div className="mx-auto col-span-full mt-3">
         <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
           Sign Up
         </button>
