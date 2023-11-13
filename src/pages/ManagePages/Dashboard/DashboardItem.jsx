@@ -18,13 +18,16 @@ export default function DashboardItem({ handleChangeDisplay }) {
   const { statusList, fetchStatusList } = useDashboard();
 
   const calculateStatus = async () => {
+    console.log(statusList);
     // Count total
-    let totalRequestLeaveCounts = statusList.requestLeaveCounts?.reduce(
+    let totalRequestLeaveCounts = await statusList.requestLeaveCounts?.reduce(
       (acc, curr) => {
+        console.log(curr);
         return (acc += curr._count);
       },
       0
     );
+    console.log(totalRequestLeaveCounts);
 
     let totalStatusCounts = statusList.statusCounts?.reduce((acc, curr) => {
       return (acc += curr._count);
@@ -63,6 +66,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
     fetchStatusList()
       .then(() => {
         calculateStatus();
+        console.log("calculate status!!!!!");
       })
       .catch((error) => {
         console.log("Error fetching data:", error);
@@ -82,7 +86,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
             <div
               className="flex flex-row items-center gap-4 p-4"
               onClick={() =>
-                handleChangeDisplay("On Leave", dashboardInfo.countOnLeave)
+                handleChangeDisplay("On Leave", dashboardInfo?.countOnLeave)
               }
             >
               <div className="rounded-full bg-blue-500 text-2xl  text-white hover hover:text-blue-500 p-2 hover:bg-white border border-blue-500">
@@ -91,7 +95,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500">On Leave</div>
                 <div>
-                  {dashboardInfo.countOnLeave}
+                  {dashboardInfo?.countOnLeave}
                   <span>%</span>
                 </div>
               </div>
@@ -99,7 +103,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
             <div
               className="flex flex-row  items-center gap-4 p-4"
               onClick={() =>
-                handleChangeDisplay("On Time", dashboardInfo.countOnTime)
+                handleChangeDisplay("On Time", dashboardInfo?.countOnTime)
               }
             >
               <div className="rounded-full bg-green-600 text-2xl  text-white hover hover:text-green-600 p-2 hover:bg-white border border-green-600">
@@ -108,7 +112,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500 font-semibold">On Time</div>
                 <div>
-                  {dashboardInfo.countOnTime}
+                  {dashboardInfo?.countOnTime}
                   <span>%</span>
                 </div>
               </div>
@@ -116,7 +120,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
             <div
               className="flex flex-row items-center gap-4 p-4"
               onClick={() =>
-                handleChangeDisplay("Late", dashboardInfo.countLate)
+                handleChangeDisplay("Late", dashboardInfo?.countLate)
               }
             >
               <div className="rounded-full bg-orange-500 text-2xl  text-white hover hover:text-orange-500 p-2 hover:bg-white border border-orange-500">
@@ -125,7 +129,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500 font-semibold">Late</div>
                 <div>
-                  {dashboardInfo.countLate}
+                  {dashboardInfo?.countLate}
                   <span>%</span>
                 </div>
               </div>

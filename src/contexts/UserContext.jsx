@@ -107,6 +107,7 @@ export default function UserContextProvider({ children }) {
           userType: user.userType,
           isActive: user.isActive,
           checkLocation: user.checkLocation,
+          companyProfile: user.companyProfile,
         }));
         setAllUser(userData);
       })

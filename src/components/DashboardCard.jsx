@@ -6,42 +6,42 @@ export default function DashboardCard({ allUser }) {
   const { statusList, fetchStatusList } = useDashboard();
   const [initialLoading, setInitialLoading] = useState(true);
   const [cardInfo, setCardInfo] = useState([
-    { title: "Total Employees", count: 0, color: "text-black" },
-    { title: "Lates", count: 0, color: "text-pink-500" },
-    { title: "Leave", count: 0, color: "text-black" },
-    { title: "OT", count: 0, color: "text-black" },
+    { title: "Total Employees", count: 1000, color: "text-black" },
+    { title: "Lates", count: 1000, color: "text-pink-500" },
+    { title: "Leave", count: 1000, color: "text-black" },
+    { title: "OT", count: 1000, color: "text-black" },
   ]);
 
-  const calculateInfo = () => {
-    const late =
-      statusList?.statusCounts?.length > 0
-        ? statusList.statusCounts[0]._count
-        : 0;
+  // const calculateInfo = () => {
+  //   const late =
+  //     statusList?.statusCounts?.length > 0
+  //       ? statusList.statusCounts[0]._count
+  //       : 0;
 
-    const leave =
-      statusList?.requestLeaveCounts?.length > 0
-        ? statusList.requestLeaveCounts[0]._count
-        : 0;
+  //   const leave =
+  //     statusList?.requestLeaveCounts?.length > 0
+  //       ? statusList.requestLeaveCounts[0]._count
+  //       : 0;
 
-    let updateInfo = cardInfo;
+  //   let updateInfo = cardInfo;
 
-    updateInfo.map((item) => {
-      if (item.title === "Total Employees") {
-        item.count += allUser.length;
-      }
-      if (item.title === "Lates") {
-        item.count += late;
-      }
-      if (item.title === "Leave") {
-        item.count += leave;
-      }
-      if (item.title === "OT") {
-        // item.count += late;
-      }
-    });
+  //   updateInfo.map((item) => {
+  //     if (item.title === "Total Employees") {
+  //       item.count += allUser.length;
+  //     }
+  //     if (item.title === "Lates") {
+  //       item.count += late;
+  //     }
+  //     if (item.title === "Leave") {
+  //       item.count += leave;
+  //     }
+  //     if (item.title === "OT") {
+  //       // item.count += late;
+  //     }
+  //   });
 
-    setCardInfo(updateInfo);
-  };
+  //   setCardInfo(updateInfo);
+  // };
 
   useEffect(() => {
     fetchStatusList()
