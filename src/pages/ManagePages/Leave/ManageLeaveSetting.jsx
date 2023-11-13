@@ -40,20 +40,21 @@ export default function ManageLeaveSetting() {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   return (
-    <div className="flex flex-col md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
-      <div className="flex justify-center items-center gap-4 md:w-full">
-        <div
-          onClick={() => {
-            setIsOpen(true);
-          }}
-          className="rounded-3xl"
-        >
-          <CustomizedButtons buttonName="Add Leave Profile" />
+    <div className="flex flex-col gap-4 md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
+      <div>
+        <div className="flex justify-between p-2">
+          <div className="text-2xl font-bold">Leave Profile</div>
+          <div className="p-4  flex "></div>
+          <CustomizedButtons
+            onClick={() => {
+              setIsOpen(true);
+            }}
+            buttonName="Add Leave Profile"
+          />
         </div>
-      </div>
-      <div className=" flex flex-col justify-start md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
         <TableLeaveSetting
           deleteLeaveProfile={deleteLeaveProfile}
           leaveProfiles={leaveProfiles}
@@ -65,6 +66,32 @@ export default function ManageLeaveSetting() {
           title="Add Leave Profile"
           open={isOpen}
           onClose={() => setIsOpen(false)}
+        >
+          <AddLeaveSettingForm />
+        </Modal>
+      </div>
+      <div>
+        <div className="flex justify-between p-2">
+          <div className="text-2xl font-bold">Time Profile</div>
+          <div className="p-4  flex "></div>
+          <CustomizedButtons
+            onClick={() => {
+              setIsOpen2(true);
+            }}
+            buttonName="Add Time Profile"
+          />
+        </div>
+        <TableLeaveSetting
+          deleteLeaveProfile={deleteLeaveProfile}
+          leaveProfiles={leaveProfiles}
+          leaveProfileById={leaveProfileById}
+          setLeaveProfileById={setLeaveProfileById}
+          loading={loading}
+        />
+        <Modal
+          title="Add Time Profile"
+          open={isOpen2}
+          onClose={() => setIsOpen2(false)}
         >
           <AddLeaveSettingForm />
         </Modal>

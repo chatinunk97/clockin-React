@@ -14,10 +14,11 @@ export default function SuperAdminMainPage() {
       if (getAccessToken()) {
         removeAccessToken();
         navigate("/login");
-        return;
       }
-      removeAccessTokenDB();
-      navigate("/login");
+      if (getAccessTokenDB()) {
+        removeAccessTokenDB();
+        navigate("/login");
+      }
     }
   };
   return (
