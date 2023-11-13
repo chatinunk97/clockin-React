@@ -4,9 +4,9 @@ export default function PersonalDetails({ profileUser }) {
   return (
     <div className="lg:w-96 lg:m-auto overflow-hidden overflow-y-auto pt-20">
       {profileUser && (
-        <h1 className="pt-16 font-bold text-[36px] text-center">
+        <p className="pt-16 font-bold text-[36px] text-center">
           {profileUser.firstName} {profileUser.lastName}
-        </h1>
+        </p>
       )}
       <div className="flex flex-col px-8 gap-10">
         <PersonalDetailList

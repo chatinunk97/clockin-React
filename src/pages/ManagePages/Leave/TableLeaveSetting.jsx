@@ -60,7 +60,7 @@ export default function TableLeaveSetting({
 
   return (
     <>
-      <div className="ag-theme-alpine" style={{ height: 700, width: "auto" }}>
+      <div className="ag-theme-alpine" style={{ height: 300, width: "auto" }}>
         {loading && <LinearIndeterminate />}
         <AgGridReact
           rowData={leaveProfiles}
