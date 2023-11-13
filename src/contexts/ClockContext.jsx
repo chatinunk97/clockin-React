@@ -14,7 +14,7 @@ export default function ClockContextProvider({ children }) {
 
   const [isClockIn, setIsClockIn] = useState(true);
   const [location, setLocation] = useState({ lat: "", lng: "" });
-  const [address, setAddress] = useState("HardCodeState");
+  const [isCheckLocation, setIsCheckLocation] = useState(true);
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [time, setTime] = useState(null);
@@ -68,10 +68,12 @@ export default function ClockContextProvider({ children }) {
   };
   const clockIn = async (companyLocation, userLocation, time) => {
     try {
-      console.log("Clock In");
-      if (getDistance(companyLocation, location) > 50) {
-        return alert("You're out of clock in/out range ; 50 meters");
+      if (isCheckLocation) {
+        if (getDistance(companyLocation, location) > 50) {
+          return alert("You're out of clock in/out range ; 50 meters");
+        }
       }
+
       await clockAxios.post(
         "clock/clockIn",
         clockObjectChange(userLocation, time, "clockIn")
@@ -89,10 +91,12 @@ export default function ClockContextProvider({ children }) {
   };
   const clockOut = async (companyLocation, userLocation, time) => {
     try {
-      console.log("Clock Out");
-      if (getDistance(companyLocation, location) > 50) {
-        return alert("You're out of clock in/out range ; 50 meters");
+      if (isCheckLocation) {
+        if (getDistance(companyLocation, location) > 50) {
+          return alert("You're out of clock in/out range ; 50 meters");
+        }
       }
+
       await clockAxios.patch(
         "clock/clockOut",
         clockObjectChange(userLocation, time, "clockOut")
@@ -110,11 +114,11 @@ export default function ClockContextProvider({ children }) {
   };
   useEffect(() => {
     clockAxios.get("/time/getAllTimeProfile").then((res) => {
-      if(!res.data.allTimeProfiles.length){
+      if (!res.data.allTimeProfiles.length) {
         Swal.fire({
           title: "Initial Setting not done",
           text: "Your company time profile has not been set. Please contact your admin",
-          icon: "question"
+          icon: "question",
         });
       }
     });
@@ -133,7 +137,8 @@ export default function ClockContextProvider({ children }) {
     clockOut,
     location,
     clockHistory,
-    address,
+    isCheckLocation,
+    setIsCheckLocation,
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>
