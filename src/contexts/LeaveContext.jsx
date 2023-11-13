@@ -58,8 +58,9 @@ export default function LeaveContextProvider({ children }) {
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     try {
+      console.log(updatedLeaveProfile);
       const res = await dashboardAxios.patch(
-        "leave/updateLeaveProfile",
+        `leave/updateLeaveProfile/${updatedLeaveProfile.id}`,
         updatedLeaveProfile
       );
       setLeaveProfileById({

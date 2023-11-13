@@ -23,7 +23,6 @@ import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
 import ManageEmployees from "../pages/ManagePages/Dashboard/ManageEmployees";
 import ManageLeaveRequest from "../pages/ManagePages/Leave/ManageLeaveRequest";
 import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
-import ManageLeaveSetting from "../pages/ManagePages/Leave/ManageLeaveSetting";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
@@ -34,6 +33,8 @@ import DashboardMainContext from "../contexts/DashboardMainContext";
 import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
 import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
 import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
+import ManageProfileSetting from "../pages/ManagePages/Setting/ManageProfileSetting";
+import TimeContextProvider from "../contexts/TimeContext";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -154,10 +155,12 @@ export default function Route() {
           ),
         },
         {
-          path: "/manage/leave-setting",
+          path: "/manage/profile-setting",
           element: (
             <LeaveContextProvider>
-              <ManageLeaveSetting />
+              <TimeContextProvider>
+                <ManageProfileSetting />
+              </TimeContextProvider>
             </LeaveContextProvider>
           ),
         },
