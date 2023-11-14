@@ -10,6 +10,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
+  const [ userLeaveList , setUserLeaveList] = useState([])
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
   const [myrequestLeave, setMyrequestLeave] = useState([]);
@@ -54,7 +55,7 @@ export default function LeaveContextProvider({ children }) {
   };
 
   const getAllLeaveProfile = async () =>
-    await dashboardAxios.get("/leave/getAllLeaveProfile");
+    await dashboardAxios.get("/leave/getConfirmLeaveById");
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     try {
@@ -97,6 +98,15 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getAcceptedLeave = async (id,date) => {
+    try {
+      const result = await clockAxios.get(`/leave/getConfirmLeaveById?userId=${id}&date=${date}`);
+      setUserLeaveList(result.data.leaveResult)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteLeaveProfile = async (id) => {
     try {
       const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
@@ -135,8 +145,8 @@ export default function LeaveContextProvider({ children }) {
   const createRequestLeave = async (data) => {
     try {
       const newData = { ...data };
-      newData.startDate = dayjs(data.startDat).format("YYYY-DD-MM");
-      newData.endDate = dayjs(data.endDate).format("YYYY-DD-MM");
+      newData.startDate = dayjs(data.startDat).format("YYYY-MM-DD");
+      newData.endDate = dayjs(data.endDate).format("YYYY-MM-DD");
       const res = await clockAxios.post("/leave/createRequestLeave", newData);
       setRequestLeave(res.data.requestLeave);
     } catch (error) {
@@ -226,6 +236,8 @@ export default function LeaveContextProvider({ children }) {
         getRequestLeaveId,
         myrequestLeave,
         allRequestLeaves,
+        getAcceptedLeave,
+        userLeaveList
       }}
     >
       {children}

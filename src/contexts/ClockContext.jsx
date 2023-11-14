@@ -16,7 +16,7 @@ export default function ClockContextProvider({ children }) {
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [isCheckLocation, setIsCheckLocation] = useState(true);
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
-  const [reasonLocation , setReasonLocation] = useState("Test")
+  const [reasonLocation, setReasonLocation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [time, setTime] = useState(null);
   const [clockHistory, setClockHistory] = useState([]);
@@ -76,7 +76,13 @@ export default function ClockContextProvider({ children }) {
       }
       const result = await clockAxios.post(
         "clock/clockIn",
-        clockObjectChange(userLocation, time, "clockIn", todayString(),reasonLocation)
+        clockObjectChange(
+          userLocation,
+          time,
+          "clockIn",
+          todayString(),
+          reasonLocation
+        )
       );
       fetchClockHistory();
       setIsClockIn(false);
@@ -111,6 +117,8 @@ export default function ClockContextProvider({ children }) {
               text: `Start work at ${time.toTimeString().split(" ")[0]}`,
               icon: "info",
             });
+            setReasonLocation("");
+            setIsCheckLocation(true);
           });
       } else {
         Swal.fire({
@@ -118,12 +126,14 @@ export default function ClockContextProvider({ children }) {
           text: `Start work at ${time.toTimeString().split(" ")[0]}`,
           icon: "success",
         });
+        setReasonLocation("");
+        setIsCheckLocation(true);
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Something went wrong!",
-        text: error.response.data.message
+        text: error.response.data.message,
       });
     }
   };
@@ -137,7 +147,7 @@ export default function ClockContextProvider({ children }) {
 
       await clockAxios.patch(
         "clock/clockOut",
-        clockObjectChange(userLocation, time, "clockOut")
+        clockObjectChange(userLocation, time, "clockOut", null, reasonLocation)
       );
       fetchClockHistory();
       setIsClockIn(true);
@@ -146,6 +156,8 @@ export default function ClockContextProvider({ children }) {
         text: `End work at ${time.toTimeString().split(" ")[0]}`,
         icon: "success",
       });
+      setReasonLocation("");
+      setIsCheckLocation(true);
     } catch (error) {
       console.log(error);
     }
@@ -177,7 +189,7 @@ export default function ClockContextProvider({ children }) {
     clockHistory,
     isCheckLocation,
     setIsCheckLocation,
-    setReasonLocation
+    setReasonLocation,
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>

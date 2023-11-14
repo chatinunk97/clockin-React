@@ -66,7 +66,7 @@ export default function Route() {
           <MainLayout />
         </Authenticated>
       ),
-      errorElement: <Navigate to={'/'}/>,
+      errorElement: <Navigate to={"/"} />,
       children: [
         {
           path: "/clockin",
@@ -78,7 +78,11 @@ export default function Route() {
         },
         {
           path: "/profile",
-          element: <ProfileMainPage />,
+          element: (
+            <LeaveContextProvider>
+              <ProfileMainPage />
+            </LeaveContextProvider>
+          ),
           children: [
             { path: "/profile/:userId", element: <PersonalProfilePage /> },
             {

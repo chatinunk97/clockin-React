@@ -4,7 +4,7 @@ const clockObjectChange = (location,time,type,today,reasonLocation)=>{
         return {latitudeClockIn : location.lat , longitudeClockIn : location.lng , clockInTime : time , today , reasonLocation }
     }
     else{
-        return {latitudeClockOut : location.lat , longitudeClockOut : location.lng , clockOutTime : time}
+        return {latitudeClockOut : location.lat , longitudeClockOut : location.lng , clockOutTime : time,reasonLocation}
     }
 
 }
