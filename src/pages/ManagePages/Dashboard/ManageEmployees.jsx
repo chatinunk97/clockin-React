@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Modal from "../../../components/Modal";
+// import { useState } from "react";
+// import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
-import AddmployeeForm from "../Edit/AddEmployeeForm";
+// import AddmployeeForm from "../Edit/AddEmployeeForm";
 import { useEffect } from "react";
 import useUser from "../../../hooks/use-user";
 
@@ -19,7 +19,7 @@ export default function ManageEmployees() {
       });
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex flex-col justify-start md:mt-20 p-2 max-w-[800px] max-h-[896px] md:w-full md:max-w-full">
@@ -30,9 +30,9 @@ export default function ManageEmployees() {
       </div>
       <div>
         <TableEmployee allUser={allUser} loading={loading} />
-        <Modal title="Add User " open={isOpen} onClose={() => setIsOpen(false)}>
+        {/* <Modal title="Add User " open={isOpen} onClose={() => setIsOpen(false)}>
           <AddmployeeForm allUser={allUser} onClose={() => setIsOpen(false)} />
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   );

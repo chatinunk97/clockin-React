@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { clockAxios } from "../../../config/axios";
 import RegisterInput from "./RegisterInput";
 import InputErrorMessage from "./InputErrorMessage";
-import Loading from "../../../components/LoadingBar";
+import Loading from "../../../components/Loading";
 import GoogleMap from "../../../config/GoogleMap/Map";
 import Swal from "sweetalert2";
 import locationPermission from "../../../utils/locationPermission";
@@ -117,7 +117,13 @@ export default function RegisterFrom() {
 
       const response = await clockAxios.post("/user/registerCompany", formData);
       if (response.status === 201) {
-        alert("Registed");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Add user success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {
@@ -126,11 +132,16 @@ export default function RegisterFrom() {
           setError({ ...error, email: "This Email is already in use" });
         } else if (errorMessage.includes("mobile")) {
           setError({ ...error, mobile: "Phone number is already in use" });
-        } else {
-          console.log("Other specific error:", errorMessage);
         }
-      } else {
-        console.log("Unexpected error:", err);
+      }
+      if (err.response.status === 500) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Something Went Wrong",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } finally {
       setLoading(false);
@@ -138,98 +149,102 @@ export default function RegisterFrom() {
   };
 
   return (
-    <form
-      className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6"
-      onSubmit={handleSubmitRegister}
-    >
-      <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-        <h1>Select Package</h1>
-        <select
-          className="flex items-start flex-col cursor-pointer border border-stone-300 p-2"
-          onChange={handleChangeInput}
-          value={input.packageId}
-          name="packageId"
-        >
-          {allpackage.map((el) => {
-            return (
-              <option
-                key={el.id}
-                name="packageId"
-                value={el.id}
-                label={`${el.price}฿ / ${el.userCount} People`}
-              ></option>
-            );
-          })}
-        </select>
-      </div>
-      {RegisInput.map((el) => (
-        <div key={el.id}>
-          <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-            <h1>{el.label}</h1>
-            <RegisterInput
-              placeholder={el.placeholder}
-              name={el.name}
-              value={input[el.name]}
-              onChange={handleChangeInput}
-              hasError={error[el.name]}
-            />
-            {error[el.name] && (
-              <InputErrorMessage message={error[el.name]} />
-            )}
-          </div>
-        </div>
-      ))}
+    <>
 
-      <div className="p-2 w-36 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-        <h1>PaySlip</h1>
-        <InputFileUpload
-          type="file"
-          onChange={(e) => {
-            if (e.target.files[0]) {
-              setFile(e.target.files[0]);
-              setInput({ ...input, paySlip: e.target.files[0] });
-            }
-          }}
-          name="paySlip"
-          hasError={error.paySlip}
-        />
-        {error.paySlip && (
-          <InputErrorMessage message={error.paySlip} />
-        )}
-      </div>
-      <div className="flex justify-center mt-7">
-        <SubmitButton
-          onClick={(e) => {
-            e.preventDefault();
-            setIsOpen(true);
-          }}
-
-        >
-          Company Location
-        </SubmitButton>
-      </div>
-      <Modal
-        title="Select your company Location"
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
+      {loading && <Loading />}
+      <form
+        className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6"
+        onSubmit={handleSubmitRegister}
       >
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className="w-full h-[500px]">
-            <GoogleMap
-              location={location}
-              enableSelect={true}
-              setLocation={setLocation}
-            />
+        <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+          <h1>Select Package</h1>
+          <select
+            className="flex items-start flex-col cursor-pointer border border-stone-300 p-2"
+            onChange={handleChangeInput}
+            value={input.packageId}
+            name="packageId"
+          >
+            {allpackage.map((el) => {
+              return (
+                <option
+                  key={el.id}
+                  name="packageId"
+                  value={el.id}
+                  label={`${el.price}฿ / ${el.userCount} People`}
+                ></option>
+              );
+            })}
+          </select>
+        </div>
+        {RegisInput.map((el) => (
+          <div key={el.id}>
+            <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+              <h1>{el.label}</h1>
+              <RegisterInput
+                placeholder={el.placeholder}
+                name={el.name}
+                value={input[el.name]}
+                onChange={handleChangeInput}
+                hasError={error[el.name]}
+              />
+              {error[el.name] && (
+                <InputErrorMessage message={error[el.name]} />
+              )}
+            </div>
           </div>
-        )}
-      </Modal>
-      <div className="mx-auto col-span-full mt-3">
-        <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
-          Sign Up
-        </button>
-      </div>
-    </form>
+        ))}
+
+        <div className="p-2 w-36 md:w-[360px] md:h-[80px] flex flex-col gap-2">
+          <h1>PaySlip</h1>
+          <InputFileUpload
+            type="file"
+            onChange={(e) => {
+              if (e.target.files[0]) {
+                setFile(e.target.files[0]);
+                setInput({ ...input, paySlip: e.target.files[0] });
+              }
+            }}
+            name="paySlip"
+            hasError={error.paySlip}
+          />
+          {error.paySlip && (
+            <InputErrorMessage message={error.paySlip} />
+          )}
+        </div>
+        <div className="flex justify-center mt-7">
+          <SubmitButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsOpen(true);
+            }}
+
+          >
+            Company Location
+          </SubmitButton>
+        </div>
+        <Modal
+          title="Select your company Location"
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+        >
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="w-full h-[500px]">
+              <GoogleMap
+                location={location}
+                enableSelect={true}
+                setLocation={setLocation}
+              />
+            </div>
+          )}
+        </Modal>
+        <div className="mx-auto col-span-full mt-3">
+          <button className="bg-blue-700 rounded-lg text-white px-3 py-1.5 text-lg font-bold min-w-[10rem]">
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
