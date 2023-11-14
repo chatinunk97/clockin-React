@@ -21,7 +21,7 @@ const DashboardMenu = [
     Icon: BsCalendarEvent,
     text: "Leave Request",
   },
-  { id: 5, to: "/manage/ot-Request", Icon: BsFillMoonFill, text: "OT Request" },
+  { id: 5, to: "/manage/ot-request", Icon: BsFillMoonFill, text: "OT Request" },
 ];
 
 export default function DashboardLayout() {
