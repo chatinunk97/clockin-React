@@ -25,6 +25,7 @@ export default function ClockinMainPage() {
     clockHistory,
     isCheckLocation,
     setIsCheckLocation,
+    setReasonLocation,
   } = useClock();
 
   const handleClock = async () => {
@@ -46,7 +47,11 @@ export default function ClockinMainPage() {
             <GoogleMap location={location} companyLocation={companyLocation} />
           </div>
           <div className="h-[7%]">
-            <ClockInlocation checked={isCheckLocation} setChecked={setIsCheckLocation} />
+            <ClockInlocation
+              checked={isCheckLocation}
+              setChecked={setIsCheckLocation}
+              setReasonLocation={setReasonLocation}
+            />
           </div>
           <hr></hr>
           <div

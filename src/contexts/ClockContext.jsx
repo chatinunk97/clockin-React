@@ -16,6 +16,7 @@ export default function ClockContextProvider({ children }) {
   const [location, setLocation] = useState({ lat: "", lng: "" });
   const [isCheckLocation, setIsCheckLocation] = useState(true);
   const [companyLocation, setCompanyLocation] = useState({ lat: "", lng: "" });
+  const [reasonLocation , setReasonLocation] = useState("Test")
   const [isLoading, setIsLoading] = useState(true);
   const [time, setTime] = useState(null);
   const [clockHistory, setClockHistory] = useState([]);
@@ -75,7 +76,7 @@ export default function ClockContextProvider({ children }) {
       }
       const result = await clockAxios.post(
         "clock/clockIn",
-        clockObjectChange(userLocation, time, "clockIn", todayString())
+        clockObjectChange(userLocation, time, "clockIn", todayString(),reasonLocation)
       );
       fetchClockHistory();
       setIsClockIn(false);
@@ -176,6 +177,7 @@ export default function ClockContextProvider({ children }) {
     clockHistory,
     isCheckLocation,
     setIsCheckLocation,
+    setReasonLocation
   };
   return (
     <ClockContext.Provider value={shareObj}>{children}</ClockContext.Provider>
