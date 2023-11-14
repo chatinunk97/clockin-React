@@ -1,12 +1,10 @@
-import { AiFillCalendar } from "react-icons/ai";
-import { LuClock7 } from "react-icons/lu";
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 import useOT from "../../../../hooks/use-OT";
 import DropdownSearch from "../../../../components/DropdownSearch";
-import { BsFillClipboard2Fill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import SubmitButton from "../../../../components/SubmitButton";
 import InputBar from "../../../../components/InputBar";
-import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -40,15 +38,46 @@ const validateCreateOT = (input) => {
 };
 
 export default function OTform() {
-  const [startDate, setStartDate] = useState(new Date());
   const [error, setError] = useState({});
-  const { clockList, createRequestOT } = useOT();
+  const { clockList, createRequestOT, setDate, date } = useOT();
   const [input, setInput] = useState({
     clockId: "",
     startTime: "",
     endTime: "",
     messageOT: "",
   });
+  const [timeDif, setTimeDif] = useState(0);
+
+  useEffect(() => {
+    if (input.startTime && input.endTime) {
+      const dateStartTime = dayjs(`2023-01-01 ${input.startTime}`);
+      const dateEndTime = dayjs(`2023-01-01 ${input.endTime}`);
+      const difference = dateEndTime.diff(dateStartTime, "minute"); // Difference in minutes
+      setTimeDif(difference);
+    } else {
+      setTimeDif(0);
+    }
+  }, [input.startTime, input.endTime]);
+
+  const handleOnchangeDatePicker = (e) => {
+    setDate(e);
+  };
+
+  const handleOnchangeStartTime = (e) => {
+    console.log(e);
+    if (!e) return;
+
+    const timeFormat = dayjs(e.$d).format("HH:mm:ss");
+    setInput({ ...input, startTime: timeFormat });
+  };
+
+  const handleOnchangeEndTime = (e) => {
+    console.log(e);
+    if (!e) return;
+
+    const timeFormat = dayjs(e.$d).format("HH:mm:ss");
+    setInput({ ...input, endTime: timeFormat });
+  };
 
   const handleChangeDropdown = (e) => {
     setInput({ ...input, clockId: e.value });
@@ -56,6 +85,7 @@ export default function OTform() {
 
   const handleOTSubmit = (e) => {
     e.preventDefault();
+    console.log(input);
     const validationError = validateCreateOT(input);
     if (validationError) {
       console.dir(validationError);
@@ -69,21 +99,22 @@ export default function OTform() {
       icon: "success",
     });
   };
+
   return (
     <form
-      className=" flex flex-col items-center w-full gap-4 h-[90%] px-6"
+      className="flex flex-col items-center w-full gap-4 h-[90%] px-6"
       onSubmit={handleOTSubmit}
     >
       <div className="h-[70%] w-full flex flex-col items-start justify-center gap-4 border-b border-gray-400">
         <p className="text-3xl">Information</p>
         <div className="w-full">
           <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            selected={date}
+            onChange={handleOnchangeDatePicker}
             isClearable
             placeholderText="Select Date"
             wrapperClassName="w-full"
-            className="w-full border z-20 shadow-sm h-[36px] rounded-[4px] cursor-pointer p-1"
+            className="w-full border shadow-sm h-[36px] rounded-[4px] cursor-pointer p-1"
           />
         </div>
 
@@ -100,25 +131,16 @@ export default function OTform() {
           <DemoContainer components={["TimePicker"]}>
             <TimePicker
               label="Start Time"
-              name="startTime"
               value={input.startTime}
-              onChange={(e) =>
-                setInput({
-                  ...input,
-                  startTime: e?.$d?.toString().split(" ")[4],
-                })
-              }
+              onChange={handleOnchangeStartTime}
             />
             {error.startTime && (
               <InputErrorMessage message={"Please select start time"} />
             )}
             <TimePicker
               label="End Time"
-              name="endTime"
               value={input.endTime}
-              onChange={(e) =>
-                setInput({ ...input, endTime: e?.$d?.toString().split(" ")[4] })
-              }
+              onChange={handleOnchangeEndTime}
             />
             {error.endTime && (
               <InputErrorMessage message={"Please select end time"} />
@@ -138,13 +160,11 @@ export default function OTform() {
         </div>
       </div>
       <div className="bg-white w-full h-[15%] flex flex-col items- justify-start gap-2">
-        <h1>{`Date: ${startDate.toString().split(" ").slice(0, 4)} `}</h1>
+        <h1>{`Date: ${dayjs(date).format("DD-MM-YYYY")} `}</h1>
         <h1>{`Time: ${input.startTime} - ${input.endTime}`}</h1>
-        <h1>{`Total: ${
-          input.endTime.split(":")[0] - input.startTime.split(":")[0]
-        } hours ${Math.abs(
-          input.endTime.split(":")[1] - input.startTime.split(":")[1] || 0
-        )} minutes `}</h1>
+        <h1>{`Total: ${Math.floor(timeDif / 60)} hours ${
+          timeDif % 60
+        } minutes`}</h1>
       </div>
 
       <SubmitButton w={"w-full"}>Send Request</SubmitButton>

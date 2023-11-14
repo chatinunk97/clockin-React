@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 .slower-spin {
-  animation-duration: 5s; 
+  animation-duration: 5s;
+}
+.react-datepicker-popper {
+  z-index: 9999 !important;
 }
