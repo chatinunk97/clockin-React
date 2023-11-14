@@ -153,6 +153,7 @@ export default function LeaveContextProvider({ children }) {
       console.log(err);
     }
   };
+
   const getAllRequestLeaves = async () => {
     setLoading(true);
     await dashboardAxios
