@@ -90,7 +90,7 @@ export default function LeaveInfo({ createRequestLeave }) {
     setInput({ ...input, [name]: data.value });
   };
   return (
-    <form onSubmit={handleSubmitForm} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmitForm} className="flex flex-col gap-4 w-full">
       <DropdownSearch
         data={userLeaveData}
         onChange={handleChangeDropdown}
