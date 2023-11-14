@@ -12,11 +12,7 @@ export default function ProfileRecordMainPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    console.log(
-      "this is the first render selectedDate",
-      getAcceptedLeave(userId,dayjs(selectedDate).format("YYYY-MM-DD"))
-      
-    );
+    getAcceptedLeave(userId, dayjs(selectedDate).format("YYYY-MM-DD"));
   }, []);
   return (
     <div>
@@ -26,7 +22,7 @@ export default function ProfileRecordMainPage() {
         getAcceptedLeave={getAcceptedLeave}
         userId={userId}
       />
-      <p>{`Showing Clock in info for date : ${selectedDate.toDateString()}`}</p>
+      <p>{`Showing Leave info for date : ${selectedDate.toDateString()}`}</p>
       {userLeaveList.map((el) => {
         return (
           <LeaveCard
