@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -16,18 +17,30 @@ export default function Home({
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: GoogleAPI_KEY,
   });
+  const [mapCenter, setMapCenter] = useState(location);
+
   if (!isLoaded) return <div>Loading...</div>;
+
   return (
     <Map
       location={location}
       enableSelect={enableSelect}
       setLocation={setLocation}
       companyLocation={companyLocation}
+      mapCenter={mapCenter}
+      setMapCenter={setMapCenter}
     />
   );
 }
 
-function Map({ location, enableSelect, setLocation, companyLocation }) {
+function Map({
+  location,
+  enableSelect,
+  setLocation,
+  companyLocation,
+  mapCenter,
+  setMapCenter,
+}) {
   return (
     <GoogleMap
       options={{
@@ -36,7 +49,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
         streetViewControl: false,
       }}
       zoom={17.8}
-      center={location}
+      center={mapCenter}
       mapContainerStyle={{ width: "100%", height: "100%" }}
       onClick={(e) => {
         if (enableSelect) {
@@ -53,7 +66,7 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
             position={companyLocation}
             icon={{
               url: companyLogo,
-              scaledSize: new window.google.maps.Size(60, 80), // Adjust the size here
+              scaledSize: new window.google.maps.Size(60, 80),
               anchor: new window.google.maps.Point(30, 80),
             }}
           ></Marker>
@@ -61,9 +74,9 @@ function Map({ location, enableSelect, setLocation, companyLocation }) {
             center={companyLocation}
             radius={50}
             options={{
-              fillColor: "green", // Change the fill color of the circle
-              strokeOpacity: 0, // Change the outline opacity (0 to 1)
-              fillOpacity: 0.2, // Change the fill opacity (0 to 1)
+              fillColor: "green",
+              strokeOpacity: 0,
+              fillOpacity: 0.2,
             }}
           ></Circle>
         </>

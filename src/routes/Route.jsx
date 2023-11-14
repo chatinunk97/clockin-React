@@ -35,6 +35,7 @@ import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
 import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
 import ManageProfileSetting from "../pages/ManagePages/Setting/ManageProfileSetting";
 import TimeContextProvider from "../contexts/TimeContext";
+import { Navigate } from "react-router-dom";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -65,7 +66,7 @@ export default function Route() {
           <MainLayout />
         </Authenticated>
       ),
-      errorElement: <h1>Not Found</h1>,
+      errorElement: <Navigate to={'/'}/>,
       children: [
         {
           path: "/clockin",

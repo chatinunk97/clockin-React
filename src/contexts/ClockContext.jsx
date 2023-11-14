@@ -73,20 +73,57 @@ export default function ClockContextProvider({ children }) {
           return alert("You're out of clock in/out range ; 50 meters");
         }
       }
-      console.log(todayString())
-      await clockAxios.post(
+      const result = await clockAxios.post(
         "clock/clockIn",
-        clockObjectChange(userLocation, time, "clockIn",todayString())
+        clockObjectChange(userLocation, time, "clockIn", todayString())
       );
       fetchClockHistory();
       setIsClockIn(false);
-      Swal.fire({
-        title: "Clock In Success !",
-        text: `Start work at ${time.toTimeString().split(" ")[0]}`,
-        icon: "success",
-      });
+      if (result.data.clockIn.statusClockIn === "LATE") {
+        Swal.fire({
+          title: "Late Reason",
+          input: "text",
+          inputPlaceholder: "Please enter your late reason",
+          showCancelButton: true,
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+        })
+          .then((reason) => {
+            if (reason.isConfirmed) {
+              // User clicked "OK"
+              const inputValue = reason.value;
+              console.log("User input:", inputValue);
+              clockAxios.patch("clock/clockReason", {
+                clockId: result.data.clockIn.id,
+                reason: inputValue,
+              });
+            } else {
+              clockAxios.patch("clock/clockReason", {
+                clockId: result.data.clockIn.id,
+                reason: "No reason provided",
+              });
+            }
+          })
+          .finally(() => {
+            Swal.fire({
+              title: "Clock In Late !",
+              text: `Start work at ${time.toTimeString().split(" ")[0]}`,
+              icon: "info",
+            });
+          });
+      } else {
+        Swal.fire({
+          title: "Clock In Success !",
+          text: `Start work at ${time.toTimeString().split(" ")[0]}`,
+          icon: "success",
+        });
+      }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: error.response.data.message
+      });
     }
   };
   const clockOut = async (companyLocation, userLocation, time) => {

@@ -62,25 +62,26 @@ export default function ManageProfileSetting() {
   const [isOpen2, setIsOpen2] = useState(false);
 
   return (
-    <div className="flex flex-col gap-4 md:mt-20 w-full p-2 min-w-[414px] min-h-[896px]">
+    <div className="flex flex-col justify-center gap-4 w-full px-5 py-2 ">
       <div>
-        <div className="flex justify-between p-2">
-          <div className="text-2xl font-bold">Leave Profile</div>
-          <div className="p-4  flex "></div>
-          <CustomizedButtons
-            onClick={() => {
-              setIsOpen(true);
-            }}
-            buttonName="Add Leave Profile"
+        <div className="w-full">
+          <div className="flex justify-between p-2">
+            <div className="text-2xl font-bold">Leave Profile</div>
+            <CustomizedButtons
+              onClick={() => {
+                setIsOpen(true);
+              }}
+              buttonName="Add Leave Profile"
+            />
+          </div>
+          <TableLeaveSetting
+            deleteLeaveProfile={deleteLeaveProfile}
+            leaveProfiles={leaveProfiles}
+            leaveProfileById={leaveProfileById}
+            setLeaveProfileById={setLeaveProfileById}
+            loading={loading}
           />
         </div>
-        <TableLeaveSetting
-          deleteLeaveProfile={deleteLeaveProfile}
-          leaveProfiles={leaveProfiles}
-          leaveProfileById={leaveProfileById}
-          setLeaveProfileById={setLeaveProfileById}
-          loading={loading}
-        />
         <Modal
           title="Add Leave Profile"
           open={isOpen}
@@ -90,23 +91,25 @@ export default function ManageProfileSetting() {
         </Modal>
       </div>
       <div>
-        <div className="flex justify-between p-2">
-          <div className="text-2xl font-bold">Time Profile</div>
-          <div className="p-4  flex "></div>
-          <CustomizedButtons
-            onClick={() => {
-              setIsOpen2(true);
-            }}
-            buttonName="Add Time Profile"
+        <div className="w-full">
+          <div className="flex justify-between p-2">
+            <div className="text-2xl font-bold">Time Profile</div>
+            <div className="p-4  flex "></div>
+            <CustomizedButtons
+              onClick={() => {
+                setIsOpen2(true);
+              }}
+              buttonName="Add Time Profile"
+            />
+          </div>
+          <TableTimeProfileSetting
+            allTimeProfiles={allTimeProfiles}
+            timeProfileById={timeProfileById}
+            setTimeProfileById={setTimeProfileById}
+            loading={loading}
+            deleteTimeProfile={deleteTimeProfile}
           />
         </div>
-        <TableTimeProfileSetting
-          allTimeProfiles={allTimeProfiles}
-          timeProfileById={timeProfileById}
-          setTimeProfileById={setTimeProfileById}
-          loading={loading}
-          deleteTimeProfile={deleteTimeProfile}
-        />
         <Modal
           title="Add Time Profile"
           open={isOpen2}
