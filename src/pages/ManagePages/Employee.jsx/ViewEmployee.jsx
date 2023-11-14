@@ -12,13 +12,17 @@ import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useRef } from "react";
 import { useCallback } from "react";
+import SmallButton from "../../../components/SmallButton";
+import Modal from "../../../components/Modal";
+import AddmployeeForm from "../Edit/AddEmployeeForm";
+import DetailsEmployee from "./DetailsEmployee";
 
 export default function ViewEmployee() {
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const { userId } = useParams();
     const [employee, setEmployee] = useState({});
     const [clock, setClock] = useState([]);
-
 
     const today = new Date();
 
@@ -48,9 +52,6 @@ export default function ViewEmployee() {
             return 0;
         },
     };
-
-
-
 
     useEffect(() => {
         dashboardAxios.get(`user/getUser/${userId}`)
@@ -124,11 +125,30 @@ export default function ViewEmployee() {
             filter: 'agDateColumnFilter',
             filterParams: filterParams,
         },
-        { field: "Clockin", width: 180 },
-        { field: "Clockout", width: 180 },
-        { field: "Status", width: 160 },
-        { field: "Leave", width: 160 },
-        { field: "OT", flex: 1 }
+        { field: "Clockin", width: 150 },
+        { field: "Clockout", width: 140 },
+        { field: "Status", width: 140 },
+        { field: "Leave", width: 140 },
+        { field: "OT", width: 80 },
+        {
+            field: "actionButtons",
+            headerName: "",
+            cellRenderer: (params) => (
+                <div className="flex gap-2 justify-center items-center h-full">
+                    <div className="p-2">
+                        <SmallButton
+                            bg="bg-blue-600"
+                            hover="hover:bg-blue-400"
+                            buttonName="View"
+                            onClick={() => {
+                                setIsOpen(true);
+                            }}
+                        />
+                    </div>
+                </div>
+            ),
+        },
+
     ])
 
 
@@ -164,6 +184,9 @@ export default function ViewEmployee() {
                 </div>
                 <div className="ag-theme-alpine flex flex-col gap-2" style={{ height: 600, width: "60%" }}>
                     <AgGridReact rowData={clock} gridOptions={gridOptions} columnDefs={columnDefs} sortingOrder={sortingOrder} onGridReady={onGridReady} suppressMenuHide={true}></AgGridReact>
+                    <Modal title="Details" open={isOpen} onClose={() => setIsOpen(false)}>
+                        <DetailsEmployee />
+                    </Modal>
                     <div className=" items-end justify-end flex pt-6">
                         {employee.isActive ? (
                             <div onClick={handleDelete}>

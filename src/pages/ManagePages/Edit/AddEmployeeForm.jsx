@@ -89,7 +89,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
       await addemployee(formData);
       onClose();
     } catch (err) {
-      console.error(err);  // Fixed to log the correct error variable
+      console.error(err);
     } finally {
       setLoading(false);
     }

@@ -9,7 +9,7 @@ export default function Modal({
     <>
       {open && (
         <>
-          <div className="fixed inset-0 bg-white opacity-70 z-20"></div>
+          <div className="fixed inset-0 bg-slate-200 opacity-70 z-20"></div>
           <div className="fixed inset-0 z-30">
             <div className="flex justify-center items-center min-h-full p-4">
               <div
