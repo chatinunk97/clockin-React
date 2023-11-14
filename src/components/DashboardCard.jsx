@@ -3,59 +3,13 @@ import CountUp from "react-countup";
 import useDashboard from "../hooks/use-dashboard";
 
 export default function DashboardCard({ allUser }) {
-  const { statusList, fetchStatusList } = useDashboard();
+  const { fetchEmployees, totalEmployee, cardInfo } = useDashboard();
   const [initialLoading, setInitialLoading] = useState(true);
-  const [cardInfo, setCardInfo] = useState([
-    { title: "Total Employees", count: 1000, color: "text-black" },
-    { title: "Lates", count: 1000, color: "text-pink-500" },
-    { title: "Leave", count: 1000, color: "text-black" },
-    { title: "OT", count: 1000, color: "text-black" },
-  ]);
-
-  // const calculateInfo = () => {
-  //   const late =
-  //     statusList?.statusCounts?.length > 0
-  //       ? statusList.statusCounts[0]._count
-  //       : 0;
-
-  //   const leave =
-  //     statusList?.requestLeaveCounts?.length > 0
-  //       ? statusList.requestLeaveCounts[0]._count
-  //       : 0;
-
-  //   let updateInfo = cardInfo;
-
-  //   updateInfo.map((item) => {
-  //     if (item.title === "Total Employees") {
-  //       item.count += allUser.length;
-  //     }
-  //     if (item.title === "Lates") {
-  //       item.count += late;
-  //     }
-  //     if (item.title === "Leave") {
-  //       item.count += leave;
-  //     }
-  //     if (item.title === "OT") {
-  //       // item.count += late;
-  //     }
-  //   });
-
-  //   setCardInfo(updateInfo);
-  // };
 
   useEffect(() => {
-    fetchStatusList()
-      .then(() => {
-        calculateInfo();
-      })
-      .catch((error) => {
-        console.log("Error fetching data:", error);
-      })
-      .finally(() => {
-        setInitialLoading(false);
-      });
+    fetchEmployees();
+    setInitialLoading(false);
   }, []);
-
   return (
     <div className="m-5 gap-6 grid grid-cols-2 sm:grid-cols-4">
       {initialLoading ? (

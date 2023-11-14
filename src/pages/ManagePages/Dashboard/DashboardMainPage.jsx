@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
-import useUser from "../../../hooks/use-user";
 import DashboardItem from "./DashboardItem";
 import DashboardSelectBox from "../../../components/DashboardSelectBox";
-import DashboardPieChart from "../../../components/DashboardPieChart";
-import useDashboard from "../../../hooks/use-dashboard";
 import DashboardCard from "../../../components/DashboardCard";
-import useAuth from "../../../hooks/use-auth";
 import useManage from "../../../hooks/use-manage";
 
 export default function DashboardMainPage() {
@@ -16,25 +12,9 @@ export default function DashboardMainPage() {
     name: "",
     count: 100,
   });
-  const { allUser, getalluser } = useUser();
-  const { chartData, fetchChartData } = useDashboard();
 
   useEffect(() => {
-    getalluser().then(() => {
-      console.log("finish getalluser data");
-    });
-    fetchChartData()
-      .then(() => {
-        console.log("finish fetching data");
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        console.log("Finally");
-        console.log(allUser);
-        setInitialLoading(false);
-      });
+    setInitialLoading(false);
   }, []);
 
   const handleChangeDisplay = (name, count) => {
@@ -59,7 +39,7 @@ export default function DashboardMainPage() {
               </div>
               <DashboardSelectBox />
             </div>
-            <DashboardCard allUser={allUser} />
+            <DashboardCard />
             <br />
             <div className="flex flex-col md:flex-row sm:flex-row w-full justify-evenly items-start ">
               <div className=" bg-white shadow  border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
@@ -83,7 +63,7 @@ export default function DashboardMainPage() {
               <div className="bg-white shadow relative border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px] overflow-hidden">
                 <div className="font-semibold text-xl p-2">Employee Type</div>
                 <div className="flex justify-center mt-2 items-center h-[215px] w-[215px] mx-auto">
-                  <DashboardPieChart chartData={chartData} />
+                  {/* <DashboardPieChart chartData={chartData} /> */}
                 </div>
               </div>
             </div>

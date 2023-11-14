@@ -1,66 +1,50 @@
-import { useState, createContext, useEffect } from "react";
+import { createContext } from "react";
+import { useState } from "react";
 import { dashboardAxios } from "../config/axios";
 
 export const DashboardMainContext = createContext();
 
 export default function DashboardContextProvider({ children }) {
-  const [lateClockInsCount, setClockInsCount] = useState(0);
   const [statusList, setStatusList] = useState([]);
   const [chartData, setChartData] = useState([]);
-
-  const fetchLateClockInsCount = async () => {
-    try {
-      const response = await dashboardAxios.get("clock/statusClockIn");
-      setClockInsCount(response.data.lateClockInsCount);
-    } catch (error) {
-      console.error("Error fetching late clock-ins count:", error);
-      // Handle errors if needed
-    }
-  };
-
-  const fetchStatusList = async () => {
-    try {
-      const response = await dashboardAxios.get("clock/getAllStatus");
-      setStatusList(response.data);
-    } catch (error) {
-      console.log("Error fetching percentage of status:", error);
-    }
-  };
-
-  const fetchChartData = async () => {
-    try {
-      const response = await dashboardAxios.get("user/getPosition");
-      const data = response.data;
-      const restructuredData = Object.keys(data.userTypeTotals).map(
-        (label, id) => ({
-          id,
-          value: data.userTypeTotals[label],
-          label,
-        })
-      );
-      setChartData(restructuredData);
-    } catch (error) {
-      console.log("Error fetching chart data:", error);
-    }
-  };
-
-  // Fetch the late clock-ins count when the component mounts
-  useEffect(() => {
-    fetchLateClockInsCount();
-    fetchStatusList();
-    fetchChartData();
-  }, []);
+  const [cardInfo, setCardInfo] = useState([]);
 
   // Expose the state and the function to update it in the context
+  //Fetch Total Employee , full / part time
+  const fetchEmployees = async () => {
+    try {
+      const employeeInfo = await dashboardAxios.get("user/getPosition");
+      const clockInfo = await dashboardAxios.get("clock/statusClockIn");
+      const data = await dashboardAxios.get("clock/getAllStatus");
+      const { totalUserCount, userTypeTotals } = employeeInfo.data;
+      const { lateClockInsCount } = clockInfo.data;
+      const { requestLeaveCounts, statusCounts } = data.data;
+      setCardInfo([
+        {
+          title: "Total Employees",
+          count: totalUserCount,
+          color: "text-black",
+        },
+        { title: "Lates", count: lateClockInsCount, color: "text-pink-500" },
+        {
+          title: "Leave",
+          count: requestLeaveCounts.length,
+          color: "text-black",
+        },
+        { title: "OT", count: 10002000, color: "text-black" },
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const contextValue = {
-    lateClockInsCount,
-    fetchLateClockInsCount,
+    fetchEmployees,
     statusList,
     setStatusList,
-    fetchStatusList,
     chartData,
     setChartData,
-    fetchChartData,
+    cardInfo,
   };
 
   return (

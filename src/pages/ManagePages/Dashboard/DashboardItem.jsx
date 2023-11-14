@@ -15,7 +15,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
     countLate: 0,
   });
 
-  const { statusList, fetchStatusList } = useDashboard();
+  const { statusList } = useDashboard();
 
   const calculateStatus = async () => {
     console.log(statusList);
@@ -63,17 +63,7 @@ export default function DashboardItem({ handleChangeDisplay }) {
   };
 
   useEffect(() => {
-    fetchStatusList()
-      .then(() => {
-        calculateStatus();
-        console.log("calculate status!!!!!");
-      })
-      .catch((error) => {
-        console.log("Error fetching data:", error);
-      })
-      .finally(() => {
-        setInitialLoading(false);
-      });
+    setInitialLoading(false);
   }, []);
 
   return (
