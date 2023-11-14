@@ -1,14 +1,16 @@
-import { useState } from "react";
-import Modal from "../../../components/Modal";
+// import { useState } from "react";
+// import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
-import AddmployeeForm from "../Edit/AddEmployeeForm";
+// import AddmployeeForm from "../Edit/AddEmployeeForm";
 import { useEffect } from "react";
 import useUser from "../../../hooks/use-user";
 import * as XLSX from "xlsx";
+import Modal from "../../../components/Modal";
+import { useState } from "react";
 
 export default function ManageEmployees() {
   const { getalluser, allUser, loading } = useUser();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     getalluser()
