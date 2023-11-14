@@ -64,6 +64,7 @@ export default function LeaveInfo({ createRequestLeave }) {
         return setError(validationError);
       }
       setError({});
+      console.log(input)
       createRequestLeave(input);
       Swal.fire({
         title: "Leave request Sent!",
