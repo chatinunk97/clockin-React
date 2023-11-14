@@ -9,6 +9,7 @@ export default function TableLeaveRequest() {
   const { allRequestLeaves, loading } = useLeave();
 
   return (
+    <div className="flex flex-col justify-center gap-4 w-full px-5 py-2 ">
     <ManageTable
       columns={[
         { field: "firstName", flex: 1 },
@@ -40,5 +41,6 @@ export default function TableLeaveRequest() {
       loading={loading}
       height="700px"
     />
+    </div>
   );
 }
