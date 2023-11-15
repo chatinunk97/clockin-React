@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import useDashboard from "../hooks/use-dashboard";
 
-export default function DashboardCard({ allUser }) {
+export default function DashboardCard() {
   const { fetchEmployees, totalEmployee, cardInfo } = useDashboard();
   const [initialLoading, setInitialLoading] = useState(true);
 
