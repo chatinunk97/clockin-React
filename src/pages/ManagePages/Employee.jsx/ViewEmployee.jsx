@@ -17,9 +17,11 @@ import Modal from "../../../components/Modal";
 // import AddmployeeForm from "../Edit/AddEmployeeForm";
 import DetailsEmployee from "./DetailsEmployee";
 import { Button } from "@mui/material";
+import TableUserLeave from "./TableUserLeave";
 
 export default function ViewEmployee() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModalUserLeave, setIsOpenModalUserLeave] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
   const [employee, setEmployee] = useState({});
@@ -209,9 +211,15 @@ export default function ViewEmployee() {
             ) : null}
           </div>
           <div>
-            <Button variant="contained">User Leave</Button>
+            <Button
+              variant="contained"
+              onClick={() => setIsOpenModalUserLeave(true)}
+            >
+              User Leave
+            </Button>
           </div>
-          <Modal></Modal>
+
+          <TableUserLeave />
         </div>
       </div>
     </div>

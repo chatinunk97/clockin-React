@@ -66,7 +66,7 @@ export default function Route() {
           <MainLayout />
         </Authenticated>
       ),
-      errorElement: <Navigate to={'/'}/>,
+      errorElement: <Navigate to={"/"} />,
       children: [
         {
           path: "/clockin",
@@ -131,9 +131,11 @@ export default function Route() {
       path: "/manage",
       element: (
         <Authenticated pageType={"dashboard"}>
-          <DashboardMainContext>
-            <Layoutmanage />
-          </DashboardMainContext>
+          <LeaveContextProvider>
+            <DashboardMainContext>
+              <Layoutmanage />
+            </DashboardMainContext>
+          </LeaveContextProvider>
         </Authenticated>
       ),
       children: [
