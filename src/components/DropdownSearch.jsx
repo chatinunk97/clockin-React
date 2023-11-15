@@ -20,7 +20,7 @@ export default function DropdownSearch({
         onChange(selected, name);
       }}
       placeholder={placeholder}
-      className="w-full z-10"
+      className="w-full"
     />
   );
 }

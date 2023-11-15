@@ -16,23 +16,26 @@ export default function ProfileRecordMainPage() {
   }, []);
   return (
     <div>
-      <p>User number : {userId} Record </p>
+      {/* <p>User number : {userId} Record </p> */}
       <Calendar
         setSelectedDate={setSelectedDate}
         getAcceptedLeave={getAcceptedLeave}
         userId={userId}
       />
-      <p>{`Showing Leave info for date : ${selectedDate.toDateString()}`}</p>
-      {userLeaveList.map((el) => {
-        return (
-          <LeaveCard
-            key={el.id}
-            startDate={el.startDate}
-            endDate={el.endDate}
-            messageLeave={el.messageLeave}
-          />
-        );
-      })}
+      <div className="p-4">
+        <p className="text-lg font-bold text-green-700">{`Showing Leave info for : ${selectedDate.toDateString()}`}</p>
+        {userLeaveList.map((el) => {
+          return (
+            <div key={el.id} >
+              <LeaveCard
+                startDate={el.startDate}
+                endDate={el.endDate}
+                messageLeave={el.messageLeave}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
