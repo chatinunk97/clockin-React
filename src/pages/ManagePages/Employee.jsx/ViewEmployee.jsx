@@ -213,7 +213,7 @@ import Modal from "../../../components/Modal";
 import DetailsEmployee from "./DetailsEmployee";
 import SmallButton from "../../../components/SmallButton";
 
-const ViewEmployee = () => {
+export default function ViewEmployee() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -221,6 +221,7 @@ const ViewEmployee = () => {
   const [clock, setClock] = useState([]);
 
   const today = new Date();
+
   const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
   let filterParams = {
@@ -247,6 +248,25 @@ const ViewEmployee = () => {
       return 0;
     },
   };
+
+  useEffect(() => {
+    dashboardAxios
+      .get(`user/getUser/${userId}`)
+      .then((res) => {
+        setEmployee(res.data.user);
+
+        const ClockData = res.data.user.clock.map((clockitem) => ({
+          Date: formatDate(clockitem.clockInTime),
+          Clockin: formatTime(clockitem.clockInTime),
+          Clockout: formatTime(clockitem.clockOutTime),
+          Status: clockitem.statusClockIn,
+        }));
+        setClock(ClockData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -292,40 +312,6 @@ const ViewEmployee = () => {
       });
     }
   };
-
-  const handleFilterChanged = useCallback(() => {
-    const appliedFilters = gridApi.current.getFilterModel();
-
-    // Log the applied filters to inspect the structure
-    console.log("Applied Filters:", appliedFilters);
-
-    // Log data from the applied filters
-    console.log("Date from applied filter:", appliedFilters.Date.dateFrom);
-    console.log("Date to applied filter:", appliedFilters.Date.dateTo);
-
-    // Log clock data to check its structure and content
-    console.log("Clock Data:", clock);
-
-    // Perform additional logic to filter and log the data
-    const filteredData = clock.filter((item) => {
-      const itemDate = new Date(item.Date);
-      const filterStartDate = new Date(appliedFilters.Date.dateFrom);
-      const filterEndDate = appliedFilters.Date.dateTo
-        ? new Date(appliedFilters.Date.dateTo)
-        : null;
-
-      // Check if the date is within the specified range
-      if (filterEndDate) {
-        return itemDate >= filterStartDate && itemDate <= filterEndDate;
-      } else {
-        // If no end date, consider only the start date
-        return itemDate >= filterStartDate;
-      }
-    });
-
-    // Log the filtered data to check its content
-    console.log("Filtered Data:", filteredData);
-  }, [clock]);
 
   const [columnDefs] = useState([
     {
@@ -378,25 +364,6 @@ const ViewEmployee = () => {
     }
   }, []);
 
-  useEffect(() => {
-    dashboardAxios
-      .get(`user/getUser/${userId}`)
-      .then((res) => {
-        setEmployee(res.data.user);
-
-        const ClockData = res.data.user.clock.map((clockitem) => ({
-          Date: formatDate(clockitem.clockInTime),
-          Clockin: formatTime(clockitem.clockInTime),
-          Clockout: formatTime(clockitem.clockOutTime),
-          Status: clockitem.statusClockIn,
-        }));
-        setClock(ClockData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userId]);
-
   return (
     <div className="flex w-full justify-center items-center h-screen bg-slate-100 ">
       <div className="flex w-[500px] md:w-full justify-center md:gap-20 items-center flex-col md:flex-row gap-10">
@@ -425,7 +392,6 @@ const ViewEmployee = () => {
             sortingOrder={sortingOrder}
             onGridReady={onGridReady}
             suppressMenuHide={true}
-            onFilterChanged={handleFilterChanged} // Add the filter change event
           ></AgGridReact>
           <Modal title="Details" open={isOpen} onClose={() => setIsOpen(false)}>
             <DetailsEmployee />
@@ -441,6 +407,4 @@ const ViewEmployee = () => {
       </div>
     </div>
   );
-};
-
-export default ViewEmployee;
+}

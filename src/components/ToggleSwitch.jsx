@@ -14,7 +14,7 @@ const ToggleSwitch = ({ checked, setChecked, setReasonLocation }) => {
         confirmButtonText: "OK",
         cancelButtonText: "Cancel",
       }).then((res) => {
-        if (res.isConfirmed) {
+        if (res.isConfirmed && res.value !== "") {
           setReasonLocation(res.value);
           setChecked((prev) => !prev);
         } else {
