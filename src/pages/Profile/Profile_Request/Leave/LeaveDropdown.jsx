@@ -5,7 +5,7 @@ export default function LeaveDropdown({ onChange, name }) {
 
   return (
     <select
-      className="w-96 h-[36px] rounded-[4px] px-2 border-zinc-300"
+      className="w-full h-[36px] rounded-[4px] px-2 border border-zinc-300"
       onChange={onChange}
       name={name}
       id="leave"

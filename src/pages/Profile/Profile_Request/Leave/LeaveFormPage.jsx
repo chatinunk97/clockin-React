@@ -4,7 +4,7 @@ import useLeave from "../../../../hooks/use-leave";
 import { useEffect } from "react";
 
 export default function LeaveFormPage() {
-  const { userLeave, getUserLeaveByUserId , createRequestLeave } = useLeave();
+  const { userLeave, getUserLeaveByUserId, createRequestLeave } = useLeave();
 
   useEffect(() => {
     getUserLeaveByUserId();
@@ -21,10 +21,10 @@ export default function LeaveFormPage() {
           />
         ))}
       </div>
-      <div className="  flex flex-col justify-center items-center w-full h-full">
+      <div className="  flex flex-col justify-center items-center w-full h-full  p-6">
         <LeaveInfo createRequestLeave={createRequestLeave} />
       </div>
- 
+
     </div>
   );
 }

@@ -81,6 +81,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
       const formData = new FormData();
       formData.append("profileImage", input.profileImage);
       formData.append("data", JSON.stringify(input));
+      console.log(formData.get('data'))
       if (validationError) {
         return setError(validationError);
       }
@@ -89,7 +90,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
       await addemployee(formData);
       onClose();
     } catch (err) {
-      console.error(err);  // Fixed to log the correct error variable
+      console.error(err);
     } finally {
       setLoading(false);
     }

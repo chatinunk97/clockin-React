@@ -22,7 +22,7 @@ import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage"
 import Layoutmanage from "../pages/ManagePages/Dashboard/Layoutmanage";
 import ManageEmployees from "../pages/ManagePages/Dashboard/ManageEmployees";
 import ManageLeaveRequest from "../pages/ManagePages/Leave/ManageLeaveRequest";
-import ManageOTRequest from "../pages/ManagePages/Dashboard/ManageOTRequest";
+import ManageOTRequest from "../pages/ManagePages/OT/ManageOTRequest";
 import ViewEmployee from "../pages/ManagePages/Employee.jsx/ViewEmployee";
 import ClockContextProvider from "../contexts/ClockContext";
 import LeaveContextProvider from "../contexts/LeaveContext";
@@ -66,7 +66,7 @@ export default function Route() {
           <MainLayout />
         </Authenticated>
       ),
-      errorElement: <Navigate to={'/'}/>,
+      errorElement: <Navigate to={"/"} />,
       children: [
         {
           path: "/clockin",
@@ -78,7 +78,11 @@ export default function Route() {
         },
         {
           path: "/profile",
-          element: <ProfileMainPage />,
+          element: (
+            <LeaveContextProvider>
+              <ProfileMainPage />
+            </LeaveContextProvider>
+          ),
           children: [
             { path: "/profile/:userId", element: <PersonalProfilePage /> },
             {
@@ -131,9 +135,11 @@ export default function Route() {
       path: "/manage",
       element: (
         <Authenticated pageType={"dashboard"}>
-          <DashboardMainContext>
-            <Layoutmanage />
-          </DashboardMainContext>
+          <LeaveContextProvider>
+            <DashboardMainContext>
+              <Layoutmanage />
+            </DashboardMainContext>
+          </LeaveContextProvider>
         </Authenticated>
       ),
       children: [
@@ -181,7 +187,14 @@ export default function Route() {
             </LeaveContextProvider>
           ),
         },
-        { path: "/manage/ot-Request", element: <ManageOTRequest /> },
+        {
+          path: "/manage/ot-request",
+          element: (
+            <OTContextProvider>
+              <ManageOTRequest />
+            </OTContextProvider>
+          ),
+        },
         { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],
     },

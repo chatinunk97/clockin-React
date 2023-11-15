@@ -10,6 +10,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
+  const [userLeaveList, setUserLeaveList] = useState([]);
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
   const [myrequestLeave, setMyrequestLeave] = useState([]);
@@ -97,6 +98,17 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const getAcceptedLeave = async (id, date) => {
+    try {
+      const result = await clockAxios.get(
+        `/leave/getConfirmLeaveById?userId=${id}&date=${date}`
+      );
+      setUserLeaveList(result.data.leaveResult);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteLeaveProfile = async (id) => {
     try {
       const res = await dashboardAxios.delete(`leave/deleteLeaveProfile/${id}`);
@@ -132,11 +144,100 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const createUserLeave = async (data) => {
+    try {
+      const res = await dashboardAxios.post("/leave/createUserLeave", data);
+
+      const userLeaveData = res.data.userLeave;
+
+      setUserLeave((prev) => {
+        console.log(prev);
+        return [...prev, userLeaveData];
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Create User Leave success!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
+  const updateUserLeave = async (updatedUserLeave) => {
+    try {
+      const res = await dashboardAxios.patch(
+        `leave/updateUserLeave/${updatedUserLeave.id}`,
+        updatedUserLeave
+      );
+      console.log(res.data);
+      const newUserLeave = [...userLeave];
+      const foundIdx = newUserLeave.findIndex(
+        (item) => item.id === res.data.userLeave.id
+      );
+      newUserLeave.splice(foundIdx, 1, res.data.userLeave);
+      setUserLeave(newUserLeave);
+
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Edit User Leave success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
+    }
+  };
+
+  const deleteUserLeave = async (id) => {
+    try {
+      const res = await dashboardAxios.delete(`/leave/deleteUserLeave/${id}`);
+      if (res.status === 200) {
+        setUserLeave((prev) => prev.filter((el) => el.id !== id));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete User Leave success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
   const createRequestLeave = async (data) => {
     try {
       const newData = { ...data };
-      newData.startDate = dayjs(data.startDat).format("YYYY-DD-MM");
-      newData.endDate = dayjs(data.endDate).format("YYYY-DD-MM");
+      newData.startDate = dayjs(data.startDat).format("YYYY-MM-DD");
+      newData.endDate = dayjs(data.endDate).format("YYYY-MM-DD");
       const res = await clockAxios.post("/leave/createRequestLeave", newData);
       setRequestLeave(res.data.requestLeave);
     } catch (error) {
@@ -153,6 +254,7 @@ export default function LeaveContextProvider({ children }) {
       console.log(err);
     }
   };
+
   const getAllRequestLeaves = async () => {
     setLoading(true);
     await dashboardAxios
@@ -219,6 +321,9 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfiles,
         getUserLeaveByUserId,
         userLeave,
+        deleteUserLeave,
+        createUserLeave,
+        updateUserLeave,
         createRequestLeave,
         getAllRequestLeaves,
         updateRequestLeave,
@@ -226,6 +331,8 @@ export default function LeaveContextProvider({ children }) {
         getRequestLeaveId,
         myrequestLeave,
         allRequestLeaves,
+        getAcceptedLeave,
+        userLeaveList,
       }}
     >
       {children}
