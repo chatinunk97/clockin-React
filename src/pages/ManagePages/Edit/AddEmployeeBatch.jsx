@@ -3,10 +3,12 @@ import * as XLSX from "xlsx";
 import AddEmployeeBatchCard from "./AddEmployeeBatchCard";
 import SubmitButton from "../../../components/SubmitButton";
 import useUser from "../../../hooks/use-user";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function AddEmployeeBatch() {
   const { addemployee } = useUser();
   const [excelValues, setExcelValues] = useState(null);
+  const [isAdding, setIsAdding] = useState(true);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
 
@@ -44,7 +46,7 @@ export default function AddEmployeeBatch() {
     if (excelValues) {
       const formData = new FormData();
       formData.append("data", JSON.stringify(excelValues[0]));
-      addemployee(formData)
+      addemployee(formData);
       for (const record of excelValues) {
         console.log(record);
       }
@@ -64,8 +66,11 @@ export default function AddEmployeeBatch() {
           return <AddEmployeeBatchCard data={el} />;
         })}
       </div>
-      <SubmitButton onClick={handleSubmitClick}>
-        Start Batch Import
+      <SubmitButton
+        onClick={handleSubmitClick}
+        disabled={isAdding ? true : false}
+      >
+        <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
       </SubmitButton>
     </div>
   );
