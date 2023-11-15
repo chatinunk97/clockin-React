@@ -30,17 +30,17 @@ export default function ManageEmployees() {
         <div className="flex justify-center items-center p-6"></div>
       </div>
       <div className="w-full p-5">
-        <TableEmployee allUser={allUser} loading={loading} />
+        <TableEmployee allUser={allUser} loading={loading} />{" "}
+        <button
+          className="p-4 px-2 bg-red-500 rounded-md"
+          onClick={handleBatchImportClick}
+        >
+          Test batch import
+        </button>
         <Modal title="Add User" open={isOpen} onClose={() => setIsOpen(false)}>
           <AddEmployeeBatch />
         </Modal>
       </div>
-      <button
-        className="p-4 px-2 bg-red-500 rounded-md"
-        onClick={handleBatchImportClick}
-      >
-        Test batch import
-      </button>
     </div>
   );
 }

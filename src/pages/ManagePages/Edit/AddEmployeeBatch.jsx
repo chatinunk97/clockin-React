@@ -8,7 +8,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 export default function AddEmployeeBatch() {
   const { addemployee } = useUser();
   const [excelValues, setExcelValues] = useState(null);
-  const [isAdding, setIsAdding] = useState(true);
+  const [valueMap , setValueMap] = useState(null)
+  const [isAdding, setIsAdding] = useState(false);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
 
@@ -35,22 +36,23 @@ export default function AddEmployeeBatch() {
         );
 
         setExcelValues(resultWithoutRowNum);
+        setValueMap(resultWithoutRowNum)
       };
 
       reader.readAsBinaryString(file);
     }
   };
   const handleSubmitClick = async () => {
-    console.log("Submitted Excel Values:", excelValues);
-
+    setIsAdding(true);
     if (excelValues) {
-      const formData = new FormData();
-      formData.append("data", JSON.stringify(excelValues[0]));
-      addemployee(formData);
       for (const record of excelValues) {
-        console.log(record);
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(record));
+        const result = await addemployee(formData);
+        console.log(result);
       }
     }
+    setIsAdding(false);
   };
 
   return (
@@ -62,15 +64,19 @@ export default function AddEmployeeBatch() {
       <hr></hr>
       <div className="bg-blue-500 p-5 flex flex-col gap-3">
         Map some shit here
-        {excelValues?.map((el) => {
-          return <AddEmployeeBatchCard data={el} />;
+        {valueMap?.map((el) => {
+          return <AddEmployeeBatchCard data={el} key={el.employeeId} loading={el.loading} />;
         })}
       </div>
       <SubmitButton
         onClick={handleSubmitClick}
         disabled={isAdding ? true : false}
       >
-        <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+        {isAdding ? (
+          <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+        ) : (
+          <p>Begin Batch Import</p>
+        )}
       </SubmitButton>
     </div>
   );
