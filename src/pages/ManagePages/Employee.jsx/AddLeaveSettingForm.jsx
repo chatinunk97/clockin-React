@@ -1,34 +1,48 @@
 import { useState } from "react";
 import useLeave from "../../../hooks/use-leave";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
-import LinearIndeterminate from "../../../components/LoadingBar";
 import IconLabelButtons from "../../../components/SendButton";
+import { useEffect } from "react";
+import DropdownSearch from "../../../components/DropdownSearch";
 
-export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
-  const { updateUserLeave } = useLeave();
-  const [loading, setLoading] = useState(false);
+export default function AddUserLeaveForm({ userId, onClose }) {
   const [input, setInput] = useState({
-    id: userLeaveById.id,
-    leaveName: userLeaveById.leaveName,
-    dateAmount: userLeaveById.dateAmount,
+    leaveProfileId: "",
+    dateAmount: "",
   });
+  const [leaveProfile, setLeaveProfiles] = useState([]);
 
+  const { createUserLeave, getAllLeaveProfile } = useLeave();
+
+  const leaveProfileData = leaveProfile.map((obj) => ({
+    label: obj.leaveName,
+    value: obj.id,
+  }));
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const handleChangeDropdown = (data, name) => {
+    console.log(data);
+    setInput({ ...input, [name]: data.value });
   };
 
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
       input.userId = userId;
-      await updateUserLeave(input);
+      await createUserLeave(input);
       onClose();
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getAllLeaveProfile().then((res) => {
+      console.log(res.data.allLeaveProfile);
+      setLeaveProfiles(res.data.allLeaveProfile);
+    });
+  }, []);
 
   return (
     <>
@@ -38,17 +52,17 @@ export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
       >
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Leave Name</h1>
-          <RegisterInput
-            placeholder="Leave Name"
-            value={input.leaveName}
-            onChange={handleChangeInput}
-            name="leaveName"
+          <DropdownSearch
+            data={leaveProfileData}
+            onChange={handleChangeDropdown}
+            value={input.leaveProfileId}
+            name={"leaveProfileId"}
           />
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Leave Amount (days)</h1>
           <RegisterInput
-            placeholder="Date Amount (days)"
+            placeholder="Enter number of leave days"
             value={input.dateAmount}
             onChange={handleChangeInput}
             name="dateAmount"
@@ -60,7 +74,6 @@ export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
           </label>
         </div>
       </form>
-      {loading && <LinearIndeterminate />}
     </>
   );
 }
