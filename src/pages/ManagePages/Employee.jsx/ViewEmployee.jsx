@@ -1,31 +1,26 @@
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useState } from "react";
-import { useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import DeleteButtons from "../../../components/DeleteButton";
-import { useEffect } from "react";
 import { dashboardAxios } from "../../../config/axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { useRef } from "react";
-import { useCallback } from "react";
 import SmallButton from "../../../components/SmallButton";
 import Modal from "../../../components/Modal";
-// import AddmployeeForm from "../Edit/AddEmployeeForm";
 import DetailsEmployee from "./DetailsEmployee";
 import { Button } from "@mui/material";
 import TableUserLeave from "./TableUserLeave";
 
 export default function ViewEmployee() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenModalUserLeave, setIsOpenModalUserLeave] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
   const [employee, setEmployee] = useState({});
   const [clock, setClock] = useState([]);
+  const [selectedRowData, setSelectedRowData] = useState("");
 
   const today = new Date();
 
@@ -63,10 +58,12 @@ export default function ViewEmployee() {
         setEmployee(res.data.user);
 
         const ClockData = res.data.user.clock.map((clockitem) => ({
-          Date: formatDate(clockitem.clockInTime),
-          Clockin: formatTime(clockitem.clockInTime),
-          Clockout: formatTime(clockitem.clockOutTime),
-          Status: clockitem.statusClockIn,
+          Date: formatDate(clockitem?.clockInTime),
+          Clockin: formatTime(clockitem?.clockInTime),
+          Clockout: formatTime(clockitem?.clockOutTime),
+          Status: clockitem?.statusClockIn,
+          ReasonLate: clockitem?.reasonLate,
+          ReasonLocation: clockitem?.reasonLocation,
         }));
         setClock(ClockData);
       })
@@ -144,6 +141,8 @@ export default function ViewEmployee() {
               buttonName="View"
               onClick={() => {
                 setIsOpen(true);
+                setSelectedRowData(params.data);
+                console.log(params.data);
               }}
             />
           </div>
@@ -201,7 +200,7 @@ export default function ViewEmployee() {
             suppressMenuHide={true}
           ></AgGridReact>
           <Modal title="Details" open={isOpen} onClose={() => setIsOpen(false)}>
-            <DetailsEmployee />
+            <DetailsEmployee selectedRowData={selectedRowData} />
           </Modal>
           <div className=" items-end justify-end flex pt-6">
             {employee.isActive ? (
@@ -211,12 +210,7 @@ export default function ViewEmployee() {
             ) : null}
           </div>
           <div>
-            <Button
-              variant="contained"
-              onClick={() => setIsOpenModalUserLeave(true)}
-            >
-              User Leave
-            </Button>
+            <Button variant="contained">User Leave</Button>
           </div>
 
           <TableUserLeave />
