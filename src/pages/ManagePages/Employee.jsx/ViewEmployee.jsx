@@ -8,9 +8,11 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import SmallButton from "../../../components/SmallButton";
 import Modal from "../../../components/Modal";
 import DetailsEmployee from "./DetailsEmployee";
-import SmallButton from "../../../components/SmallButton";
+import { Button } from "@mui/material";
+import TableUserLeave from "./TableUserLeave";
 
 export default function ViewEmployee() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +20,7 @@ export default function ViewEmployee() {
   const { userId } = useParams();
   const [employee, setEmployee] = useState({});
   const [clock, setClock] = useState([]);
-  const [selectedRowData, setSelectedRowData] = useState('')
+  const [selectedRowData, setSelectedRowData] = useState("");
 
   const today = new Date();
 
@@ -56,12 +58,12 @@ export default function ViewEmployee() {
         setEmployee(res.data.user);
 
         const ClockData = res.data.user.clock.map((clockitem) => ({
-          Date: formatDate(clockitem.clockInTime),
-          Clockin: formatTime(clockitem.clockInTime),
-          Clockout: formatTime(clockitem.clockOutTime),
-          Status: clockitem.statusClockIn,
-          ReasonLate: clockitem.reasonLate,
-          ReasonLocation: clockitem.reasonLocation
+          Date: formatDate(clockitem?.clockInTime),
+          Clockin: formatTime(clockitem?.clockInTime),
+          Clockout: formatTime(clockitem?.clockOutTime),
+          Status: clockitem?.statusClockIn,
+          ReasonLate: clockitem?.reasonLate,
+          ReasonLocation: clockitem?.reasonLocation,
         }));
         setClock(ClockData);
       })
@@ -140,7 +142,7 @@ export default function ViewEmployee() {
               onClick={() => {
                 setIsOpen(true);
                 setSelectedRowData(params.data);
-                console.log(params.data)
+                console.log(params.data);
               }}
             />
           </div>
@@ -167,9 +169,7 @@ export default function ViewEmployee() {
       gridApi.current = params.api;
     }
   }, []);
-  useEffect(() => {
-    console.log(selectedRowData);
-  }, [selectedRowData]);
+
   return (
     <div className="flex w-full justify-center items-center h-screen bg-slate-100 ">
       <div className="flex w-[500px] md:w-full justify-center md:gap-20 items-center flex-col md:flex-row gap-10">
@@ -209,6 +209,11 @@ export default function ViewEmployee() {
               </div>
             ) : null}
           </div>
+          <div>
+            <Button variant="contained">User Leave</Button>
+          </div>
+
+          <TableUserLeave />
         </div>
       </div>
     </div>

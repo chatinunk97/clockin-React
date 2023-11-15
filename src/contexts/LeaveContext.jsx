@@ -144,6 +144,32 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
+  const deleteUserLeave = async (id) => {
+    try {
+      console.log(id);
+      const res = await dashboardAxios.delete(`/leave/deleteUserLeave/${id}`);
+      if (res.status === 200) {
+        setUserLeave((prev) => prev.filter((el) => el.id !== id));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete Leave Profile success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
   const createRequestLeave = async (data) => {
     try {
       const newData = { ...data };
@@ -232,6 +258,7 @@ export default function LeaveContextProvider({ children }) {
         setLeaveProfiles,
         getUserLeaveByUserId,
         userLeave,
+        deleteUserLeave,
         createRequestLeave,
         getAllRequestLeaves,
         updateRequestLeave,
