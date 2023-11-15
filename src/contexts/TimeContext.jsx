@@ -9,6 +9,8 @@ export default function TimeContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [allTimeProfiles, setAllTimeProfiles] = useState();
   const [timeProfileById, setTimeProfileById] = useState({});
+  const [allFlexibleTime, setAllFlexibleTime] = useState();
+  const [flexibleTimeById, setFlexibleTimeById] = useState({});
 
   const createTimeProfile = async (newAddedTimeProfile) => {
     try {
@@ -116,6 +118,56 @@ export default function TimeContextProvider({ children }) {
       console.log(err);
     }
   };
+
+  const getFlexibleByUserId = async (id) => {
+    try {
+      const res = await dashboardAxios.get(`/flexible/getFlexible/${id}`);
+      setFlexibleTimeById(res.data.flexible);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  const updateFlexible = async (updatedFlexibleTime) => {
+    try {
+      console.log(updatedFlexibleTime);
+      const res = await dashboardAxios.patch(
+        `flexible/updateTimeProfile/${updateFlexible.id}`,
+        updatedFlexibleTime
+      );
+      setFlexibleTimeById({
+        ...flexibleTimeById,
+        ...res.data.updatedFlexibleTime,
+      });
+
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Edit Flexible Time success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      getFlexibleByUserId()
+        .then((res) => {
+          setAllFlexibleTime(res.data.flexible);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <TimeContext.Provider
       value={{
@@ -129,6 +181,12 @@ export default function TimeContextProvider({ children }) {
         setTimeProfileById,
         deleteTimeProfile,
         createTimeProfile,
+        getFlexibleByUserId,
+        flexibleTimeById,
+        setFlexibleTimeById,
+        allFlexibleTime,
+        setAllFlexibleTime,
+        updateFlexible,
       }}
     >
       {children}

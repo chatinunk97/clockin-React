@@ -13,6 +13,7 @@ import Modal from "../../../components/Modal";
 import DetailsEmployee from "./DetailsEmployee";
 import { Button } from "@mui/material";
 import TableUserLeave from "./TableUserLeave";
+import TableFlexibleTime from "./TableFlexibleTime";
 
 export default function ViewEmployee() {
   const [isOpen, setIsOpen] = useState(false);
@@ -214,6 +215,7 @@ export default function ViewEmployee() {
           </div>
 
           <TableUserLeave />
+          <TableFlexibleTime />
         </div>
       </div>
     </div>
