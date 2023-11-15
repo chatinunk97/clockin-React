@@ -11,6 +11,7 @@ export default function UserContextProvider({ children }) {
 
   const addemployee = async (credential) => {
     try {
+      console.log(credential)
       const response = await dashboardAxios.post(
         "/user/createUser",
         credential
