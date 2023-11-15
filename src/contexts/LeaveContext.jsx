@@ -10,7 +10,7 @@ export default function LeaveContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [leaveProfiles, setLeaveProfiles] = useState([]);
   const [leaveProfileById, setLeaveProfileById] = useState({});
-  const [ userLeaveList , setUserLeaveList] = useState([])
+  const [userLeaveList, setUserLeaveList] = useState([]);
   const [userLeave, setUserLeave] = useState([]);
   const [requestLeave, setRequestLeave] = useState([]);
   const [myrequestLeave, setMyrequestLeave] = useState([]);
@@ -55,7 +55,7 @@ export default function LeaveContextProvider({ children }) {
   };
 
   const getAllLeaveProfile = async () =>
-    await dashboardAxios.get("/leave/getConfirmLeaveById");
+    await dashboardAxios.get("/leave/getAllLeaveProfile");
 
   const updateLeaveProfile = async (updatedLeaveProfile) => {
     try {
@@ -98,10 +98,12 @@ export default function LeaveContextProvider({ children }) {
     }
   };
 
-  const getAcceptedLeave = async (id,date) => {
+  const getAcceptedLeave = async (id, date) => {
     try {
-      const result = await clockAxios.get(`/leave/getConfirmLeaveById?userId=${id}&date=${date}`);
-      setUserLeaveList(result.data.leaveResult)
+      const result = await clockAxios.get(
+        `/leave/getConfirmLeaveById?userId=${id}&date=${date}`
+      );
+      setUserLeaveList(result.data.leaveResult);
     } catch (error) {
       console.log(error);
     }
@@ -238,7 +240,7 @@ export default function LeaveContextProvider({ children }) {
         myrequestLeave,
         allRequestLeaves,
         getAcceptedLeave,
-        userLeaveList
+        userLeaveList,
       }}
     >
       {children}
