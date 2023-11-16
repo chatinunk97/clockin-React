@@ -39,8 +39,8 @@ export default function TableUserLeave({ userId }) {
       </div>
       <ManageTable
         columns={[
-          { field: "leaveName", flex: 1 },
-          { field: "dateAmount", flex: 1 },
+          { field: "leaveName", },
+          { field: "dateAmount", },
           {
             field: "actionButtons",
             headerName: "",
@@ -66,7 +66,10 @@ export default function TableUserLeave({ userId }) {
                 </div>
               </div>
             ),
+            minWidth: 180,
+            resizable: true,
           },
+
         ]}
         allData={newUserLeave}
         loading={loading}

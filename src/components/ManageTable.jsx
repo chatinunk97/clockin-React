@@ -83,7 +83,7 @@ export default function ManageTable({
   }, []);
 
   return (
-    <div className="border border-gray-500 p-5 overflow-auto">
+    <div className="shadow-xl rounded-lg border p-5 overflow-auto">
       <div className="overflow-y-auto">
         <div
           className="ag-theme-alpine"

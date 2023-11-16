@@ -13,19 +13,19 @@ export default function TableOTRequest() {
           {
             field: "firstName",
             headerName: "First Name",
-            flex: 1,
+
             filter: true,
           },
           {
             field: "lastName",
             headerName: "Last Name",
-            flex: 1,
+
             filter: true,
           },
-          { field: "startTime", headerName: "Start Time", flex: 1, filter: true },
-          { field: "endTime", headerName: "End Time", flex: 1, filter: true },
-          { field: "statusOT", headerName: "Status OT", flex: 1, filter: true },
-          { field: "messageOT", headerName: "Message OT", flex: 1, filter: true },
+          { field: "startTime", headerName: "Start Time", filter: true },
+          { field: "endTime", headerName: "End Time", filter: true },
+          { field: "statusOT", headerName: "Status OT", filter: true },
+          { field: "messageOT", headerName: "Message OT", filter: true },
           {
             field: "actionButtons",
             headerName: "",
@@ -45,7 +45,7 @@ export default function TableOTRequest() {
                 </div>
               </div>
             ),
-            flex: 1,
+            minWidth: 180,
             resizable: true,
           },
         ]}
