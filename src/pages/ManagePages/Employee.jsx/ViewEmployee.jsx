@@ -29,7 +29,7 @@ export default function ViewEmployee() {
       .get(`user/getUser/${userId}`)
       .then((res) => {
         setEmployee(res.data.user);
-
+        console.log(res.data);
         const ClockData = res.data.user.clock.map((clockitem) => ({
           Date: formatDate(clockitem?.clockInTime),
           Clockin: formatTime(clockitem?.clockInTime),
@@ -37,6 +37,10 @@ export default function ViewEmployee() {
           Status: clockitem?.statusClockIn,
           ReasonLate: clockitem?.reasonLate,
           ReasonLocation: clockitem?.reasonLocation,
+          latitudeClockIn: clockitem?.latitudeClockIn,
+          longitudeClockIn: clockitem?.longitudeClockIn,
+          latitudeClockOut: clockitem?.latitudeClockOut,
+          longitudeClockOut: clockitem?.longitudeClockOut,
         }));
         setClock(ClockData);
       })
