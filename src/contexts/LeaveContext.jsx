@@ -46,7 +46,7 @@ export default function LeaveContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
+        title: err.response.data.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -90,7 +90,7 @@ export default function LeaveContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
+        title: error.response.data.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -166,7 +166,7 @@ export default function LeaveContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
+        title: error.response.data.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -200,7 +200,7 @@ export default function LeaveContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
+        title: error.response.data.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -226,7 +226,7 @@ export default function LeaveContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
+        title: error.response.data.message,
         showConfirmButton: false,
         timer: 1500,
       });

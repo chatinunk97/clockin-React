@@ -10,7 +10,7 @@ export default function SubmitButton({
 }) {
   return (
     <button
-      className={`${bg} text-white ${p} ${w} rounded-3xl ${className} ${textSize} flex justify-center items-center`}
+      className={`${bg} text-white ${p} ${w} rounded-3xl ${className} ${textSize}`}
       onClick={onClick}
       disabled={disabled}
     >

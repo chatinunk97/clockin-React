@@ -24,9 +24,9 @@ export default function AccountMenu() {
     { id: 2, to: "/manage/employees", Icon: BsPersonFill, text: "Employees" },
     {
       id: 3,
-      to: "/manage/leave-setting",
+      to: "/manage/profile-setting",
       Icon: BsCalendarEvent,
-      text: "Leave Setting",
+      text: "Profile Setting",
     },
     {
       id: 4,

@@ -9,8 +9,14 @@ export default function ProfileLeaveMainPage() {
           to="/leave/leaveform"
           name="Leave Form"
           link={"leaveform"}
+          type={"leave"}
         />
-        <RequestMenu to="/leave/myleave" name="My Leave" link={"myleave"} />
+        <RequestMenu
+          to="/leave/myleave"
+          name="My Leave"
+          link={"myleave"}
+          type={"leave"}
+        />
       </div>
       <Outlet />
     </div>

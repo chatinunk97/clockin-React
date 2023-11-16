@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-export default function RequestMenu({ to, name, link }) {
-  const matchPath = useLocation().pathname.split("/leave/")[1] === link;
+export default function RequestMenu({ to, name, link, type }) {
+  const matchPath = useLocation().pathname.split(`/${type}/`)[1] === link;
   return (
     <Link
       to={to}
