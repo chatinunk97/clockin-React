@@ -6,11 +6,13 @@ export default function SubmitButton({
   textSize = "",
   className,
   onClick,
+  disabled = false,
 }) {
   return (
     <button
       className={`${bg} text-white ${p} ${w} rounded-3xl ${className} ${textSize}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
