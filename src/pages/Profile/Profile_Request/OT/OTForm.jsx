@@ -19,6 +19,7 @@ const createOTSchema = Joi.object({
   endTime: Joi.string().required(),
   messageOT: Joi.string().required(),
   clockId: Joi.number().integer().positive().required(),
+  totalTime: Joi.number().integer().positive().required(),
 });
 
 const validateCreateOT = (input) => {
@@ -47,6 +48,7 @@ export default function OTform() {
     messageOT: "",
   });
   const [timeDif, setTimeDif] = useState(0);
+  console.log(timeDif);
 
   useEffect(() => {
     if (input.startTime && input.endTime) {
@@ -86,6 +88,7 @@ export default function OTform() {
   const handleOTSubmit = (e) => {
     e.preventDefault();
     console.log(input);
+    input.totalTime = timeDif;
     const validationError = validateCreateOT(input);
     if (validationError) {
       return setError(validationError);
@@ -101,7 +104,7 @@ export default function OTform() {
 
   return (
     <form
-      className="flex flex-col items-center w-full gap-4 h-[90%] px-6"
+      className="h-[90%] p-4 flex flex-col items-center w-full gap-5 "
       onSubmit={handleOTSubmit}
     >
       <div className="h-[70%] w-full flex flex-col items-start justify-center gap-4 border-b border-gray-400">
