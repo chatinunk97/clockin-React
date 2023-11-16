@@ -6,6 +6,7 @@ export default function DropdownSearch({
   name,
   value,
   placeholder,
+  defaultValue,
 }) {
   /* 
   data pattern is  an array with object structure like this
@@ -20,6 +21,7 @@ export default function DropdownSearch({
         onChange(selected, name);
       }}
       placeholder={placeholder}
+      defaultValue={defaultValue}
       className="w-full"
     />
   );

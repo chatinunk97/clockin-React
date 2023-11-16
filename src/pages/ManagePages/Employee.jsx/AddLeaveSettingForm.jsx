@@ -4,6 +4,28 @@ import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import IconLabelButtons from "../../../components/SendButton";
 import { useEffect } from "react";
 import DropdownSearch from "../../../components/DropdownSearch";
+import Joi from "joi";
+import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
+
+const createUserLeaveSchema = Joi.object({
+  userId: Joi.number().integer().positive().required(),
+  leaveProfileId: Joi.number().integer().positive().required(),
+  dateAmount: Joi.number().integer().positive().required().allow(0),
+});
+
+const validateCreateUserLeave = (input) => {
+  const { error } = createUserLeaveSchema.validate(input, {
+    abortEarly: false,
+  });
+  if (error) {
+    const result = error.details.reduce((acc, el) => {
+      const { message, path } = el;
+      acc[path[0]] = message;
+      return acc;
+    }, {});
+    return result;
+  }
+};
 
 export default function AddUserLeaveForm({ userId, onClose }) {
   const [input, setInput] = useState({
@@ -11,6 +33,7 @@ export default function AddUserLeaveForm({ userId, onClose }) {
     dateAmount: "",
   });
   const [leaveProfile, setLeaveProfiles] = useState([]);
+  const [error, setError] = useState({});
 
   const { createUserLeave, getAllLeaveProfile } = useLeave();
 
@@ -22,14 +45,19 @@ export default function AddUserLeaveForm({ userId, onClose }) {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleChangeDropdown = (data, name) => {
-    console.log(data);
     setInput({ ...input, [name]: data.value });
   };
 
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
+
       input.userId = userId;
+      const validationError = validateCreateUserLeave(input);
+      if (validationError) {
+        return setError(validationError);
+      }
+      setError({});
       await createUserLeave(input);
       onClose();
     } catch (err) {
@@ -39,7 +67,6 @@ export default function AddUserLeaveForm({ userId, onClose }) {
 
   useEffect(() => {
     getAllLeaveProfile().then((res) => {
-      console.log(res.data.allLeaveProfile);
       setLeaveProfiles(res.data.allLeaveProfile);
     });
   }, []);
@@ -58,6 +85,9 @@ export default function AddUserLeaveForm({ userId, onClose }) {
             value={input.leaveProfileId}
             name={"leaveProfileId"}
           />
+          {error.leaveProfileId && (
+            <InputErrorMessage message={"Please select a leave"} />
+          )}
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Leave Amount (days)</h1>
@@ -67,6 +97,9 @@ export default function AddUserLeaveForm({ userId, onClose }) {
             onChange={handleChangeInput}
             name="dateAmount"
           />
+          {error.dateAmount && (
+            <InputErrorMessage message={"Please enter date amount"} />
+          )}
         </div>
         <div className="mx-auto col-span-full mt-6">
           <label onClick={handleSubmitForm}>
