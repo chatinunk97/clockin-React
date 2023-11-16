@@ -1,6 +1,7 @@
 import PersonalDetailList from "./PersonalDetailList";
 
 export default function PersonalDetails({ profileUser }) {
+  console.log(profileUser)
   return (
     <div className="lg:w-96 lg:m-auto overflow-hidden overflow-y-auto pt-20 text-sm md:text-lg flex flex-col gap-8">
       {profileUser && (
