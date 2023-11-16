@@ -156,10 +156,15 @@ export default function TimeContextProvider({ children }) {
       console.log(error);
     }
   };
+
   const getFlexibleByUserId = async (id) => {
     try {
       const res = await dashboardAxios.get(`/flexible/getFlexible/${id}`);
-      setFlexibleTimeById(res.data.flexible);
+      console.log(res);
+      console.log(res.data.flexible);
+      // setFlexibleTimeById(res.data.flexible);
+      // console.log(flexibleTimeById);
+      return res;
     } catch (error) {
       console.log("Error:", error);
     }

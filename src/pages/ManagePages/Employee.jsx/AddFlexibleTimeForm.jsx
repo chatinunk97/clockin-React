@@ -33,15 +33,6 @@ export default function AddFlexibleTimeForm() {
         onSubmit={handleSubmitForm}
       >
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>User Id</h1>
-          <RegisterInput
-            placeholder="User Id"
-            value={input.userId}
-            onChange={handleChangeInput}
-            name="userId"
-          />
-        </div>
-        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Date</h1>
           <RegisterInput
             placeholder="Enter date"

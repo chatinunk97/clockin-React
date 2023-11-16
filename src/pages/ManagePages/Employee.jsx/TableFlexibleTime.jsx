@@ -8,6 +8,7 @@ import CustomizedButtons from "../../../components/ButtonCustomization";
 import Modal from "../../../components/Modal";
 import AddFlexibleTimeForm from "./AddFlexibleTimeForm";
 import { useParams } from "react-router-dom";
+// import { dashboardAxios } from "../../../config/axios";
 
 export default function TableFlexibleTime() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,14 +29,13 @@ export default function TableFlexibleTime() {
     setLoading(true);
     getFlexibleByUserId(userId)
       .then((res) => {
-        console.log(res);
         const flexibleData = res.data.flexible.map((flexibleItem) => ({
           id: flexibleItem.id,
-          userId: flexibleItem.userId,
           date: flexibleItem.date,
-          timeProfileId: flexibleItem.timeProfileId,
+          typeTime: flexibleItem.timeProfile.typeTime,
+          start: flexibleItem.timeProfile.start,
+          end: flexibleItem.timeProfile.end,
         }));
-        console.log(flexibleData);
         setAllFlexibleTime(flexibleData);
       })
       .catch((err) => {
@@ -50,8 +50,10 @@ export default function TableFlexibleTime() {
     <>
       <ManageTable
         columns={[
-          { field: "userId", flex: 1 },
           { field: "date", flex: 1 },
+          { field: "typeTime", flex: 1 },
+          { field: "start", flex: 1 },
+          { field: "end", flex: 1 },
           { field: "timeProfileId", flex: 1 },
           {
             field: "actionButtons",
