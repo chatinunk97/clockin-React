@@ -39,7 +39,7 @@ export default function UserContextProvider({ children }) {
           position: "center",
           icon: "success",
           title: `${userData.firstName} : Created sucessfully`,
-          timer : 3000,
+          timer: 3000,
           showConfirmButton: false,
         });
         return true;
@@ -50,7 +50,7 @@ export default function UserContextProvider({ children }) {
         position: "center",
         icon: "error",
         html: `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`,
-        timer : 3000,
+        timer: 3000,
         showConfirmButton: true,
       });
       return `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`;
@@ -97,12 +97,13 @@ export default function UserContextProvider({ children }) {
     dashboardAxios
       .get("/user/getAllUser")
       .then((res) => {
+        console.log(res);
         const userData = res.data.allUser.map((user) => ({
           profileImage: user.profileImage,
           firstName: user.firstName,
           lastName: user.lastName,
           position: user.position,
-          userBossId: user.userRelationshipUser[0]?.userBossId || "",
+          bossInfo: user.bossInfo,
           employeeId: user.employeeId,
           mobile: user.mobile,
           email: user.email,
