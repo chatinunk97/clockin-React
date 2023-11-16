@@ -20,10 +20,6 @@ export default function ManageEmployees() {
       });
   }, []);
 
-  const handleBatchImportClick = () => {
-    setIsOpen(true);
-  };
-
   return (
     <div className="flex flex-col justify-start md:mt-20 p-2 max-w-[800px] max-h-[896px] md:w-full md:max-w-full">
       <div className="flex justify-center items-center gap-4 w-full">
@@ -31,12 +27,6 @@ export default function ManageEmployees() {
       </div>
       <div className="w-full p-5">
         <TableEmployee allUser={allUser} loading={loading} />{" "}
-        <button
-          className="p-4 px-2 bg-red-500 rounded-md"
-          onClick={handleBatchImportClick}
-        >
-          Test batch import
-        </button>
         <Modal title="Add User" open={isOpen} onClose={() => setIsOpen(false)}>
           <AddEmployeeBatch />
         </Modal>

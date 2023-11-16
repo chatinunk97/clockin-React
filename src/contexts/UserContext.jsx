@@ -39,20 +39,21 @@ export default function UserContextProvider({ children }) {
           position: "center",
           icon: "success",
           title: `${userData.firstName} : Created sucessfully`,
+          timer : 3000,
           showConfirmButton: false,
         });
         return true;
       }
     } catch (error) {
       const { firstName } = JSON.parse(credential.get("data"));
-      console.log(firstName);
       await Swal.fire({
         position: "center",
         icon: "error",
         html: `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`,
+        timer : 3000,
         showConfirmButton: true,
       });
-      return false;
+      return `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`;
     }
   };
 
