@@ -17,7 +17,7 @@ export default function ManageEmployees() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-start md:mt-20 p-2 max-w-[800px] max-h-[896px] md:w-full md:max-w-full">
+    <div className="flex flex-col justify-start md:mt-20 p-2 max-w-[800px] max-h-[896px] md:w-full md:max-w-full overflow-y-auto">
       <div className="flex justify-center items-center gap-4 w-full">
         <div className="flex justify-center items-center p-6"></div>
       </div>

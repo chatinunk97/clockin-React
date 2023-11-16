@@ -16,10 +16,11 @@ export default function TableLeaveSetting({
   return (
     <ManageTable
       columns={[
-        { field: "leaveName", flex: 1 },
-        { field: "defaultDateAmount", flex: 1 },
+        { field: "leaveName", width: 595 },
+        { field: "defaultDateAmount", width: 595 },
         {
           field: "actionButtons",
+          flex: 1,
           headerName: "",
           cellRenderer: (params) => (
             <div className="flex gap-2 justify-center items-center h-full">
@@ -43,6 +44,8 @@ export default function TableLeaveSetting({
               </div>
             </div>
           ),
+          minWidth: 180,
+          resizable: true,
         },
       ]}
       allData={leaveProfiles}

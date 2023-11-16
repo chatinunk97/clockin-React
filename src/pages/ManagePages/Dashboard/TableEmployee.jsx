@@ -128,71 +128,76 @@ export default function TableEmployee({ allUser, loading }) {
   }, []);
 
   return (
-    <div className="overflow-y-auto">
-      <div
-        className="ag-theme-alpine"
-        style={{ height: "auto", width: "auto" }}
-      >
-        {loading && <LinearIndeterminate />}
-        <div className=" flex flex-col md:flex-row justify-center md:justify-start items-center mb-4 gap-6 md:ml-4">
-          <input
-            type="text"
-            id="filter-text-box"
-            placeholder="Quick search..."
-            onInput={onFilterTextBoxChanged}
-            className="border border-stone-200 p-4 rounded-lg md:w-96 w-36"
-          />
-          <button
-            onClick={exportToExcel}
-            className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-3 px-6 rounded-md shadow-md  hover:from-blue-700 hover:to-green-700"
-          >
-            Export to Excel
-          </button>
-          <div
-            onClick={() => {
-              setIsOpenadd(true);
-            }}
-            className="rounded-3xl w-32 p-1 md:"
-          >
-            <CustomizedButtons buttonName="Add User" />
+    <div className="shadow-xl rounded-lg border p-5 overflow-y-auto max-h-[700px]">
+      <div className="overflow-y-auto">
+        <div
+          className="ag-theme-alpine"
+          style={{ height: "auto", width: "auto" }}
+        >
+          {loading && <LinearIndeterminate />}
+          <div className=" flex flex-col md:flex-row justify-center md:justify-start items-center mb-4 gap-6 md:ml-4">
+            <input
+              type="text"
+              id="filter-text-box"
+              placeholder="Quick search..."
+              onInput={onFilterTextBoxChanged}
+              className="border border-stone-200 p-4 rounded-lg md:w-96 w-36"
+            />
+            <button
+              onClick={exportToExcel}
+              className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-3 px-6 rounded-md shadow-md  hover:from-blue-700 hover:to-green-700"
+            >
+              Export to Excel
+            </button>
+            <button
+              onClick={() => setIsOpenBatch(true)}
+              className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-3 px-6 rounded-md shadow-md  hover:from-blue-700 hover:to-green-700"
+            >
+              User Batch Import
+            </button>
+
+            <div
+              onClick={() => {
+                setIsOpenadd(true);
+              }}
+              className="rounded-3xl w-32 p-1 md:"
+            >
+              <CustomizedButtons buttonName="Add User" />
+            </div>
+            <Modal
+              title="User Batch Import"
+              open={isOpenBatch}
+              onClose={() => setIsOpenBatch(false)}
+            >
+              <AddEmployeeBatch />
+            </Modal>
           </div>
-          <CustomizedButtons
-            buttonName="User Batch Import"
-            onClick={() => setIsOpenBatch(true)}
+          <AgGridReact
+            rowData={allUser}
+            gridOptions={gridOptions}
+            columnDefs={columnDefs}
+            sortingOrder={sortingOrder}
+            onGridReady={onGridReady}
+            suppressMenuHide={true}
           />
+          <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
+            <EditemployeeForm
+              UserbyId={UserbyId}
+              allUser={allUser}
+              onClose={() => setIsOpen(false)}
+            />
+          </Modal>
           <Modal
-            title="Add User Batch"
-            open={isOpenBatch}
-            onClose={() => setIsOpenBatch(false)}
+            title="Add User "
+            open={isOpenadd}
+            onClose={() => setIsOpenadd(false)}
           >
-            <AddEmployeeBatch />
+            <AddmployeeForm
+              allUser={allUser}
+              onClose={() => setIsOpenadd(false)}
+            />
           </Modal>
         </div>
-        <AgGridReact
-          rowData={allUser}
-          gridOptions={gridOptions}
-          columnDefs={columnDefs}
-          sortingOrder={sortingOrder}
-          onGridReady={onGridReady}
-          suppressMenuHide={true}
-        />
-        <Modal title="Edit" open={isOpen} onClose={() => setIsOpen(false)}>
-          <EditemployeeForm
-            UserbyId={UserbyId}
-            allUser={allUser}
-            onClose={() => setIsOpen(false)}
-          />
-        </Modal>
-        <Modal
-          title="Add User "
-          open={isOpenadd}
-          onClose={() => setIsOpenadd(false)}
-        >
-          <AddmployeeForm
-            allUser={allUser}
-            onClose={() => setIsOpenadd(false)}
-          />
-        </Modal>
       </div>
     </div>
   );
