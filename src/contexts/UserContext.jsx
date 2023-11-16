@@ -11,6 +11,7 @@ export default function UserContextProvider({ children }) {
 
   const addemployee = async (credential) => {
     try {
+      console.log(credential);
       const response = await dashboardAxios.post(
         "/user/createUser",
         credential
@@ -34,23 +35,25 @@ export default function UserContextProvider({ children }) {
         return [newUser, ...prev];
       });
       if (response.status === 201) {
-        Swal.fire({
+        await Swal.fire({
           position: "center",
           icon: "success",
-          title: "Add user success!",
+          title: `${userData.firstName} : Created sucessfully`,
+          timer : 3000,
           showConfirmButton: false,
-          timer: 1500,
         });
+        return true;
       }
     } catch (error) {
-      Swal.fire({
+      const { firstName } = JSON.parse(credential.get("data"));
+      await Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something Went Wrong",
-        showConfirmButton: false,
-        timer: 1500,
+        html: `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`,
+        timer : 3000,
+        showConfirmButton: true,
       });
-      console.error("Error:", error);
+      return `<b>Error while creating <em>${firstName}</em></b> <br><em>${error.response.data.message}</em>`;
     }
   };
 
@@ -107,6 +110,7 @@ export default function UserContextProvider({ children }) {
           userType: user.userType,
           isActive: user.isActive,
           checkLocation: user.checkLocation,
+          companyProfile: user.companyProfile,
         }));
         setAllUser(userData);
       })

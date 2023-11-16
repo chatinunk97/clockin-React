@@ -1,6 +1,6 @@
 export default function OTCard({ OT }) {
   return (
-    <div className="w-full h-36 border border-black rounded-2xl flex shadow-lg">
+    <div className="w-full h-36 border border-black rounded-2xl flex shadow-lg bg-red-500">
       <div className="flex h-full items-center p-2 justify-start gap-6 w-full">
         <div>ICON</div>
         <div>

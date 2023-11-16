@@ -8,7 +8,6 @@ import CustomizedButtons from "../../../components/ButtonCustomization";
 import Modal from "../../../components/Modal";
 import AddFlexibleTimeForm from "./AddFlexibleTimeForm";
 import { useParams } from "react-router-dom";
-// import { dashboardAxios } from "../../../config/axios";
 
 export default function TableFlexibleTime() {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,13 +47,29 @@ export default function TableFlexibleTime() {
 
   return (
     <>
+      <div className="flex justify-between p-2">
+        <div className="text-2xl font-bold">Flexible Time</div>
+        <CustomizedButtons
+          onClick={() => {
+            setIsOpen2(true);
+          }}
+          buttonName="Add Flexible Time"
+        />
+      </div>
+
+      <Modal
+        title="Add Flexible Time"
+        open={isOpen2}
+        onClose={() => setIsOpen2(false)}
+      >
+        <AddFlexibleTimeForm userId={userId} />
+      </Modal>
       <ManageTable
         columns={[
           { field: "date", flex: 1 },
           { field: "typeTime", flex: 1 },
           { field: "start", flex: 1 },
           { field: "end", flex: 1 },
-          //   { field: "timeProfileId", flex: 1 },
           {
             field: "actionButtons",
             headerName: "",
@@ -94,20 +109,6 @@ export default function TableFlexibleTime() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <CustomizedButtons
-        onClick={() => {
-          setIsOpen2(true);
-        }}
-        buttonName="Add Flexible Time"
-      />
-
-      <Modal
-        title="Add Flexible Time"
-        open={isOpen2}
-        onClose={() => setIsOpen2(false)}
-      >
-        <AddFlexibleTimeForm userId={userId} />
-      </Modal>
     </>
   );
 }

@@ -19,6 +19,7 @@ const createOTSchema = Joi.object({
   endTime: Joi.string().required(),
   messageOT: Joi.string().required(),
   clockId: Joi.number().integer().positive().required(),
+  totalTime: Joi.number().integer().positive().required(),
 });
 
 const validateCreateOT = (input) => {
@@ -47,6 +48,7 @@ export default function OTform() {
     messageOT: "",
   });
   const [timeDif, setTimeDif] = useState(0);
+  console.log(timeDif);
 
   useEffect(() => {
     if (input.startTime && input.endTime) {
@@ -86,9 +88,9 @@ export default function OTform() {
   const handleOTSubmit = (e) => {
     e.preventDefault();
     console.log(input);
+    input.totalTime = timeDif;
     const validationError = validateCreateOT(input);
     if (validationError) {
-      console.dir(validationError);
       return setError(validationError);
     }
     setError({});
@@ -102,7 +104,7 @@ export default function OTform() {
 
   return (
     <form
-      className="flex flex-col items-center w-full gap-4 h-[90%] px-6"
+      className="h-[90%] p-4 flex flex-col items-center w-full gap-5 "
       onSubmit={handleOTSubmit}
     >
       <div className="h-[70%] w-full flex flex-col items-start justify-center gap-4 border-b border-gray-400">
@@ -122,7 +124,7 @@ export default function OTform() {
           placeholder={"Select your record.."}
           data={clockList}
           onChange={handleChangeDropdown}
-          className="w-full"
+          className="w-full z-20"
         />
         {error.clockId && (
           <InputErrorMessage message={"Please select period time"} />
@@ -133,6 +135,7 @@ export default function OTform() {
               label="Start Time"
               value={input.startTime}
               onChange={handleOnchangeStartTime}
+              className="z-0"
             />
             {error.startTime && (
               <InputErrorMessage message={"Please select start time"} />
@@ -141,6 +144,7 @@ export default function OTform() {
               label="End Time"
               value={input.endTime}
               onChange={handleOnchangeEndTime}
+              className="z-0"
             />
             {error.endTime && (
               <InputErrorMessage message={"Please select end time"} />

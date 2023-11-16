@@ -1,77 +1,20 @@
-import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import DeleteButtons from "../../../components/DeleteButton";
+import { useState, useEffect } from "react";
 import { dashboardAxios } from "../../../config/axios";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import SmallButton from "../../../components/SmallButton";
-import Modal from "../../../components/Modal";
-import DetailsEmployee from "./DetailsEmployee";
 import { Button } from "@mui/material";
 import TableUserLeave from "./TableUserLeave";
 import TableFlexibleTime from "./TableFlexibleTime";
+import TableClock from "./TableClock";
 
 export default function ViewEmployee() {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const { userId } = useParams();
   const [employee, setEmployee] = useState({});
   const [clock, setClock] = useState([]);
-  const [selectedRowData, setSelectedRowData] = useState("");
-
-  const today = new Date();
-
-  const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-
-  let filterParams = {
-    minValidDate: "2023-01-01",
-    maxValidDate: tomorrow,
-    comparator: (filterLocalDateAtMidnight, cellValue) => {
-      var dateAsString = cellValue;
-      if (dateAsString == null) return -1;
-      var dateParts = dateAsString.split("/");
-      var cellDate = new Date(
-        Number(dateParts[2]),
-        Number(dateParts[1]) - 1,
-        Number(dateParts[0])
-      );
-      if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-        return 0;
-      }
-      if (cellDate < filterLocalDateAtMidnight) {
-        return -1;
-      }
-      if (cellDate > filterLocalDateAtMidnight) {
-        return 1;
-      }
-      return 0;
-    },
-  };
-
-  useEffect(() => {
-    dashboardAxios
-      .get(`user/getUser/${userId}`)
-      .then((res) => {
-        setEmployee(res.data.user);
-
-        const ClockData = res.data.user.clock.map((clockitem) => ({
-          Date: formatDate(clockitem?.clockInTime),
-          Clockin: formatTime(clockitem?.clockInTime),
-          Clockout: formatTime(clockitem?.clockOutTime),
-          Status: clockitem?.statusClockIn,
-          ReasonLate: clockitem?.reasonLate,
-          ReasonLocation: clockitem?.reasonLocation,
-        }));
-        setClock(ClockData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userId]);
+  const [isShowUserLeave, setIsShowUserLeave] = useState(false);
+  const [isShowFlexibleTime, setIsShowFlexibleTime] = useState(false);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -83,93 +26,31 @@ export default function ViewEmployee() {
     return format(date, "HH:mm:ss");
   };
 
-  const handleDelete = async () => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
+  useEffect(() => {
+    dashboardAxios
+      .get(`user/getUser/${userId}`)
+      .then((res) => {
+        setEmployee(res.data.user);
+        console.log(res.data);
+        console.log(employee);
+        const ClockData = res.data.user.clock.map((clockitem) => ({
+          Date: formatDate(clockitem?.clockInTime),
+          Clockin: formatTime(clockitem?.clockInTime),
+          Clockout: formatTime(clockitem?.clockOutTime),
+          Status: clockitem?.statusClockIn,
+          ReasonLate: clockitem?.reasonLate,
+          ReasonLocation: clockitem?.reasonLocation,
+          latitudeClockIn: clockitem?.latitudeClockIn,
+          longitudeClockIn: clockitem?.longitudeClockIn,
+          latitudeClockOut: clockitem?.latitudeClockOut,
+          longitudeClockOut: clockitem?.longitudeClockOut,
+        }));
+        setClock(ClockData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-
-      if (result.isConfirmed) {
-        const res = await dashboardAxios.delete(`/user/deleteUser/${userId}`);
-        await Swal.fire({
-          title: "Deactivate!",
-          text: "User has been deactivate.",
-          icon: "success",
-        });
-        if (res.status === 200) {
-          return navigate("/manage/employees");
-        }
-      }
-    } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Oops...",
-        text: "Something Went Wrong",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-    }
-  };
-
-  const [columnDefs] = useState([
-    {
-      field: "Date",
-      width: 180,
-      filter: "agDateColumnFilter",
-      filterParams: filterParams,
-    },
-    { field: "Clockin", width: 150 },
-    { field: "Clockout", width: 140 },
-    { field: "Status", width: 140 },
-    { field: "Leave", width: 140 },
-    { field: "OT", width: 80 },
-    {
-      field: "actionButtons",
-      headerName: "",
-      cellRenderer: (params) => (
-        <div className="flex gap-2 justify-center items-center h-full">
-          <div className="p-2">
-            <SmallButton
-              bg="bg-blue-600"
-              hover="hover:bg-blue-400"
-              buttonName="View"
-              onClick={() => {
-                setIsOpen(true);
-                setSelectedRowData(params.data);
-                console.log(params.data);
-              }}
-            />
-          </div>
-        </div>
-      ),
-    },
-  ]);
-
-  const gridOptions = {
-    defaultColDef: {
-      resizable: true,
-      sortable: true,
-    },
-  };
-
-  const sortingOrder = useMemo(() => {
-    return ["desc", "asc", null];
-  }, []);
-
-  const gridApi = useRef(null);
-
-  const onGridReady = useCallback((params) => {
-    if (params.api) {
-      gridApi.current = params.api;
-    }
-  }, []);
+  }, [userId]);
 
   return (
     <div className="flex w-full justify-center items-center h-screen bg-slate-100 ">
@@ -188,39 +69,149 @@ export default function ViewEmployee() {
             />
           </div>
         </div>
+
+        {/* <div
+          className="ag-theme-alpine flex flex-col gap-2"
+          style={{ height: 600, width: "60%" }}
+        >
+        {employee.userType === "PARTTIME" ? (<div className="flex gap-2">
+            <Button
+              variant="contained"
+              onClick={() => setIsShowUserLeave(false)}
+            >
+              Clock in-out
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setIsShowUserLeave(true)}
+            >
+              User Leave
+            </Button>
+          </div>
+          {isShowUserLeave ? (
+            <TableUserLeave userId={userId} />
+          ) : true ? (
+            <TableClock employee={employee} clock={clock} />
+          ) : (
+            "ddd"
+          )}) : ( <div className="flex gap-2">
+            <Button
+              variant="contained"
+              onClick={() => setIsShowFlexibleTime(false)}
+            >
+              Clock in-out
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setIsShowFlexibleTime(true)}
+            >
+              Flexible Time
+            </Button>
+          </div>
+          {isShowFlexibleTime ? (
+            <TableFlexibleTime />
+          ) : true ? (
+            <TableClock employee={employee} clock={clock} />
+          ) : (
+            "ddd"
+            )})}
+        </div> */}
+
         <div
           className="ag-theme-alpine flex flex-col gap-2"
           style={{ height: 600, width: "60%" }}
         >
-          <AgGridReact
-            rowData={clock}
-            gridOptions={gridOptions}
-            columnDefs={columnDefs}
-            sortingOrder={sortingOrder}
-            onGridReady={onGridReady}
-            suppressMenuHide={true}
-          ></AgGridReact>
-          <Modal title="Details" open={isOpen} onClose={() => setIsOpen(false)}>
-            <DetailsEmployee selectedRowData={selectedRowData} />
-          </Modal>
-          <div className=" items-end justify-end flex pt-6">
-            {employee.isActive ? (
-              <div onClick={handleDelete}>
-                <DeleteButtons />
-              </div>
-            ) : null}
-          </div>
-          <div>
-            <Button variant="contained">User Leave</Button>
-          </div>
+          {employee.userType === "PARTTIME" ? (
+            <div className="flex gap-2">
+              <Button
+                variant="contained"
+                onClick={() => setIsShowFlexibleTime(false)}
+              >
+                Clock in-out
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => setIsShowFlexibleTime(true)}
+              >
+                Flexible Time
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                variant="contained"
+                onClick={() => setIsShowUserLeave(false)}
+              >
+                Clock in-out
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => setIsShowUserLeave(true)}
+              >
+                User Leave
+              </Button>
+            </div>
+          )}
 
-          <TableUserLeave />
-          <div>
-            <Button variant="contained">Flexible Time</Button>
-          </div>
-          <TableFlexibleTime />
+          {employee.userType === "PARTTIME" ? (
+            isShowFlexibleTime ? (
+              <TableFlexibleTime />
+            ) : (
+              <TableClock employee={employee} clock={clock} />
+            )
+          ) : isShowUserLeave ? (
+            <TableUserLeave userId={userId} />
+          ) : (
+            <TableClock employee={employee} clock={clock} />
+          )}
         </div>
       </div>
     </div>
   );
+}
+{
+  /* 
+          // <div className="flex gap-2">
+          //   <Button
+          //     variant="contained"
+          //     onClick={() => setIsShowUserLeave(false)}
+          //   >
+          //     Clock in-out
+          //   </Button>
+          //   <Button
+          //     variant="contained"
+          //     onClick={() => setIsShowUserLeave(true)}
+          //   >
+          //     User Leave
+          //   </Button>
+          // </div>
+          // {isShowUserLeave ? (
+          //   <TableUserLeave userId={userId} />
+          // ) : true ? (
+          //   <TableClock employee={employee} clock={clock} />
+          // ) : (
+          //   "ddd"
+          // )}
+
+          // <div className="flex gap-2">
+          //   <Button
+          //     variant="contained"
+          //     onClick={() => setIsShowFlexibleTime(false)}
+          //   >
+          //     Clock in-out
+          //   </Button>
+          //   <Button
+          //     variant="contained"
+          //     onClick={() => setIsShowFlexibleTime(true)}
+          //   >
+          //     Flexible Time
+          //   </Button>
+          // </div>
+          // {isShowFlexibleTime ? (
+          //   <TableFlexibleTime />
+          // ) : true ? (
+          //   <TableClock employee={employee} clock={clock} />
+          // ) : (
+          //   "ddd"
+          // )} */
 }

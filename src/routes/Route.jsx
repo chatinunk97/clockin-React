@@ -36,6 +36,7 @@ import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
 import ManageProfileSetting from "../pages/ManagePages/Setting/ManageProfileSetting";
 import TimeContextProvider from "../contexts/TimeContext";
 import { Navigate } from "react-router-dom";
+import ViewOTRequest from "../pages/ManagePages/OT/ViewOTRequest";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -201,6 +202,14 @@ export default function Route() {
             <TimeContextProvider>
               <ViewEmployee />
             </TimeContextProvider>
+          ),
+        },
+        {
+          path: "/manage/ot-request/:requestOTId",
+          element: (
+            <OTContextProvider>
+              <ViewOTRequest />
+            </OTContextProvider>
           ),
         },
       ],
