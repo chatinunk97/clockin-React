@@ -7,9 +7,9 @@ export const TimeContext = createContext();
 
 export default function TimeContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
-  const [allTimeProfiles, setAllTimeProfiles] = useState();
+  const [allTimeProfiles, setAllTimeProfiles] = useState([]);
   const [timeProfileById, setTimeProfileById] = useState({});
-  const [allFlexibleTime, setAllFlexibleTime] = useState();
+  const [allFlexibleTime, setAllFlexibleTime] = useState([]);
   const [flexibleTimeById, setFlexibleTimeById] = useState({});
 
   const createTimeProfile = async (newAddedTimeProfile) => {
@@ -119,6 +119,43 @@ export default function TimeContextProvider({ children }) {
     }
   };
 
+  const createFlexible = async (newAddedFlexibleTime) => {
+    try {
+      const res = await dashboardAxios.post(
+        "/flexible/createFlexible",
+        newAddedFlexibleTime
+      );
+      const createFlexibleData = res.data.flexible;
+      const newFlexibleTime = {
+        userId: createFlexibleData.id,
+        date: createFlexibleData.date,
+        timeProfileId: createFlexibleData.timeProfileId,
+      };
+
+      setAllFlexibleTime((prev) => {
+        return [...prev, newFlexibleTime];
+      });
+
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Add Flexible Time success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(error);
+    }
+  };
   const getFlexibleByUserId = async (id) => {
     try {
       const res = await dashboardAxios.get(`/flexible/getFlexible/${id}`);
@@ -168,6 +205,33 @@ export default function TimeContextProvider({ children }) {
     }
   };
 
+  const deleteFlexible = async (id) => {
+    try {
+      const res = await dashboardAxios.delete(`time/deleteFlexible/${id}`);
+      if (res.status === 200) {
+        setAllFlexibleTime((prev) => prev.filter((el) => el.id !== id));
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete flexible time success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something Went Wrong",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(err);
+    }
+  };
+
   return (
     <TimeContext.Provider
       value={{
@@ -187,6 +251,8 @@ export default function TimeContextProvider({ children }) {
         allFlexibleTime,
         setAllFlexibleTime,
         updateFlexible,
+        createFlexible,
+        deleteFlexible,
       }}
     >
       {children}

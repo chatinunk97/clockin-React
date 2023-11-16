@@ -215,6 +215,9 @@ export default function ViewEmployee() {
           </div>
 
           <TableUserLeave />
+          <div>
+            <Button variant="contained">Flexible Time</Button>
+          </div>
           <TableFlexibleTime />
         </div>
       </div>
