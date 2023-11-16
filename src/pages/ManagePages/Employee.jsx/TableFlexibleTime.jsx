@@ -54,7 +54,7 @@ export default function TableFlexibleTime() {
           { field: "typeTime", flex: 1 },
           { field: "start", flex: 1 },
           { field: "end", flex: 1 },
-          { field: "timeProfileId", flex: 1 },
+          //   { field: "timeProfileId", flex: 1 },
           {
             field: "actionButtons",
             headerName: "",
@@ -106,7 +106,7 @@ export default function TableFlexibleTime() {
         open={isOpen2}
         onClose={() => setIsOpen2(false)}
       >
-        <AddFlexibleTimeForm />
+        <AddFlexibleTimeForm userId={userId} />
       </Modal>
     </>
   );

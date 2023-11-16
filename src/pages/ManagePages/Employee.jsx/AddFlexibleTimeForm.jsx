@@ -3,9 +3,9 @@ import useTime from "../../../hooks/use-time";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import IconLabelButtons from "../../../components/SendButton";
 
-export default function AddFlexibleTimeForm() {
+export default function AddFlexibleTimeForm({ userId }) {
   const [input, setInput] = useState({
-    userId: "",
+    userId: userId,
     date: "",
     timeProfileId: "",
   });
@@ -44,8 +44,8 @@ export default function AddFlexibleTimeForm() {
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Time Profile Id</h1>
           <RegisterInput
-            placeholder="Enter time profile"
-            value={input.timeProfileId}
+            placeholder="Enter time profile id"
+            value={input.timeProfleId}
             onChange={handleChangeInput}
             name="timeProfileId"
           />

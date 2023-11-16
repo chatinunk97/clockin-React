@@ -9,7 +9,6 @@ export default function EditFlexibleTimeForm({ flexibleTimeById, onClose }) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     id: flexibleTimeById.id,
-    userId: flexibleTimeById.userId,
     date: flexibleTimeById.date,
     timeProfileId: flexibleTimeById.timeProfileId,
   });
@@ -37,15 +36,6 @@ export default function EditFlexibleTimeForm({ flexibleTimeById, onClose }) {
         onSubmit={handleSubmitForm}
       >
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>User Id</h1>
-          <RegisterInput
-            placeholder="User Id"
-            value={input.userId}
-            onChange={handleChangeInput}
-            name="userId"
-          />
-        </div>
-        <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Date</h1>
           <RegisterInput
             placeholder="Date"
@@ -55,7 +45,7 @@ export default function EditFlexibleTimeForm({ flexibleTimeById, onClose }) {
           />
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>Start</h1>
+          <h1>Time Profile Id</h1>
           <RegisterInput
             placeholder="Time Profile Id"
             value={input.timeProfileId}

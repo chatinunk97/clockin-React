@@ -126,10 +126,14 @@ export default function TimeContextProvider({ children }) {
         newAddedFlexibleTime
       );
       const createFlexibleData = res.data.flexible;
+      console.log(createFlexibleData, "sosososos");
       const newFlexibleTime = {
         userId: createFlexibleData.id,
         date: createFlexibleData.date,
         timeProfileId: createFlexibleData.timeProfileId,
+        start: createFlexibleData.timeProfile.start,
+        end: createFlexibleData.timeProfile.end,
+        typeTime: createFlexibleData.timeProfile.typeTime,
       };
 
       setAllFlexibleTime((prev) => {
@@ -160,10 +164,7 @@ export default function TimeContextProvider({ children }) {
   const getFlexibleByUserId = async (id) => {
     try {
       const res = await dashboardAxios.get(`/flexible/getFlexible/${id}`);
-      console.log(res);
       console.log(res.data.flexible);
-      // setFlexibleTimeById(res.data.flexible);
-      // console.log(flexibleTimeById);
       return res;
     } catch (error) {
       console.log("Error:", error);
@@ -174,9 +175,10 @@ export default function TimeContextProvider({ children }) {
     try {
       console.log(updatedFlexibleTime);
       const res = await dashboardAxios.patch(
-        `flexible/updateTimeProfile/${updateFlexible.id}`,
+        `flexible/updateFlexible/${updatedFlexibleTime.id}`,
         updatedFlexibleTime
       );
+      console.log(res);
       setFlexibleTimeById({
         ...flexibleTimeById,
         ...res.data.updatedFlexibleTime,
@@ -212,7 +214,7 @@ export default function TimeContextProvider({ children }) {
 
   const deleteFlexible = async (id) => {
     try {
-      const res = await dashboardAxios.delete(`time/deleteFlexible/${id}`);
+      const res = await dashboardAxios.delete(`flexible/deleteFlexible/${id}`);
       if (res.status === 200) {
         setAllFlexibleTime((prev) => prev.filter((el) => el.id !== id));
 
