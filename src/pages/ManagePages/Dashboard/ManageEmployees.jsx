@@ -1,14 +1,10 @@
 import * as React from "react";
-import Modal from "../../../components/Modal";
 import TableEmployee from "./TableEmployee";
-import { useEffect, useState } from "react";
-import useUser from "../../../hooks/use-user";
-
-import AddEmployeeBatch from "../Edit/AddEmployeeBatch";
+import { useEffect } from "react";
+import useUser from "../../../hooks/use-user"
 
 export default function ManageEmployees() {
   const { getalluser, allUser, loading } = useUser();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getalluser()
@@ -27,9 +23,6 @@ export default function ManageEmployees() {
       </div>
       <div className="w-full p-5">
         <TableEmployee allUser={allUser} loading={loading} />{" "}
-        <Modal title="Add User" open={isOpen} onClose={() => setIsOpen(false)}>
-          <AddEmployeeBatch />
-        </Modal>
       </div>
     </div>
   );

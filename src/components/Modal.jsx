@@ -5,6 +5,7 @@ export default function Modal({
   open,
   onClose,
 }) {
+  console.log(title)
   return (
     <>
       {open && (

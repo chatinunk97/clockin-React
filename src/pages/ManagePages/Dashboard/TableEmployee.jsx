@@ -161,7 +161,7 @@ export default function TableEmployee({ allUser, loading }) {
             onClick={() => setIsOpenBatch(true)}
           />
           <Modal
-            title="Add User"
+            title="Add User Batch"
             open={isOpenBatch}
             onClose={() => setIsOpenBatch(false)}
           >
