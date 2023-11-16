@@ -11,10 +11,12 @@ import "../../../../src/styles.css";
 import CustomizedButtons from "../../../components/ButtonCustomization";
 import AddmployeeForm from "../Edit/AddEmployeeForm";
 import ExcelJS from "exceljs";
+import AddEmployeeBatch from "../Edit/AddEmployeeBatch";
 
 export default function TableEmployee({ allUser, loading }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenadd, setIsOpenadd] = useState(false);
+  const [isOpenBatch, setIsOpenBatch] = useState(false);
   const [UserbyId, setUserById] = useState({});
 
   const [columnDefs] = useState([
@@ -154,6 +156,17 @@ export default function TableEmployee({ allUser, loading }) {
           >
             <CustomizedButtons buttonName="Add User" />
           </div>
+          <CustomizedButtons
+            buttonName="User Batch Import"
+            onClick={() => setIsOpenBatch(true)}
+          />
+          <Modal
+            title="Add User"
+            open={isOpenBatch}
+            onClose={() => setIsOpenBatch(false)}
+          >
+            <AddEmployeeBatch />
+          </Modal>
         </div>
         <AgGridReact
           rowData={allUser}

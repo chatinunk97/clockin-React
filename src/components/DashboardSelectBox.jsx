@@ -13,12 +13,20 @@ export default function DashboardSelectBox() {
           onChange={(e) => setSelectedOption(e.target.value)}
         >
           <MenuItem value="default" disabled>
-            Filter by Date
+            Filter by Month
           </MenuItem>
-          <MenuItem value="one">one</MenuItem>
-          <MenuItem value="two">two</MenuItem>
-          <MenuItem value="three">three</MenuItem>
-          <MenuItem value="four">four</MenuItem>
+          <MenuItem value="January">January</MenuItem>
+          <MenuItem value="February">February</MenuItem>
+          <MenuItem value="March">March</MenuItem>
+          <MenuItem value="April">April</MenuItem>
+          <MenuItem value="May">May</MenuItem>
+          <MenuItem value="June">June</MenuItem>
+          <MenuItem value="July">July</MenuItem>
+          <MenuItem value="August">August</MenuItem>
+          <MenuItem value="September">September</MenuItem>
+          <MenuItem value="October">October</MenuItem>
+          <MenuItem value="November">November</MenuItem>
+          <MenuItem value="December">December</MenuItem>
         </Select>
       </div>
     </div>
