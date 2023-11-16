@@ -128,7 +128,7 @@ export default function TableEmployee({ allUser, loading }) {
   }, []);
 
   return (
-    <div className="shadow-xl rounded-lg border p-5 overflow-auto">
+    <div className="shadow-xl rounded-lg border p-5 overflow-y-auto max-h-[700px]">
       <div className="overflow-y-auto">
         <div
           className="ag-theme-alpine"
@@ -149,6 +149,13 @@ export default function TableEmployee({ allUser, loading }) {
             >
               Export to Excel
             </button>
+            <button
+              onClick={() => setIsOpenBatch(true)}
+              className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-3 px-6 rounded-md shadow-md  hover:from-blue-700 hover:to-green-700"
+            >
+              User Batch Import
+            </button>
+
             <div
               onClick={() => {
                 setIsOpenadd(true);
@@ -157,12 +164,8 @@ export default function TableEmployee({ allUser, loading }) {
             >
               <CustomizedButtons buttonName="Add User" />
             </div>
-            <CustomizedButtons
-              buttonName="User Batch Import"
-              onClick={() => setIsOpenBatch(true)}
-            />
             <Modal
-              title="Add User"
+              title="User Batch Import"
               open={isOpenBatch}
               onClose={() => setIsOpenBatch(false)}
             >

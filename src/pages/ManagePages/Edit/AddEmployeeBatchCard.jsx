@@ -16,16 +16,28 @@ export default function AddEmployeeBatchCard({
       position: "center",
       icon: "error",
       html: input,
-      timer : 3000,
+      timer: 3000,
       showConfirmButton: true,
     });
   };
   return (
-    <div className="bg-white p-5 rounded-md flex items-center gap-5">
-      <div className="flex-grow">{data.employeeId}</div>
-      <div className="flex-grow">{data.firstName}</div>
-      <div className="flex-grow">{data.position}</div>
-      <div className="flex-grow">{data.email}</div>
+    <div className="bg-white p-5 rounded-md flex items-center gap-5 shadow-md">
+      <div className="flex-grow w-[5%] flex justify-center">
+        {data.employeeId}
+      </div>
+      <div className="flex-grow w-[10%] flex justify-center">
+        {data.firstName}
+      </div>
+      <div className="flex-grow w-[10%] flex justify-center">
+        {data.userType}
+      </div>
+      <div className="flex-grow w-[10%] flex justify-center">
+        {data.position}
+      </div>
+      <div className="flex-grow w-[10%] flex justify-center overflow-hidden whitespace-nowrap text-overflow-ellipsis">
+  {data.email}
+</div>
+
       {result == "OK" ? (
         <FcApproval className="text-2xl" />
       ) : result == "NG" ? (
