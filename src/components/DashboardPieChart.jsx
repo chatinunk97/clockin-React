@@ -1,27 +1,44 @@
-import { PieChart } from "@mui/x-charts/PieChart";
+import { useEffect } from "react";
+import Chart from "chart.js/auto";
+import LinearIndeterminate from "./LoadingBar";
 
-export default function DashboardPieChart({ chartData }) {
+export default function DashboardPieChart({ chartData, loading }) {
+  useEffect(() => {
+    if (!chartData || !chartData[0] || !chartData[1]) {
+      console.error("Invalid chart data:", chartData);
+      return;
+    }
+
+    const data = {
+      labels: [chartData[0].title, chartData[1].title],
+      datasets: [
+        {
+          label: [chartData.title],
+          data: [chartData[0]?.count, chartData[1]?.count],
+          backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+          hoverOffset: 4,
+        },
+      ],
+    };
+
+    const config = {
+      type: "pie",
+      data: data,
+    };
+
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, config);
+
+    return () => {
+      myChart.destroy();
+    };
+  }, [chartData]);
+
   return (
-    <div>
-      <PieChart
-        series={[
-          {
-            // data: chartData, // Use the retrieved data
-            data: chartData,
-            highlightScope: {
-              faded: "global",
-              highlighted: "item",
-            },
-            faded: {
-              innerRadius: 30,
-              additionalRadius: -30,
-              color: "gray",
-            },
-          },
-        ]}
-        height={200}
-        width={405}
-      />
-    </div>
+    <>
+      {loading && <LinearIndeterminate />}
+
+      <canvas id="myChart"></canvas>
+    </>
   );
 }
