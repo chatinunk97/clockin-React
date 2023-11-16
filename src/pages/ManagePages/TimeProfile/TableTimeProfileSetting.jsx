@@ -16,9 +16,9 @@ export default function TableTimeProfileSetting({
   return (
     <ManageTable
       columns={[
-        { field: "start", flex: 1 },
-        { field: "end", flex: 1 },
-        { field: "typeTime", flex: 1 },
+        { field: "start" },
+        { field: "end" },
+        { field: "typeTime" },
         {
           field: "actionButtons",
           headerName: "",
@@ -44,6 +44,8 @@ export default function TableTimeProfileSetting({
               </div>
             </div>
           ),
+          minWidth: 180,
+          resizable: true,
         },
       ]}
       allData={allTimeProfiles}

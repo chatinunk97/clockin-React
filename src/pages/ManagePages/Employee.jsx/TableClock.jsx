@@ -102,11 +102,10 @@ export default function TableClock({ employee, clock }) {
             filter: "agDateColumnFilter",
             filterParams: filterParams,
           },
-          { field: "Clockin", width: 150 },
-          { field: "Clockout", width: 140 },
-          { field: "Status", width: 140 },
-          // { field: "Leave", width: 140 },
-          { field: "OT", width: 80 },
+          { field: "Clockin", },
+          { field: "Clockout", },
+          { field: "Status", },
+          { field: "OT", },
           {
             field: "actionButtons",
             headerName: "",
@@ -126,6 +125,8 @@ export default function TableClock({ employee, clock }) {
                 </div>
               </div>
             ),
+            minWidth: 180,
+            resizable: true,
           },
         ]}
         allData={clock}
