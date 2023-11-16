@@ -11,6 +11,7 @@ const updateUserLeaveSchema = Joi.object({
   userId: Joi.number().integer().positive().required(),
   leaveProfileId: Joi.number().integer().positive(),
   dateAmount: Joi.number().integer().positive(),
+  leaveName: Joi.string(),
 });
 
 const validateUpdateUserLeave = (input) => {
@@ -33,6 +34,7 @@ export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     id: userLeaveById.id,
+    leaveName: userLeaveById.leaveName,
     dateAmount: userLeaveById.dateAmount,
   });
 
@@ -44,9 +46,7 @@ export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
     try {
       e.preventDefault();
       input.userId = userId;
-      console.log(input);
       const validationError = validateUpdateUserLeave(input);
-      console.log(validationError);
       if (validationError) {
         return setError(validationError);
       }
@@ -70,8 +70,8 @@ export default function EditUserLeaveForm({ userLeaveById, onClose, userId }) {
           <h1>Leave Name</h1>
           <RegisterInput
             placeholder="Leave Name"
-            // value={input.leaveName}
-            // onChange={handleChangeInput}
+            value={input.leaveName}
+            onChange={handleChangeInput}
             name="leaveName"
             disabled={true}
           />
