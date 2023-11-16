@@ -5,6 +5,7 @@ export default function RegisterInput({
   onChange,
   name,
   hasError,
+  disabled = false,
 }) {
   return (
     <input
@@ -21,6 +22,7 @@ export default function RegisterInput({
       value={value}
       onChange={onChange}
       name={name}
+      disabled={disabled}
     />
   );
 }
