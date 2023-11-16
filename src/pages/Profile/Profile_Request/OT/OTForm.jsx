@@ -88,7 +88,6 @@ export default function OTform() {
     console.log(input);
     const validationError = validateCreateOT(input);
     if (validationError) {
-      console.dir(validationError);
       return setError(validationError);
     }
     setError({});
@@ -122,7 +121,7 @@ export default function OTform() {
           placeholder={"Select your record.."}
           data={clockList}
           onChange={handleChangeDropdown}
-          className="w-full"
+          className="w-full z-20"
         />
         {error.clockId && (
           <InputErrorMessage message={"Please select period time"} />
@@ -133,6 +132,7 @@ export default function OTform() {
               label="Start Time"
               value={input.startTime}
               onChange={handleOnchangeStartTime}
+              className="z-0"
             />
             {error.startTime && (
               <InputErrorMessage message={"Please select start time"} />
@@ -141,6 +141,7 @@ export default function OTform() {
               label="End Time"
               value={input.endTime}
               onChange={handleOnchangeEndTime}
+              className="z-0"
             />
             {error.endTime && (
               <InputErrorMessage message={"Please select end time"} />
