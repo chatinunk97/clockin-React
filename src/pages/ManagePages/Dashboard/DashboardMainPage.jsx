@@ -6,22 +6,29 @@ import DashboardCard from "../../../components/DashboardCard";
 import useManage from "../../../hooks/use-manage";
 import useDashboard from "../../../hooks/use-dashboard";
 import DashboardPieChart from "../../../components/DashboardPieChart";
-// import DashboardPieChart from "../../../components/DashboardPieChart";
 
 export default function DashboardMainPage() {
   const { manageUser } = useManage();
+  const { chartData, loading, clockInfo, selectDate } = useDashboard();
   const [initialLoading, setInitialLoading] = useState(true);
   const [displayInfo, setDisplayInfo] = useState({
     name: "",
-    count: 100,
+    count: 0,
   });
-
-  const { chartData, loading } = useDashboard();
-  console.log(chartData);
-
   useEffect(() => {
     setInitialLoading(false);
   }, []);
+
+  useEffect(() => {
+    setDisplayInfo({
+      name: "",
+      count: 0,
+    });
+  }, [selectDate]);
+
+  console.log(
+    "--------------------------------------------------------------------------"
+  );
 
   const handleChangeDisplay = (name, count) => {
     let newInfo = {
@@ -51,7 +58,10 @@ export default function DashboardMainPage() {
               <div className=" bg-white shadow  border-gray-300 border-2 rounded-md p-4 h-[320px] w-[440px]">
                 <div className="font-semibold text-xl p-2 ">Statistics</div>
                 <div className="flex flex-row gap-10">
-                  <DashboardItem handleChangeDisplay={handleChangeDisplay} />
+                  <DashboardItem
+                    handleChangeDisplay={handleChangeDisplay}
+                    clockInfo={clockInfo}
+                  />
                   <div className="flex flex-col items-center justify-center">
                     <div className=" relative">
                       <div className="z-20">

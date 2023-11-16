@@ -5,7 +5,8 @@ import useDashboard from "../../../hooks/use-dashboard";
 
 export default function DashboardItem({ handleChangeDisplay }) {
   const [initialLoading, setInitialLoading] = useState(true);
-  const { statusList, clockInfo } = useDashboard();
+  const { clockInfo } = useDashboard();
+  console.log(clockInfo);
 
   useEffect(() => {
     setInitialLoading(false);
@@ -21,7 +22,12 @@ export default function DashboardItem({ handleChangeDisplay }) {
             <div
               className="flex flex-row items-center gap-4 p-4"
               onClick={() =>
-                handleChangeDisplay("On Leave", statusList[0]?.count)
+                handleChangeDisplay(
+                  "On Leave",
+                  clockInfo.onLeave
+                    ? Math.round((clockInfo.onLeave / clockInfo.allClock) * 100)
+                    : 0
+                )
               }
             >
               <div className="rounded-full bg-blue-500 text-2xl  text-white hover hover:text-blue-500 p-2 hover:bg-white border border-blue-500">
@@ -30,7 +36,9 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500">On Leave</div>
                 <div>
-                  {statusList[0]?.count}
+                  {clockInfo.onLeave
+                    ? Math.round((clockInfo.onLeave / clockInfo.allClock) * 100)
+                    : 0}
                   <span>%</span>
                 </div>
               </div>
@@ -40,7 +48,11 @@ export default function DashboardItem({ handleChangeDisplay }) {
               onClick={() =>
                 handleChangeDisplay(
                   "On Time",
-                  Math.round((clockInfo.clockOnTime / clockInfo.allClock) * 100)
+                  clockInfo.onLeave
+                    ? Math.round(
+                        (clockInfo.clockOnTime / clockInfo.allClock) * 100
+                      )
+                    : 0
                 )
               }
             >
@@ -50,9 +62,11 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500 font-semibold">On Time</div>
                 <div>
-                  {Math.round(
-                    (clockInfo.clockOnTime / clockInfo.allClock) * 100
-                  )}
+                  {clockInfo.onLeave
+                    ? Math.round(
+                        (clockInfo.clockOnTime / clockInfo.allClock) * 100
+                      )
+                    : 0}
                   <span>%</span>
                 </div>
               </div>
@@ -62,7 +76,11 @@ export default function DashboardItem({ handleChangeDisplay }) {
               onClick={() =>
                 handleChangeDisplay(
                   "Late",
-                  Math.round((clockInfo.clockLate / clockInfo.allClock) * 100)
+                  clockInfo.onLeave
+                    ? Math.round(
+                        (clockInfo.clockLate / clockInfo.allClock) * 100
+                      )
+                    : 0
                 )
               }
             >
@@ -72,7 +90,11 @@ export default function DashboardItem({ handleChangeDisplay }) {
               <div>
                 <div className="text-gray-500 font-semibold">Late</div>
                 <div>
-                  {Math.round((clockInfo.clockLate / clockInfo.allClock) * 100)}
+                  {clockInfo.onLeave
+                    ? Math.round(
+                        (clockInfo.clockLate / clockInfo.allClock) * 100
+                      )
+                    : 0}
                   <span>%</span>
                 </div>
               </div>
