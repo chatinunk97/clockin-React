@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 export default function TableFlexibleTime() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [flexibleOptions, setFlexibleOptions] = useState([]);
   const { userId } = useParams();
   const {
     allFlexibleTime,
@@ -22,6 +23,7 @@ export default function TableFlexibleTime() {
     loading,
     setLoading,
     deleteFlexible,
+    getAllTimeProfile,
   } = useTime();
 
   useEffect(() => {
@@ -44,7 +46,11 @@ export default function TableFlexibleTime() {
         setLoading(false);
       });
   }, []);
-
+  useEffect(() => {
+    getAllTimeProfile().then((res) => {
+      setFlexibleOptions(res.data.allTimeProfiles);
+    });
+  }, []);
   return (
     <>
       <div className="flex justify-between p-2">
@@ -62,7 +68,10 @@ export default function TableFlexibleTime() {
         open={isOpen2}
         onClose={() => setIsOpen2(false)}
       >
-        <AddFlexibleTimeForm userId={userId} />
+        <AddFlexibleTimeForm
+          userId={userId}
+          flexibleOptions={flexibleOptions}
+        />
       </Modal>
       <ManageTable
         columns={[

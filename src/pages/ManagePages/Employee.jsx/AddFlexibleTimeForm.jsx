@@ -2,8 +2,12 @@ import { useState } from "react";
 import useTime from "../../../hooks/use-time";
 import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import IconLabelButtons from "../../../components/SendButton";
+import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
+import timeProfileList from "../../../utils/StructureChange/timeProfileList";
+import DropdownSearch from "../../../components/DropdownSearch";
 
-export default function AddFlexibleTimeForm({ userId }) {
+export default function AddFlexibleTimeForm({ userId, flexibleOptions }) {
   const [input, setInput] = useState({
     userId: userId,
     date: "",
@@ -12,14 +16,20 @@ export default function AddFlexibleTimeForm({ userId }) {
 
   const { createFlexible } = useTime();
 
-  const handleChangeInput = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+  const handleChangeTime = (e) => {
+    setInput({ ...input, timeProfileId: e.value });
   };
-
+  const handleChangeDate = (e) => {
+    setInput({ ...input, date: e });
+  };
   const handleSubmitForm = async (e) => {
     try {
+      console.log(dayjs(input.date).format("YYYY-MM-DD"));
       e.preventDefault();
-      await createFlexible(input);
+      await createFlexible({
+        ...input,
+        date: dayjs(input.date).format("YYYY-MM-DD"),
+      });
       console.log(input);
     } catch (err) {
       console.log(err);
@@ -34,20 +44,24 @@ export default function AddFlexibleTimeForm({ userId }) {
       >
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Date</h1>
-          <RegisterInput
-            placeholder="Enter date"
-            value={input.date}
-            onChange={handleChangeInput}
-            name="date"
-          />
+          <div>
+            <DatePicker
+              selected={input.date}
+              onChange={handleChangeDate}
+              isClearable
+              placeholderText="Select Date"
+              wrapperClassName="w-full"
+              className="w-full border shadow-sm h-[36px] rounded-[4px] cursor-pointer p-1"
+            />
+          </div>
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
-          <h1>Time Profile Id</h1>
-          <RegisterInput
-            placeholder="Enter time profile id"
-            value={input.timeProfleId}
-            onChange={handleChangeInput}
-            name="timeProfileId"
+          <h1>Time</h1>
+          <DropdownSearch
+            placeholder={"Select your record.."}
+            data={timeProfileList(flexibleOptions)}
+            onChange={handleChangeTime}
+            className="w-full z-20"
           />
         </div>
         <div className="mx-auto col-span-full mt-6">
