@@ -197,6 +197,14 @@ export default function Route() {
           ),
         },
         {
+          path: "/manage/employee/:userId",
+          element: (
+            <TimeContextProvider>
+              <ViewEmployee />
+            </TimeContextProvider>
+          ),
+        },
+        {
           path: "/manage/ot-request/:requestOTId",
           element: (
             <OTContextProvider>
@@ -204,7 +212,6 @@ export default function Route() {
             </OTContextProvider>
           ),
         },
-        { path: "/manage/employee/:userId", element: <ViewEmployee /> },
       ],
     },
   ]);
