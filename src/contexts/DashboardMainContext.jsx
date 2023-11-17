@@ -36,8 +36,8 @@ export default function DashboardContextProvider({ children }) {
       const res = await dashboardAxios.get(
         `OT/getAllRequestOTByMonth?date=${dayjs(selectDate).format("YYYY-MM")}`
       );
-      console.log(res.data,'ssososososo')
-      const  OT  = res.data.OT['_sum'].totalTime;
+      console.log(res.data, "ssososososo");
+      const OT = res.data.OT["_sum"].totalTime;
       const { totalUserCount, userTypeTotals } = employeeInfo.data;
       const { lateClockInsCount } = clockInfo.data;
       let { requestLeaveCounts, statusCounts } = data.data;
@@ -58,14 +58,21 @@ export default function DashboardContextProvider({ children }) {
           title: "Total Employees",
           count: totalUserCount,
           color: "text-black",
+          unit: "Persons",
         },
-        { title: "Lates", count: lateClockInsCount, color: "text-pink-500" },
+        {
+          title: "Lates",
+          count: lateClockInsCount,
+          color: "text-pink-500",
+          unit: "Persons",
+        },
         {
           title: "Leave",
           count: requestLeaveCounts.length,
           color: "text-black",
+          unit: "Persons",
         },
-        { title: "OT", count: OT },
+        { title: "OT", count: OT, unit: "Hours" },
       ]);
 
       setClockInfo({

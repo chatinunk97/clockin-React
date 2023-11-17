@@ -21,7 +21,9 @@ export default function DashboardCard() {
               >
                 <CountUp end={card.count} />
               </div>
-              <div className="text-xs font-medium text-gray-400">Persons</div>
+              <div className="text-xs font-medium text-gray-400">
+                {card.unit}
+              </div>
             </div>
           </div>
         );
