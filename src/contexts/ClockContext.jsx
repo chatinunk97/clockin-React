@@ -34,7 +34,7 @@ export default function ClockContextProvider({ children }) {
     const time = await axios.get(
       `http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
     );
-    //Get Compnay Location
+    //Get Company Location
     const { data } = await clockAxios.get(`/clock/location`);
     setCompanyLocation({
       lat: data.latitudeCompany,

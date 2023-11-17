@@ -29,6 +29,7 @@ export default function DashboardLayout() {
   const { pathname } = useLocation();
 
   const { manageUser } = useManage();
+  console.log(manageUser);
 
   return (
     <div className="bg-gradient-to-b from-azure-900 via-azure-800 to-azure-700 h-16 w-full sticky top-0 md:w-60 md:h-screen flex md:flex-col gap-2 rounded-sm flex-shrink-0  overflow-y-auto items-center z-10">
@@ -43,7 +44,9 @@ export default function DashboardLayout() {
               className="w-full h-full object-contain rounded-full"
             />
           </div>
-          <h1 className="text-2xl text-white font-bold">Clock IN</h1>
+          <h1 className="text-2xl text-white font-bold">
+            {manageUser.companyProfile?.companyName}
+          </h1>
         </div>
       </div>
       <div>
