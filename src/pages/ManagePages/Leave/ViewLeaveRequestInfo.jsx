@@ -66,8 +66,11 @@ export default function ViewLeaveRequestInfo({
         <div>
           Leave Quota: {request.userLeave && request.userLeave.dateAmount} days
         </div>
-        <div>Leave Quota Left: XXXX days</div>
-        <div>Request Status: {request.statusRequest}</div>
+        <div className="flex gap-2 font-semibold">
+          Request Status:{" "}
+          <p className="text-orange-500">{request?.statusRequest}</p>
+        </div>
+
         <br />
         <div className="flex gap-3">
           {isButtonVisible && (
