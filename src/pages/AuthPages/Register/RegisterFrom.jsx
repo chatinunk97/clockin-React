@@ -150,7 +150,6 @@ export default function RegisterFrom() {
 
   return (
     <>
-
       {loading && <Loading />}
       <form
         className="grid grid-cols-2 gap-x-3 gap-y-4 items-center p-6"
@@ -187,9 +186,7 @@ export default function RegisterFrom() {
                 onChange={handleChangeInput}
                 hasError={error[el.name]}
               />
-              {error[el.name] && (
-                <InputErrorMessage message={error[el.name]} />
-              )}
+              {error[el.name] && <InputErrorMessage message={error[el.name]} />}
             </div>
           </div>
         ))}
@@ -207,9 +204,7 @@ export default function RegisterFrom() {
             name="paySlip"
             hasError={error.paySlip}
           />
-          {error.paySlip && (
-            <InputErrorMessage message={error.paySlip} />
-          )}
+          {error.paySlip && <InputErrorMessage message={error.paySlip} />}
         </div>
         <div className="flex justify-center mt-7">
           <SubmitButton
@@ -217,7 +212,6 @@ export default function RegisterFrom() {
               e.preventDefault();
               setIsOpen(true);
             }}
-
           >
             Company Location
           </SubmitButton>
@@ -230,12 +224,15 @@ export default function RegisterFrom() {
           {loading ? (
             <Loading />
           ) : (
+            <div className="w-full h-[700] flex flex-col gap-5">
             <div className="w-full h-[500px]">
               <GoogleMap
                 location={location}
                 enableSelect={true}
                 setLocation={setLocation}
               />
+              </div>
+              <SubmitButton onClick={()=>{setIsOpen(false)}}>Confirm Location</SubmitButton>
             </div>
           )}
         </Modal>
