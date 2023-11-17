@@ -1,34 +1,25 @@
-import { useState } from "react";
-import { Select, MenuItem } from "@mui/material";
+import useDashboard from "../hooks/use-dashboard";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 export default function DashboardSelectBox() {
-  const [selectOption, setSelectedOption] = useState("default");
+  const { setSelectDate, selectDate } = useDashboard();
+  console.log(selectDate, "date");
+  const handleFilterDate = (e) => {
+    const dateFormat = dayjs(e.$d).format("YYYY-MM");
+    setSelectDate(dateFormat);
+  };
   return (
     <div>
-      <div>
-        <Select
-          className="select w-full max-w-xs bg-white shadow"
-          defaultValue="default"
-          value={selectOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-        >
-          <MenuItem value="default" disabled>
-            Filter by Month
-          </MenuItem>
-          <MenuItem value="January">January</MenuItem>
-          <MenuItem value="February">February</MenuItem>
-          <MenuItem value="March">March</MenuItem>
-          <MenuItem value="April">April</MenuItem>
-          <MenuItem value="May">May</MenuItem>
-          <MenuItem value="June">June</MenuItem>
-          <MenuItem value="July">July</MenuItem>
-          <MenuItem value="August">August</MenuItem>
-          <MenuItem value="September">September</MenuItem>
-          <MenuItem value="October">October</MenuItem>
-          <MenuItem value="November">November</MenuItem>
-          <MenuItem value="December">December</MenuItem>
-        </Select>
-      </div>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Select Date"
+          views={["year", "month"]}
+          onChange={handleFilterDate}
+          className=" w-44 max-w-xl bg-white shadow"
+        />
+      </LocalizationProvider>
     </div>
   );
 }
