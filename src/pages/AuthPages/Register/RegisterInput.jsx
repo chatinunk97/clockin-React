@@ -11,7 +11,7 @@ export default function RegisterInput({
     <input
       type={type}
       placeholder={placeholder}
-      className={`block  border border-zinc-300 w-full h-[38px] text- rounded-[4px] px-2 py-1.5 text-sm outline-none
+      className={`block  border border-zinc-300 w-full h-[35px] text- rounded-[4px] px-2 py-1.5 text-sm outline-none
                focus:ring
                ${
                  hasError
