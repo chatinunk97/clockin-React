@@ -26,10 +26,6 @@ export default function DashboardMainPage() {
     });
   }, [selectDate]);
 
-  console.log(
-    "--------------------------------------------------------------------------"
-  );
-
   const handleChangeDisplay = (name, count) => {
     let newInfo = {
       name,
@@ -46,9 +42,9 @@ export default function DashboardMainPage() {
         ) : (
           <div className=" w-full h-screen">
             <div className="flex  max-lg:flex-col justify-evenly text-4xl font-semibold text-center mb-4 pt-24 ">
-              <div>
-                Welcome to your dashboard,
-                {manageUser?.companyProfile?.companyName}
+              <div className="flex">
+                Welcome to your dashboard ,  
+                <p className="italic"> {manageUser?.companyProfile?.companyName}</p>
               </div>
               <DashboardSelectBox />
             </div>

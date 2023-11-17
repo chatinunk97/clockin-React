@@ -111,6 +111,7 @@ export default function AddEmployeeBatch() {
       <SubmitButton
         onClick={handleSubmitClick}
         disabled={isAdding ? true : false}
+        w={"w-full"}
       >
         {isAdding ? (
           <div className="flex flex-col items-center justify-center relative">

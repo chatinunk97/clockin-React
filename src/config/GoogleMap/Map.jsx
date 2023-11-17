@@ -14,7 +14,6 @@ export default function Home({
   setLocation,
   companyLocation,
 }) {
-  console.log(location)
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: GoogleAPI_KEY,
   });
