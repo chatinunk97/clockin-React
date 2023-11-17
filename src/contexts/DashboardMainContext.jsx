@@ -15,8 +15,6 @@ export default function DashboardContextProvider({ children }) {
   const [OTInfo, setOTInfo] = useState([]);
   const [clockInfo, setClockInfo] = useState({ clockLate: 0, clockOnTime: 0 });
 
-  // Expose the state and the function to update it in the context
-  //Fetch Total Employee , full / part time
   const fetchEmployees = async () => {
     try {
       setLoading(true);
@@ -38,7 +36,8 @@ export default function DashboardContextProvider({ children }) {
       const res = await dashboardAxios.get(
         `OT/getAllRequestOTByMonth?date=${dayjs(selectDate).format("YYYY-MM")}`
       );
-      const { OT } = res.data;
+      console.log(res.data,'ssososososo')
+      const  OT  = res.data.OT['_sum'].totalTime;
       const { totalUserCount, userTypeTotals } = employeeInfo.data;
       const { lateClockInsCount } = clockInfo.data;
       let { requestLeaveCounts, statusCounts } = data.data;
@@ -66,7 +65,7 @@ export default function DashboardContextProvider({ children }) {
           count: requestLeaveCounts.length,
           color: "text-black",
         },
-        { title: "OT", count: OT.length },
+        { title: "OT", count: OT },
       ]);
 
       setClockInfo({

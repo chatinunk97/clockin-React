@@ -41,13 +41,17 @@ export default function DetailsEmployee({ selectedRowData }) {
       </div>
 
       <div className="h-72 w-[95%] border border-stone-300 text-center flex justify-center flex-col rounded-md">
-        <GoogleMap
-          location={{
-            lat: selectedRowData.latitudeClockIn,
-            lng: selectedRowData.longitudeClockIn,
-          }}
-          companyLocation={companyLocation}
-        />
+        {!selectedRowData.latitudeClockOut ? (
+          <h1>No Clock out information yet</h1>
+        ) : (
+          <GoogleMap
+            location={{
+              lat: selectedRowData.latitudeClockOut,
+              lng: selectedRowData.longitudeClockOut,
+            }}
+            companyLocation={companyLocation}
+          />
+        )}
       </div>
     </form>
   );
