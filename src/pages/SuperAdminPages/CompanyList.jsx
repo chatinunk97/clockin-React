@@ -1,9 +1,8 @@
-import React from "react";
 import MUITable from "../../components/MUITable";
 import { useNavigate } from "react-router-dom";
 
 export default function CompanyList({ data }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const columns = [
     { label: "Company Name", align: "left", key: "name" },
     { label: "Company name", align: "center", key: "companyName" },
@@ -12,11 +11,11 @@ export default function CompanyList({ data }) {
     { label: "Status", align: "center", key: "status" },
   ];
   const handleRowClick = (input) => {
-    navigate(`/superadmin/${input.id}`)
+    navigate(`/superadmin/${input.id}`);
   };
   return (
     <div className="p-5 px-10">
-      <p>Compnay List</p>
+      <p>Company List</p>
       <MUITable data={data} columns={columns} handleRowClick={handleRowClick} />
     </div>
   );
