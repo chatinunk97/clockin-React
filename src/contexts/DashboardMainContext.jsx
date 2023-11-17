@@ -1,27 +1,48 @@
 import { createContext } from "react";
 import { useState } from "react";
 import { dashboardAxios } from "../config/axios";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+// import { getYear } from "date-fns";
 
 export const DashboardMainContext = createContext();
 
 export default function DashboardContextProvider({ children }) {
-  const [statusList, setStatusList] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [cardInfo, setCardInfo] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectDate, setSelectDate] = useState(new Date());
+  const [OTInfo, setOTInfo] = useState([]);
   const [clockInfo, setClockInfo] = useState({ clockLate: 0, clockOnTime: 0 });
 
-  // Expose the state and the function to update it in the context
-  //Fetch Total Employee , full / part time
   const fetchEmployees = async () => {
     try {
       setLoading(true);
+      console.log(
+        `clock/statusClockIn?date=${dayjs(selectDate).format("YYYY-MM")}`
+      );
       const employeeInfo = await dashboardAxios.get("user/getPosition");
-      const clockInfo = await dashboardAxios.get("clock/statusClockIn");
-      const data = await dashboardAxios.get("clock/getAllStatus");
+      const clockInfo = await dashboardAxios.get(
+        `clock/statusClockIn?date=${dayjs(selectDate).format("YYYY-MM")}`
+      );
+      console.log(
+        clockInfo.data,
+        "+++++++++++++++clockInfo+++++++++++++++++++++"
+      );
+      const data = await dashboardAxios.get(
+        `clock/getAllStatus?date=${dayjs(selectDate).format("YYYY-MM")}`
+      );
+
+      const res = await dashboardAxios.get(
+        `OT/getAllRequestOTByMonth?date=${dayjs(selectDate).format("YYYY-MM")}`
+      );
+      console.log(res.data, "ssososososo");
+      const OT = res.data.OT["_sum"].totalTime;
       const { totalUserCount, userTypeTotals } = employeeInfo.data;
       const { lateClockInsCount } = clockInfo.data;
-      const { requestLeaveCounts, statusCounts } = data.data;
+      let { requestLeaveCounts, statusCounts } = data.data;
+      console.log(statusCounts);
+
       setChartData([
         {
           title: "Full-time",
@@ -37,39 +58,35 @@ export default function DashboardContextProvider({ children }) {
           title: "Total Employees",
           count: totalUserCount,
           color: "text-black",
+          unit: "Persons",
         },
-        { title: "Lates", count: lateClockInsCount, color: "text-pink-500" },
+        {
+          title: "Lates",
+          count: lateClockInsCount,
+          color: "text-pink-500",
+          unit: "Persons",
+        },
         {
           title: "Leave",
           count: requestLeaveCounts.length,
           color: "text-black",
+          unit: "Persons",
         },
-        { title: "OT", count: 10002000, color: "text-black" },
-      ]);
-
-      setStatusList([
-        {
-          title: "statusCounts",
-          count: requestLeaveCounts.length,
-          color: "text-black",
-        },
-        {
-          title: "statusCounts",
-          count: requestLeaveCounts.length,
-          color: "text-black",
-        },
-        {
-          title: "Late",
-          count: requestLeaveCounts.length,
-          color: "text-black",
-        },
-        {},
+        { title: "OT", count: OT, unit: "Hours" },
       ]);
 
       setClockInfo({
-        clockLate: statusCounts[0]["_count"],
-        clockOnTime: statusCounts[1]["_count"],
-        allClock: statusCounts[0]["_count"] + statusCounts[1]["_count"],
+        onLeave: requestLeaveCounts[0] ? requestLeaveCounts[0]["_count"] : 0,
+        clockLate: statusCounts[0] ? statusCounts[0]["_count"] : 0,
+        clockOnTime: statusCounts[1] ? statusCounts[1]["_count"] : 0,
+        allClock:
+          (requestLeaveCounts[0] ? requestLeaveCounts[0]["_count"] : 0) +
+          (statusCounts[1] ? statusCounts[1]["_count"] : 0) +
+          (statusCounts[0] ? statusCounts[0]["_count"] : 0),
+      });
+
+      setOTInfo({
+        count: OT._count,
       });
     } catch (error) {
       console.log(error);
@@ -77,16 +94,20 @@ export default function DashboardContextProvider({ children }) {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    fetchEmployees();
+  }, [selectDate]);
+  console.log(clockInfo, "%%%%%%%%%%%%%%%%%%%clockInfo%%%%%%%%%%%%%%%%");
   const contextValue = {
     fetchEmployees,
-    statusList,
-    setStatusList,
     chartData,
     setChartData,
     cardInfo,
     clockInfo,
+    OTInfo,
     loading,
+    selectDate,
+    setSelectDate,
   };
 
   return (

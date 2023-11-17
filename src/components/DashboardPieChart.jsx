@@ -4,13 +4,8 @@ import LinearIndeterminate from "./LoadingBar";
 
 export default function DashboardPieChart({ chartData, loading }) {
   useEffect(() => {
-    if (!chartData || !chartData[0] || !chartData[1]) {
-      console.error("Invalid chart data:", chartData);
-      return;
-    }
-
     const data = {
-      labels: [chartData[0].title, chartData[1].title],
+      labels: [chartData[0]?.title, chartData[1]?.title],
       datasets: [
         {
           label: [chartData.title],

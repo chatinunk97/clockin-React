@@ -20,11 +20,22 @@ export default function TableEmployee({ allUser, loading }) {
   const [UserbyId, setUserById] = useState({});
 
   const [columnDefs] = useState([
+    { field: "employeeId", width: 180, filter: true },
     { field: "firstName", width: 180, filter: true },
     { field: "lastName", width: 180, filter: true },
     { field: "position", width: 180, filter: true },
-    { field: "userBossId", width: 180, filter: true },
-    { field: "employeeId", width: 180, filter: true },
+    {
+      field: "bossInfo",
+      headerName: "Supervisor",
+      width: 180,
+      filter: true,
+      cellRenderer: (params) => {
+        if (params.data.bossInfo) {
+          return `${params.data.bossInfo.firstName} ${params.data.bossInfo.lastName}`;
+        }
+        return "";
+      },
+    },
     { field: "mobile", width: 180, filter: true },
     { field: "email", width: 180, filter: true },
     { field: "isActive", width: 140, filter: true },
