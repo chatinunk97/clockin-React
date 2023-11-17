@@ -53,7 +53,10 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
     firstName: UserbyId.firstName,
     lastName: UserbyId.lastName,
     position: UserbyId.position,
-    userBossId: UserbyId.userBossId || "",
+    // bossFirstName: UserbyId.bossFirstName,
+    // bossLastName: UserbyId.bossLastName,
+    bossInfo: UserbyId.bossInfo,
+    // userBossId: UserbyId.userBossId || "",
     employeeId: UserbyId.employeeId,
     mobile: UserbyId.mobile,
     email: UserbyId.email,
@@ -123,9 +126,10 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                   onChange={handleChangeInput}
                   hasError={error[el.name]}
                 />
-                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                {error[el.name] && (
+                  <InputErrorMessage message={error[el.name]} />
+                )}
               </div>
-
             </>
           );
         })}
@@ -153,9 +157,10 @@ export default function EditemployeeForm({ UserbyId, allUser, onClose }) {
                   value={input[el.name]}
                   hasError={error[el.name]}
                 />
-                {error[el.name] && <InputErrorMessage message={error[el.name]} />}
+                {error[el.name] && (
+                  <InputErrorMessage message={error[el.name]} />
+                )}
               </div>
-
             </>
           );
         })}

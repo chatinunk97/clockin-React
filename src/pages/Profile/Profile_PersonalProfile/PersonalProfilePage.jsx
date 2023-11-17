@@ -20,7 +20,8 @@ export default function PersonalProfilePage() {
     clockAxios
       .get(`/user/getUser/${userId}`)
       .then((res) => {
-        setProfileUser(res.data.user);
+        console.log(res.data);
+        setProfileUser(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +50,10 @@ export default function PersonalProfilePage() {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <PersonalDetails profileUser={profileUser} />
+                <PersonalDetails
+                  profileUser={profileUser.user}
+                  bossInfo={profileUser.bossInfo}
+                />
                 <div className="text-center">
                   <Link to={`/profile/record/${userId}`}>
                     <SubmitButton p="px-10 py-3">View Calendar</SubmitButton>
