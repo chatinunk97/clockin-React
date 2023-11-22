@@ -25,5 +25,11 @@ export const RegisInput = [
     placeholder: "Mobile Number",
     name: "mobile",
   },
-  { id: 7, label: "Password", placeholder: "Password", name: "password" },
+  {
+    id: 7,
+    label: "Password",
+    placeholder: "Password",
+    name: "password",
+    type: "password",
+  },
 ];

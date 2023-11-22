@@ -5,6 +5,7 @@ import InputBar from "../../components/InputBar";
 import SubmitButton from "../../components/SubmitButton";
 import { useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function SetPasswordMainPage() {
   const token = useLocation().search.split("token=")[1];
@@ -47,7 +48,11 @@ export default function SetPasswordMainPage() {
         { password: input.password, confirmPassword: input.confirmPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(result.data.message)
+      Swal.fire({
+        title: "Done",
+        text: result.data.message,
+        icon: "success",
+      });
     } catch (error) {
       console.log(error);
     }
