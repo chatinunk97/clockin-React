@@ -13,12 +13,14 @@ export default function AddTimeProfileSettingForm() {
   const { createTimeProfile } = useTime();
 
   const handleChangeInput = (e) => {
+    console.log(e.target.value);
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
+      console.log(input);
       await createTimeProfile(input);
     } catch (err) {
       console.log(err);
@@ -51,12 +53,17 @@ export default function AddTimeProfileSettingForm() {
         </div>
         <div className=" p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
           <h1>Time Type</h1>
-          <RegisterInput
+          <select
             placeholder="Enter time type"
             value={input.typeTime}
             onChange={handleChangeInput}
             name="typeTime"
-          />
+          >
+            <option value="DEFAULT">Default</option>
+            <option value="FIRSTHALF">First Half</option>
+            <option value="SECONDHALF">Second Half</option>
+            <option value="NOTSPECIFIED">Not-Specified</option>
+          </select>
         </div>
         <div className="mx-auto col-span-full mt-6">
           <label onClick={handleSubmitForm}>

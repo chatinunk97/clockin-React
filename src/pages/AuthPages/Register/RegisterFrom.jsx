@@ -180,6 +180,7 @@ export default function RegisterFrom() {
             <div className="p-1 w-32 md:w-[360px] md:h-[80px] flex flex-col gap-2">
               <h1>{el.label}</h1>
               <RegisterInput
+                type={el.type}
                 placeholder={el.placeholder}
                 name={el.name}
                 value={input[el.name]}
@@ -225,14 +226,20 @@ export default function RegisterFrom() {
             <Loading />
           ) : (
             <div className="w-full h-[700] flex flex-col gap-5">
-            <div className="w-full h-[500px]">
-              <GoogleMap
-                location={location}
-                enableSelect={true}
-                setLocation={setLocation}
-              />
+              <div className="w-full h-[500px]">
+                <GoogleMap
+                  location={location}
+                  enableSelect={true}
+                  setLocation={setLocation}
+                />
               </div>
-              <SubmitButton onClick={()=>{setIsOpen(false)}}>Confirm Location</SubmitButton>
+              <SubmitButton
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                Confirm Location
+              </SubmitButton>
             </div>
           )}
         </Modal>
