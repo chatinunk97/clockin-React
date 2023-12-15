@@ -12,7 +12,7 @@ export default function OTContextProvider({ children }) {
   const [OT, setOT] = useState([]);
   const [allRequestOT, setAllRequestOT] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [UserName, setUserName] = useState([])
+  const [UserName, setUserName] = useState([]);
 
   useEffect(() => {
     const formattedDate = dayjs(date).format("YYYY-MM-DD");
@@ -64,7 +64,6 @@ export default function OTContextProvider({ children }) {
       });
   };
 
-
   const updateOTRequest = async (data) => {
     try {
       const res = await dashboardAxios.patch("/ot/requestOT", data);
@@ -82,16 +81,13 @@ export default function OTContextProvider({ children }) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: 'Something Went Wrong',
+        title: "Something Went Wrong",
         showConfirmButton: false,
         timer: 1500,
       });
       return false;
     }
   };
-
-
-
 
   const shareObj = {
     clockList,
@@ -104,9 +100,8 @@ export default function OTContextProvider({ children }) {
     date,
     setDate,
     UserName,
-    updateOTRequest
+    updateOTRequest,
   };
-
 
   useEffect(() => {
     console.log("allRequestOT updated:", allRequestOT);

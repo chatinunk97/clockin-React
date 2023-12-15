@@ -10,7 +10,7 @@ export default function DetailsEmployee({ selectedRowData }) {
 
   const { authUser } = useAuth();
   const { latitudeCompany: lat, longitudeCompany: lng } =
-    authUser.companyProfile.companyLocations[0];
+    authUser?.companyProfile.companyLocations[0];
   const companyLocation = { lat, lng };
 
   return (
