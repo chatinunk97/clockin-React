@@ -32,7 +32,7 @@ export default function ClockContextProvider({ children }) {
     );
     //Get user time based on timezone
     const time = await axios.get(
-      `http://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
+      `https://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
     );
     //Get Company Location
     const { data } = await clockAxios.get(`/clock/location`);
