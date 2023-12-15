@@ -30,7 +30,7 @@ import UserContextProvider from "../contexts/UserContext";
 import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
 import DashboardMainContext from "../contexts/DashboardMainContext";
-import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
+import SuperAdminMainPage from "../pages/SuperAdminPages/SuperAdminMainPage";
 import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
 import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
 import ManageProfileSetting from "../pages/ManagePages/Setting/ManageProfileSetting";
