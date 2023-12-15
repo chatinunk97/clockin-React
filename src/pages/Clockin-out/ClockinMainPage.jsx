@@ -1,4 +1,4 @@
-import ClockInlocation from "./ClockInlocation";
+import ClockInlocation from "./ClockInLocation";
 import ClockInHeader from "./ClockInHeader";
 import GoogleMap from "../../config/GoogleMap/Map";
 import useAuth from "../../hooks/use-auth";
