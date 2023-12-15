@@ -15,7 +15,7 @@ import LeaveFormPage from "../pages/Profile/Profile_Request/Leave/LeaveFormPage"
 import MyLeavePage from "../pages/Profile/Profile_Request/Leave/MyLeavePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/OT/ProfileOTMainPage";
 import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
-import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
+import OTForm from "../pages/Profile/Profile_Request/OT/OTForm";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import Authenticated from "../features/auth/Authenticated";
 import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage";
@@ -30,7 +30,7 @@ import UserContextProvider from "../contexts/UserContext";
 import ViewLeaveRequest from "../pages/ManagePages/Leave/ViewLeaveRequest";
 import OTContextProvider from "../contexts/OTContext";
 import DashboardMainContext from "../contexts/DashboardMainContext";
-import SuperAdminMainPage from "../pages/SuperAdminPages/superAdminMainPage";
+import SuperAdminMainPage from "../pages/SuperAdminPages/SuperAdminMainPage";
 import CompanySumPage from "../pages/SuperAdminPages/CompanySumPage";
 import CompanyDetails from "../pages/SuperAdminPages/CompanyDetails";
 import ManageProfileSetting from "../pages/ManagePages/Setting/ManageProfileSetting";

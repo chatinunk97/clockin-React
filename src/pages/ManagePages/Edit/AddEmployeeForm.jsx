@@ -5,7 +5,7 @@ import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
 import useUser from "../../../hooks/use-user";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import IconLabelButtons from "../../../components/SendButton";
-import InputFileUpload from "../../../components/Uploadbutton";
+import InputFileUpload from "../../../components/UploadButton";
 import DropdownSearch from "../../../components/DropdownSearch";
 import supervisorList from "../../../utils/StructureChange/supervisorList";
 import {
@@ -81,7 +81,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
       const formData = new FormData();
       formData.append("profileImage", input.profileImage);
       formData.append("data", JSON.stringify(input));
-      console.log(formData.get('data'))
+      console.log(formData.get("data"));
       if (validationError) {
         return setError(validationError);
       }
@@ -117,9 +117,7 @@ export default function AddmployeeForm({ allUser, onClose }) {
                 onChange={handleChangeInput}
                 hasError={error[el.name]}
               />
-              {error[el.name] && (
-                <InputErrorMessage message={error[el.name]} />
-              )}
+              {error[el.name] && <InputErrorMessage message={error[el.name]} />}
             </div>
           </div>
         ))}

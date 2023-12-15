@@ -5,7 +5,7 @@ import SubmitButton from "../../../components/SubmitButton";
 import useUser from "../../../hooks/use-user";
 import LinearProgress from "@mui/material/LinearProgress";
 import Swal from "sweetalert2";
-import InputFileUpload from "../../../components/Uploadbutton";
+import InputFileUpload from "../../../components/UploadButton";
 
 export default function AddEmployeeBatch() {
   const { addemployee } = useUser();
