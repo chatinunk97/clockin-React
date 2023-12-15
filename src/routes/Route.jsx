@@ -15,7 +15,7 @@ import LeaveFormPage from "../pages/Profile/Profile_Request/Leave/LeaveFormPage"
 import MyLeavePage from "../pages/Profile/Profile_Request/Leave/MyLeavePage";
 import ProfileOTMainPage from "../pages/Profile/Profile_Request/OT/ProfileOTMainPage";
 import MyOTForm from "../pages/Profile/Profile_Request/OT/MyOTForm";
-import OTForm from "../pages/Profile/Profile_Request/OT/OTform";
+import OTForm from "../pages/Profile/Profile_Request/OT/OTForm";
 import RedirectIfAuthenticated from "../features/auth/RedirectIfAuthenticated";
 import Authenticated from "../features/auth/Authenticated";
 import ManageLoginMainPage from "../pages/ManagePages/Login/ManageLoginMainPage";
