@@ -10,7 +10,7 @@ import locationPermission from "../../../utils/locationPermission";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../components/SubmitButton";
 import Modal from "../../../components/Modal";
-import InputFileUpload from "../../../components/Uploadbutton";
+import InputFileUpload from "../../../components/UploadButton";
 import { RegisInput } from "./RegisInput";
 const registerSchema = Joi.object({
   paySlip: Joi.required(),

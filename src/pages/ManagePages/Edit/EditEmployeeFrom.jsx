@@ -4,7 +4,7 @@ import RegisterInput from "../../AuthPages/Register/RegisterInput";
 import LinearIndeterminate from "../../../components/LoadingBar";
 import InputErrorMessage from "../../AuthPages/Register/InputErrorMessage";
 import IconLabelButtons from "../../../components/SendButton";
-import InputFileUpload from "../../../components/Uploadbutton";
+import InputFileUpload from "../../../components/UploadButton";
 import DropdownSearch from "../../../components/DropdownSearch";
 import supervisorList from "../../../utils/StructureChange/supervisorList";
 import useUser from "../../../hooks/use-user";
