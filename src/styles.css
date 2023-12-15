@@ -1,0 +1,19 @@
+.ag-theme-alpine {
+  --ag-header-background-color: #263454;
+  --ag-font-size: 14px;
+  --ag-font-family: monospace;
+  --ag-header-cell-hover-background-color: #304878;
+  --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+  --ag-foreground-color: black;
+  --ag-data-color: black;
+  --ag-secondary-foreground-color: #fff;
+}
+
+.ag-theme-alpine .ag-header-cell {
+  color: #fff;
+  font-weight: bold;
+}
+
+.ag-theme-alpine .ag-cell {
+  border-bottom: 1px solid rgba(18, 53, 132, 0.1);
+}
