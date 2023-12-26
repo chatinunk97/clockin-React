@@ -64,7 +64,7 @@ export default function ViewEmployee() {
           <div className="w-80 h-80 rounded-full hidden md:block bg-slate-200 ">
             <img
               src={employee.profileImage}
-              alt="UserPhoto"
+              alt=""
               className="w-full h-full rounded-full shadow-2xl"
             />
           </div>
