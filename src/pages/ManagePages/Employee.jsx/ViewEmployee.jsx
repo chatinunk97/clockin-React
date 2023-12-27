@@ -69,54 +69,6 @@ export default function ViewEmployee() {
             />
           </div>
         </div>
-
-        {/* <div
-          className="ag-theme-alpine flex flex-col gap-2"
-          style={{ height: 600, width: "60%" }}
-        >
-        {employee.userType === "PARTTIME" ? (<div className="flex gap-2">
-            <Button
-              variant="contained"
-              onClick={() => setIsShowUserLeave(false)}
-            >
-              Clock in-out
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => setIsShowUserLeave(true)}
-            >
-              User Leave
-            </Button>
-          </div>
-          {isShowUserLeave ? (
-            <TableUserLeave userId={userId} />
-          ) : true ? (
-            <TableClock employee={employee} clock={clock} />
-          ) : (
-            "ddd"
-          )}) : ( <div className="flex gap-2">
-            <Button
-              variant="contained"
-              onClick={() => setIsShowFlexibleTime(false)}
-            >
-              Clock in-out
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => setIsShowFlexibleTime(true)}
-            >
-              Flexible Time
-            </Button>
-          </div>
-          {isShowFlexibleTime ? (
-            <TableFlexibleTime />
-          ) : true ? (
-            <TableClock employee={employee} clock={clock} />
-          ) : (
-            "ddd"
-            )})}
-        </div> */}
-
         <div
           className="ag-theme-alpine flex flex-col gap-2"
           style={{ height: 600, width: "60%" }}
@@ -170,48 +122,4 @@ export default function ViewEmployee() {
   );
 }
 {
-  /* 
-          // <div className="flex gap-2">
-          //   <Button
-          //     variant="contained"
-          //     onClick={() => setIsShowUserLeave(false)}
-          //   >
-          //     Clock in-out
-          //   </Button>
-          //   <Button
-          //     variant="contained"
-          //     onClick={() => setIsShowUserLeave(true)}
-          //   >
-          //     User Leave
-          //   </Button>
-          // </div>
-          // {isShowUserLeave ? (
-          //   <TableUserLeave userId={userId} />
-          // ) : true ? (
-          //   <TableClock employee={employee} clock={clock} />
-          // ) : (
-          //   "ddd"
-          // )}
-
-          // <div className="flex gap-2">
-          //   <Button
-          //     variant="contained"
-          //     onClick={() => setIsShowFlexibleTime(false)}
-          //   >
-          //     Clock in-out
-          //   </Button>
-          //   <Button
-          //     variant="contained"
-          //     onClick={() => setIsShowFlexibleTime(true)}
-          //   >
-          //     Flexible Time
-          //   </Button>
-          // </div>
-          // {isShowFlexibleTime ? (
-          //   <TableFlexibleTime />
-          // ) : true ? (
-          //   <TableClock employee={employee} clock={clock} />
-          // ) : (
-          //   "ddd"
-          // )} */
 }
