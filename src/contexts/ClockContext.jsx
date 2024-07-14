@@ -22,13 +22,12 @@ export default function ClockContextProvider({ children }) {
   const [clockHistory, setClockHistory] = useState([]);
   const fetchLocationTime = async () => {
     //Get user location
-
     const location = await locationPermission();
     setLocation(location);
-
+    
     //Get user timezone based on location
     const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1331161200&key=AIzaSyALKm5K2JFpte9A8cXryHMa2cJR3j7jemo`
+      `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1331161200&key=${import.meta.env.VITE_GOOGLE_API_KEY}`
     );
     //Get user time based on timezone
     const time = await axios.get(
