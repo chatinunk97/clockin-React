@@ -6,7 +6,7 @@ import Loading from "./components/Loading";
 
 function App() {
   const { initialLoading } = useAuth();
-  console.log(initialLoading);
+
   return (
     <>
       {initialLoading ? (

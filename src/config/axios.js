@@ -1,5 +1,4 @@
 import axios from "axios";
-import { BACKEND_URL } from "../../env";
 import {
   getAccessToken,
   removeAccessToken,
@@ -7,7 +6,7 @@ import {
   removeAccessTokenDB,
 } from "../utils/local-storage";
 
-axios.defaults.baseURL = BACKEND_URL;
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 export const clockAxios = axios.create();
 export const dashboardAxios = axios.create();
