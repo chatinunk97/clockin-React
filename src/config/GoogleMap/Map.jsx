@@ -6,7 +6,8 @@ import {
   Circle,
 } from "@react-google-maps/api";
 import companyLogo from "../../assets/companyLogo.png";
-import { GoogleAPI_KEY } from "../../../env";
+
+
 
 export default function Home({
   location,
@@ -15,7 +16,7 @@ export default function Home({
   companyLocation,
 }) {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: GoogleAPI_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
   });
   const [mapCenter, setMapCenter] = useState(location);
 
