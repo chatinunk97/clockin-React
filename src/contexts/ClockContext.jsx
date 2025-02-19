@@ -21,38 +21,69 @@ export default function ClockContextProvider({ children }) {
   const [time, setTime] = useState(null);
   const [clockHistory, setClockHistory] = useState([]);
   const fetchLocationTime = async () => {
-    //Get user location
-    const location = await locationPermission();
-    setLocation(location);
-    
-    //Get user timezone based on location
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1331161200&key=${import.meta.env.VITE_GOOGLE_API_KEY}`
-    );
-    //Get user time based on timezone
-    const time = await axios.get(
-      `https://worldtimeapi.org/api/timezone/${res.data.timeZoneId}`
-    );
-    //Get Company Location
-    const { data } = await clockAxios.get(`/clock/location`);
-    setCompanyLocation({
-      lat: data.latitudeCompany,
-      lng: data.longitudeCompany,
-    });
-    setTime(new Date(time.data.datetime));
-    //Newest Clock
-    const newestClock = await clockAxios.get(
-      `/clock/latestClock/?today=${todayString()}`
-    );
+    try {
+      // Step 1: Get User Location
+      const userLocation = await locationPermission();
+      setLocation(userLocation);
 
-    //If there's no newest clock from today or the newest clock already has clockout => clock in
-    if (!newestClock.data || newestClock.data.clockOutTime) {
-      setIsClockIn(true);
-    } else {
-      setIsClockIn(false);
+      // Step 2: Get Current UTC Timestamp
+      const timestamp = Math.floor(Date.now() / 1000); // Convert to UNIX seconds
+
+      // Step 3: Fetch Time Zone Data from Google
+      const res = await axios.get(
+        `https://maps.googleapis.com/maps/api/timezone/json?location=${
+          userLocation.lat
+        },${userLocation.lng}&timestamp=${timestamp}&key=${
+          import.meta.env.VITE_GOOGLE_API_KEY
+        }`
+      );
+
+      if (res.data.status !== "OK") {
+        throw new Error("Failed to fetch time zone data");
+      }
+
+      // Step 4: Calculate Local Time
+      const { rawOffset, dstOffset, timeZoneId } = res.data;
+      const totalOffset = rawOffset + dstOffset; // Offset in seconds
+
+      const utcTime = new Date(); // Current UTC time
+      const localTime = new Date(utcTime.getTime() + totalOffset * 1000); // Adjusted local time
+
+      setTime(localTime);
+
+      console.log(`User Timezone: ${timeZoneId}`);
+      console.log(`Local Time: ${localTime.toLocaleString()}`);
+
+      // Step 5: Get Company Location
+      const { data } = await clockAxios.get(`/clock/location`);
+      setCompanyLocation({
+        lat: data.latitudeCompany,
+        lng: data.longitudeCompany,
+      });
+
+      // Step 6: Fetch Clock History
+      const newestClock = await clockAxios.get(
+        `/clock/latestClock/?today=${todayString()}`
+      );
+
+      // Step 7: Determine Clock-in/Clock-out Status
+      if (!newestClock.data || newestClock.data.clockOutTime) {
+        setIsClockIn(true);
+      } else {
+        setIsClockIn(false);
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching time:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Time Fetch Error",
+        text: "Could not fetch local time. Please try again.",
+      });
     }
-    setIsLoading(false);
   };
+
   const fetchClockHistory = async () => {
     try {
       //Only the current date history
